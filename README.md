@@ -1,3 +1,10 @@
+#Simple Node Server
+1. Install Node.js: http://nodejs.org (add to PATH if necessary)
+2. Open shell/cmd
+3. `cd` to this directory and run `node .`
+4. http://127.0.0.1:3000/
+
+
 NumberPunch
 ===========
 
