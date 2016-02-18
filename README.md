@@ -1,4 +1,5 @@
 # Simple Node Server
+
 1. Install Node.js: http://nodejs.org (add to PATH if necessary)
 2. Open shell/cmd
 3. `cd` to this directory and run `node .`
@@ -6,6 +7,11 @@
 
 Unfortunately opening the socket.io requests to Firecaster is protected by remote origin policies so it doesn't actually work right now.
 
+#### Structure 
+
+node_modules - libraries, auto-generated/downloaded with npm per requirements in package.json
+public - resources/libraries for client
+app.js - entry point for node per package.json, sets up server with Express and sets default route to index.html
 
 NumberPunch
 ===========
