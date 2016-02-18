@@ -4,6 +4,8 @@
 3. `cd` to this directory and run `node .`
 4. http://127.0.0.1:3000/
 
+Unfortunately opening the socket.io requests to Firecaster is protected by remote origin policies so it doesn't actually work right now.
+
 
 NumberPunch
 ===========
