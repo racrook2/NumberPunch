@@ -12,7 +12,6 @@ var Multiplayer;
 			syncOrders: false
 		});
 	}
-
 	socket.on('listgames', function (games) {
 		//data[i].id, data[i].title, data[i].players, data[i].max
 		var validGames=[];
@@ -50,10 +49,6 @@ var Multiplayer;
 		socket.emit('joingame', id);
 	}
 
-	function leaveGame() {
-		socket.emit('leavegame');
-	}
-
 	function sendOrder(data){
 		socket.emit("order",data);
 	}
@@ -72,7 +67,6 @@ var Multiplayer;
 		joinGame: joinGame,
 		sendOrder: sendOrder,
 		refreshGameList: refreshGameList,
-		startGame: startGame,
-		leaveGame: leaveGame
+		startGame: startGame
 	}
 })();
