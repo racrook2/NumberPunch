@@ -1,0 +1,32 @@
+button {
+	background-image: url(../media/button.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	height:	110px;
+	width: 100px;
+	border:	none;
+	margin: 5px;
+}
+
+button:active {
+	background-image: url(../media/button-pressed.png);
+}
+
+#center-button {
+	background-image: url(../media/center-button.png);
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+#center-button:active {
+	background-image: url(../media/center-button-pressed.png);
+}
+
+.light {
+	height: 15px;
+	width: 15px;
+	background-color: red;
+	display: inline-block;
+	border: 1px;
+	border-style: solid;
+}
