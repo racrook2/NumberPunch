@@ -1,0 +1,35 @@
+#gamesList {
+	border-style: solid;
+	border-width: 3px;
+}
+
+#buttons {
+	width: 100%
+}
+
+#buttons > div {
+	display: inline-block;
+	padding: 5px;
+	background-color: orange;
+	color: blue;
+}
+
+#buttons > div:hover {
+	cursor: pointer;
+}
+
+#createGame {
+	
+}
+
+#leaveGame, #refresh {
+	
+}
+
+#gameCanvas {
+	
+}
+
+.game:hover {
+	cursor: pointer;
+}
