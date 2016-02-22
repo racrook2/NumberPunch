@@ -1,7 +1,7 @@
 var Multiplayer;
 (function () {
     var GAMETYPE = 5023;
-    var socket = io.connect("ctw.firecaster.com");
+    var socket = io.connect("ctw.firecaster.com:80");
     function createGame() {
         socket.emit("creategame", {
             title: "A game",

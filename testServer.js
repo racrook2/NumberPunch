@@ -7,7 +7,7 @@ QUnit.module("Server Test", {
             socket.socket.connect();
         }
         else {
-            socket = io.connect("ctw.firecaster.com");
+            socket = io.connect("ctw.firecaster.com:80");
         }
     },
     afterEach: function () {
