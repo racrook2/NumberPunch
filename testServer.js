@@ -1,61 +1,57 @@
 var socket;
 var GAME_TYPE = 268201;
 
-QUnit.module( "Server Test", {
-  beforeEach: function() {
-      console.log("before");
-    // prepare something for all following tests
-    if (socket){
-        socket.socket.connect();
+QUnit.module("Server Test", {
+    beforeEach: function () {
+        if (socket) {
+            socket.socket.connect();
+        }
+        else {
+            socket = io.connect("ctw.firecaster.com");
+        }
+    },
+    afterEach: function () {
+        socket.removeAllListeners();
+        socket.disconnect();
     }
-    else{
-        socket = io.connect("ctw.firecaster.com");
-    }
-  },
-  afterEach: function() {
-      socket.removeAllListeners();
-      socket.disconnect();
-  }
 });
 
-QUnit.test( "Did we connect", function( assert ) {
+QUnit.test("Did we connect", function (assert) {
     var done = assert.async();
-    socket.on('connect',function(){
-        assert.ok( true, "connected to ctw.firecaster.com" );
-        console.log("we did connect");
+    socket.on('connect', function () {
+        assert.ok(true, "connected to ctw.firecaster.com");
         done();
     });
 });
 
 
-QUnit.test( "Test listgames", function( assert ) {
+QUnit.test("Test listgames", function (assert) {
 
     socket.emit("listgames");
-    console.log("listgames");
     var done = assert.async();
-    socket.on('listgames',function(data){
-        assert.ok( true, "Got listgames packet" );
-        assert.ok( Array.isArray(data), "The data is an array" );
+    socket.on('listgames', function (data) {
+        assert.ok(true, "Got listgames packet");
+        assert.ok(Array.isArray(data), "The data is an array");
         done();
     });
 });
 
-QUnit.test( "Test creategame", function( assert ) {
+QUnit.test("Test create/join game", function (assert) {
 
-    var title = "Test title";
-    socket.emit("creategame",{
-        type:GAME_TYPE,
-        title:title,
-        max:2
+    var title = "Test creategame title";
+    socket.emit("creategame", {
+        type: GAME_TYPE,
+        title: title,
+        max: 2
     });
     var done = assert.async();
     socket.emit("listgames");
-    socket.on('listgames',function(data){
-        assert.ok( true, "Got listgames packet" );
-        assert.ok( Array.isArray(data), "The data is an array" );
-        for (var i = 0; i < data.length; i++){
-            if (data[i].title === title && data[i].max == 2){
-                assert.ok(true,"Our game was listed")
+    socket.on('listgames', function (data) {
+        assert.ok(true, "Got listgames packet");
+        assert.ok(Array.isArray(data), "The data is an array");
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].title === title && data[i].max == 2) {
+                assert.ok(true, "Our game was listed")
             }
         }
         done();
@@ -63,21 +59,91 @@ QUnit.test( "Test creategame", function( assert ) {
 });
 
 
-QUnit.test( "Test startgame", function( assert ) {
-    var title = "Test joingame title";
-    socket.emit("creategame",{
-        type:GAME_TYPE,
-        title:title,
-        max:2
+QUnit.test("Test startgame", function (assert) {
+    var title = "Test startgame title";
+    socket.emit("creategame", {
+        type: GAME_TYPE,
+        title: title,
+        max: 2
     });
     var done = assert.async();
-    socket.on("start",function(data){
-        console.log(data);
-        assert.ok(true,"Got start packet");
-        assert.ok(data.pc === 1,"Player count should be 1");
-        assert.ok(data.me === 0,"Id should be 0");
-        assert.ok(data.seed,"Should contain a random seed");
+    socket.on("start", function (data) {
+        assert.ok(true, "Got start packet");
+        assert.ok(data.pc === 1, "Player count should be 1");
+        assert.ok(data.me === 0, "Id should be 0");
+        assert.ok(data.seed, "Should contain a random seed");
         done();
+    });
+    socket.emit("startgame");
+});
+
+
+QUnit.test("Test players", function (assert) {
+    var title = "Test players title";
+    socket.emit("creategame", {
+        type: GAME_TYPE,
+        title: title,
+        max: 2,
+        syncOrders: false
+    });
+    var done = assert.async();
+    socket.on("players", function (data) {
+        assert.ok(Array.isArray(data), "Players data is array");
+        assert.ok(data.length === 1, "Players array has one player (me)");
+        done();
+
+    });
+    socket.emit("startgame");
+});
+
+QUnit.test("Test order", function (assert) {
+    var title = "Test order title";
+    socket.emit("creategame", {
+        type: GAME_TYPE,
+        title: title,
+        max: 2,
+        syncOrders: false
+    });
+    var done = assert.async();
+    socket.on("start", function (startdata) {
+        var orderObj = {
+            "some": "silly data"
+        }
+        socket.emit("order", orderObj);
+        socket.on("order", function (data) {
+
+            assert.ok(true, "Got order");
+            assert.ok(data["some"] === "silly data", "Got order");
+            assert.ok(data.from === startdata.me, "Order is from me");
+            done();
+        })
+
+    });
+    socket.emit("startgame");
+});
+QUnit.test("Test leavegame", function (assert) {
+    var title = "Test leavegame title " + Math.random();
+    socket.emit("creategame", {
+        type: GAME_TYPE,
+        title: title,
+        max: 2,
+        syncOrders: false
+    });
+    var done = assert.async();
+    socket.on("start", function (data) {
+        socket.emit("leavegame");
+        socket.emit("listgames");
+        socket.on("listgames", function (games) {
+            var hasOurGame = false;
+            for (var i = 0; i < games.length; i++) {
+                if (games.title === title) {
+                    hasOurGame = true;
+                }
+            }
+            assert.ok(hasOurGame === false, "Our game is no longer in the list");
+            done();
+        })
+
     });
     socket.emit("startgame");
 });
