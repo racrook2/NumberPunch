@@ -1,8 +1,8 @@
 
 var blueOrangeTheme = {
     name : 'blueOrange',
-    bgColor : 'blue',
-    fontColor : 'orange'
+    bgColor : 'orange',
+    fontColor : 'blue'
 };
 var blackWhiteTheme = {
     name : 'blackWhite',
@@ -15,11 +15,11 @@ function changeName(name) {
 };
 
 
-function changeTheme(theme) {
-    $('body').css("background-color", theme.bgColor);
-    $('body').css("color", theme.fontColor);
-    $('#buttons div').css("color", theme.bgColor);
-    $('#buttons div').css("background-color", theme.fontColor);
+function changeButtonTheme(theme) {
+    //$('body').css("background-color", theme.bgColor);
+    //$('body').css("color", theme.fontColor);
+    $('#buttons div').css("color", theme.fontColor);
+    $('#buttons div').css("background-color", theme.bgColor);
 };
 
 
@@ -34,10 +34,11 @@ $(document).ready(function() {
     $('#settingsForm').on('submit', function(event) {
         var checked = $('input[type=radio]:checked').val();
         if(checked == 'blueOrange') {
-            changeTheme(blueOrangeTheme);
+            changeButtonTheme(blueOrangeTheme);
         } else if (checked == 'blackWhite') {
-            changeTheme(blackWhiteTheme);
+            changeButtonTheme(blackWhiteTheme);
         }
+        $('#settings').toggle();
         event.preventDefault();
     });
 });
