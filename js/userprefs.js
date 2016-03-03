@@ -17,8 +17,8 @@ function changeName(name) {
 
 function changeTheme(theme) {
     $('body').css("background-color", theme.bgColor);
-    $('#buttons').css("color", theme.bgColor);
-    $('#buttons').css("background-color", theme.fontColor);
+    $('#buttons div').css("color", theme.bgColor);
+    $('#buttons div').css("background-color", theme.fontColor);
 };
 
 
@@ -38,7 +38,6 @@ $(document).ready(function() {
             changeTheme(blackWhiteTheme);
         }
         event.preventDefault();
-        return false;
     });
 });
 
