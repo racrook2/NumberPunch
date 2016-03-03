@@ -21,6 +21,10 @@ function changeButtonTheme(theme) {
 };
 
 
+function applySettings(settings) {
+    changeButtonTheme(settings.buttonTheme);
+}
+
 $(document).ready(function() {
 	
 	//handle clicking preferences button
