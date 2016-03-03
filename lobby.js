@@ -84,6 +84,17 @@ $(document).ready(function() {
 
 		return false;
 	});
+	
+	$("#preferences").on('click', function(){
+		$(".modal").css("marginTop", "0");
+		$(".modal").css("marginLeft", ($(window).width() - $(".modal").width())/2);
+		$(".modal-bg").fadeIn();
+		$(".modal").fadeIn();
+	});
+
+	$("#settingsForm").on('submit', function(){
+		$(".modal-bg").fadeOut();
+		$(".modal").fadeOut();
+	});
 
 });
-
