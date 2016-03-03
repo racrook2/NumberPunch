@@ -8,6 +8,6 @@ QUnit.module("User Preferences Test", {
 
 QUnit.test("Did Preferences Panel Open:", function (assert) {
     changeButtonTheme(blackWhiteTheme);
-    var buttonBgColor = document.body.style.backgroundColor;
-    assert.equal(buttonBgColor, 'black');
+    var buttonBgColor = $('body').css('background-color');
+    assert.equal(buttonBgColor, 'rgba(0, 0, 0, 0)');
 });
