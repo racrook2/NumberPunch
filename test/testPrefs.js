@@ -6,8 +6,12 @@ QUnit.module("User Preferences Test", {
     }
 });
 
-QUnit.test("Did Preferences Panel Open:", function (assert) {
-    assert.equal(true,true);
+QUnit.test("Did Preferences Modal Open:", function (assert) {
+    var modalDisplay = $('.modal').css('display');
+    assert.equal(modalDisplay, 'none');
+    openModal();
+    modalDisplay = $('.modal').css('display');
+    assert.equal(modalDisplay, 'block');
 });
 
 QUnit.test("Did Buttons Change to Black/White:", function (assert) {
