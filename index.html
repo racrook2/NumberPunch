@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html>
-	<!--Testing-->
-
 	<head>
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -16,9 +14,18 @@
 		<div id="buttons">
 			<div id="createGame">Create Game</div>
 			<div id="refresh">Refresh</div>
+			<div id="preferences">Preferences</div>
+			<div id="exitSettings">Save</div>
 			<div id="leaveGame">Leave Game</div>
 		</div>
 		<div id="gamesList"></div>
 		<canvas id="gameCanvas" height=400 width=800 ></canvas>
+		<div id="settings">
+			<form>
+				Button color:<br>
+				<input type="radio" name="gender" value="male" checked> Orange<br>
+				<input type="radio" name="gender" value="male"> Blue<br>
+			</form>
+		</div>
 	</body>
 </html>

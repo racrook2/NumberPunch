@@ -19,7 +19,9 @@ $(document).ready(function() {
 	ctx.stroke();
 
 	//Hide leave game and game upon loading as they are not needed until a game is starting.
-	$('#leaveGame').css('display', 'none'); 
+	$('#leaveGame').css('display', 'none');
+	$('#settings').css('display', 'none');
+	$('#exitSettings').css('display', 'none');
 	$('#gameCanvas').css('display', 'none');
 
 	//Refresh when refresh button is clicked.
@@ -39,8 +41,33 @@ $(document).ready(function() {
 		$('#createGame').css('display', 'none');
 		$('#refresh').css('display', 'none');
 		$('#gamesList').css('display', 'none');
+		$('#preferences').css('display', 'none');
 
 		return false;
+	});
+	
+	$('#preferences').on('click', function() {
+		console.log("Clicked Preferences");
+		
+		$('#createGame').css('display', 'none');
+		$('#refresh').css('display', 'none');
+		$('#preferences').css('display', 'none');
+		$('#exitSettings').css('display', 'inline-block');
+		$('#gamesList').css('display', 'none');
+		$('#settings').css('display', 'block');
+	});
+	
+	$('#exitSettings').on('click', function() {
+		console.log("Clicked Return");
+		
+		$('#leaveGame').css('display', 'none');
+		$('#gameCanvas').css('display', 'none');
+		$('#createGame').css('display', 'inline-block');
+		$('#refresh').css('display', 'inline-block');
+		$('#gamesList').css('display', 'block');
+		$('#preferences').css('display', 'inline-block');
+		$('#exitSettings').css('display', 'none');
+		$('#settings').css('display', 'none');
 	});
 	
 	//Upon clicking "Leave game" the backend wil recieve an order to leave the game and the leave game button will disappear, being replaced by create game and refresh.
@@ -53,6 +80,7 @@ $(document).ready(function() {
 		$('#createGame').css('display', 'inline-block');
 		$('#refresh').css('display', 'inline-block');
 		$('#gamesList').css('display', 'block');
+		$('#preferences').css('display', 'inline-block');
 
 		return false;
 	});
