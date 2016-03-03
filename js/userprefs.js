@@ -14,6 +14,17 @@ function changeName(name) {
     //change user's name
 };
 
+function openModal() {
+	$(".modal").css("marginTop", "0");
+	$(".modal").css("marginLeft", ($(window).width() - $(".modal").width())/2);
+	$(".modal-bg").fadeIn();
+	$(".modal").fadeIn();
+}
+
+function closeModal() {
+	$(".modal-bg").fadeOut();
+	$(".modal").fadeOut();
+}
 
 function changeButtonTheme(theme) {
     $('#buttons div').css("color", theme.fontColor);
@@ -26,11 +37,7 @@ $(document).ready(function() {
 	//handle clicking preferences button
     $('#preferences').on('click', function(event) {
         console.log("Clicked Preferences");
-		
-		$(".modal").css("marginTop", "0");
-		$(".modal").css("marginLeft", ($(window).width() - $(".modal").width())/2);
-		$(".modal-bg").fadeIn();
-		$(".modal").fadeIn();
+		openModal();
     });
 
     //handle preference submit
@@ -41,15 +48,13 @@ $(document).ready(function() {
         } else if (checked == 'blackWhite') {
             changeButtonTheme(blackWhiteTheme);
         }
-		$(".modal-bg").fadeOut();
-		$(".modal").fadeOut();
+		closeModal();
         event.preventDefault();
     });
 	
 	//handle clicking 'x' in modal to exit
 	$(".close-modal").on('click', function(){
-		$(".modal-bg").fadeOut();
-		$(".modal").fadeOut();
+		closeModal();
 	});
 });
 
