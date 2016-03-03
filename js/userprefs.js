@@ -17,6 +17,7 @@ function changeName(name) {
 
 function changeTheme(theme) {
     $('body').css("background-color", theme.bgColor);
+    $('body').css("color", theme.fontColor);
     $('#buttons div').css("color", theme.bgColor);
     $('#buttons div').css("background-color", theme.fontColor);
 };
@@ -24,10 +25,10 @@ function changeTheme(theme) {
 
 $(document).ready(function() {
 
-    /*$('#preferences').on('click', function(event) {
+    $('#preferences').on('click', function(event) {
         console.log("Clicked Preferences");
         $('#settings').toggle();
-    });*/
+    });
 
     //handle preference submit
     $('#settingsForm').on('submit', function(event) {
