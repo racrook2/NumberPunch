@@ -1,4 +1,4 @@
-
+//themes
 var blueOrangeTheme = {
     name : 'blueOrange',
     bgColor : 'orange',
