@@ -43,15 +43,6 @@ $(document).ready(function() {
 
 		return false;
 	});
-	/*
-	$('#preferences').on('click', function() {
-		console.log("Clicked Preferences");
-		
-		$('#createGame').css('display', 'none');
-		$('#refresh').css('display', 'none');
-		$('#preferences').css('display', 'none');
-		$('#gamesList').css('display', 'none');
-	});*/
 	
 	//Upon clicking "Leave game" the backend wil recieve an order to leave the game and the leave game button will disappear, being replaced by create game and refresh.
 	$('#leaveGame').on('click', function() {

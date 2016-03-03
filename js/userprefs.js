@@ -16,15 +16,14 @@ function changeName(name) {
 
 
 function changeButtonTheme(theme) {
-    //$('body').css("background-color", theme.bgColor);
-    //$('body').css("color", theme.fontColor);
     $('#buttons div').css("color", theme.fontColor);
     $('#buttons div').css("background-color", theme.bgColor);
 };
 
 
 $(document).ready(function() {
-
+	
+	//handle clicking preferences button
     $('#preferences').on('click', function(event) {
         console.log("Clicked Preferences");
 		
@@ -47,6 +46,7 @@ $(document).ready(function() {
         event.preventDefault();
     });
 	
+	//handle clicking 'x' in modal to exit
 	$(".close-modal").on('click', function(){
 		$(".modal-bg").fadeOut();
 		$(".modal").fadeOut();
