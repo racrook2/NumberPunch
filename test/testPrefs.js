@@ -7,7 +7,11 @@ QUnit.module("User Preferences Test", {
 });
 
 QUnit.test("Did Preferences Panel Open:", function (assert) {
+    assert.equal(true,true);
+});
+
+QUnit.test("Did Buttons Change to Black/White:", function (assert) {
     changeButtonTheme(blackWhiteTheme);
-    var buttonBgColor = $('body').css('background-color');
-    assert.equal(buttonBgColor, 'rgba(0, 0, 0, 0)');
+    var buttonBgColor = $('#createGame').css('background-color');
+    assert.equal(buttonBgColor, 'black');
 });
