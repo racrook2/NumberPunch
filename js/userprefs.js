@@ -10,6 +10,10 @@ var blackWhiteTheme = {
     fontColor : 'white'
 };
 
+function changeName(name) {
+    //change user's name
+};
+
 
 function changeTheme(theme) {
     $('body').css("background-color", theme.bgColor);
@@ -18,8 +22,14 @@ function changeTheme(theme) {
 
 
 $(document).ready(function() {
+
+    $('#preferences').on('click', function(event) {
+        console.log("Clicked Preferences");
+        $('#settings').toggle();
+    });
+
     //handle preference submit
-    $('#settings').on('submit', function(event) {
+    $('#settingsForm').on('submit', function(event) {
         var checked = $('input[type=radio]:checked').val();
         if(checked == 'blueOrange') {
             changeTheme(blueOrangeTheme);
