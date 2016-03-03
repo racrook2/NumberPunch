@@ -27,7 +27,11 @@ $(document).ready(function() {
 
     $('#preferences').on('click', function(event) {
         console.log("Clicked Preferences");
-        $('#settings').toggle();
+		
+		$(".modal").css("marginTop", "0");
+		$(".modal").css("marginLeft", ($(window).width() - $(".modal").width())/2);
+		$(".modal-bg").fadeIn();
+		$(".modal").fadeIn();
     });
 
     //handle preference submit
@@ -38,9 +42,15 @@ $(document).ready(function() {
         } else if (checked == 'blackWhite') {
             changeButtonTheme(blackWhiteTheme);
         }
-        $('#settings').toggle();
+		$(".modal-bg").fadeOut();
+		$(".modal").fadeOut();
         event.preventDefault();
     });
+	
+	$(".close-modal").on('click', function(){
+		$(".modal-bg").fadeOut();
+		$(".modal").fadeOut();
+	});
 });
 
 

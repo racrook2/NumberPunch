@@ -20,7 +20,6 @@ $(document).ready(function() {
 
 	//Hide leave game and game upon loading as they are not needed until a game is starting.
 	$('#leaveGame').css('display', 'none');
-	$('#settings').css('display', 'none');
 	$('#gameCanvas').css('display', 'none');
 
 	//Refresh when refresh button is clicked.
@@ -52,7 +51,6 @@ $(document).ready(function() {
 		$('#refresh').css('display', 'none');
 		$('#preferences').css('display', 'none');
 		$('#gamesList').css('display', 'none');
-		$('#settings').css('display', 'block');
 	});*/
 	
 	//Upon clicking "Leave game" the backend wil recieve an order to leave the game and the leave game button will disappear, being replaced by create game and refresh.
@@ -83,18 +81,6 @@ $(document).ready(function() {
 		$('#gamesList').css('display', 'none');
 
 		return false;
-	});
-	
-	$("#preferences").on('click', function(){
-		$(".modal").css("marginTop", "0");
-		$(".modal").css("marginLeft", ($(window).width() - $(".modal").width())/2);
-		$(".modal-bg").fadeIn();
-		$(".modal").fadeIn();
-	});
-
-	$("#settingsForm").on('submit', function(){
-		$(".modal-bg").fadeOut();
-		$(".modal").fadeOut();
 	});
 
 });
