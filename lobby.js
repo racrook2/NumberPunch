@@ -70,6 +70,7 @@ $(document).ready(function() {
 		$('#createGame').css('display', 'none');
 		$('#refresh').css('display', 'none');
 		$('#gamesList').css('display', 'none');
+		$('#preferences').css('display', 'none');
 
 		return false;
 	});
