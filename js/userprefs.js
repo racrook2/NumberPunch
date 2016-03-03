@@ -17,16 +17,17 @@ function changeName(name) {
 
 function changeTheme(theme) {
     $('body').css("background-color", theme.bgColor);
-    $('body').css("color", theme.fontColor);
+    $('#buttons').css("color", theme.bgColor);
+    $('#buttons').css("background-color", theme.fontColor);
 };
 
 
 $(document).ready(function() {
 
-    $('#preferences').on('click', function(event) {
+    /*$('#preferences').on('click', function(event) {
         console.log("Clicked Preferences");
         $('#settings').toggle();
-    });
+    });*/
 
     //handle preference submit
     $('#settingsForm').on('submit', function(event) {
@@ -37,6 +38,7 @@ $(document).ready(function() {
             changeTheme(blackWhiteTheme);
         }
         event.preventDefault();
+        return false;
     });
 };
 
