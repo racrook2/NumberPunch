@@ -14,6 +14,9 @@ function changeName(name) {
     //change user's name
 };
 
+/* openModal
+ * fades the user preferences modal dialog into view
+ */
 function openModal() {
 	$(".modal").css("marginTop", "0");
 	$(".modal").css("marginLeft", ($(window).width() - $(".modal").width())/2);
@@ -21,11 +24,18 @@ function openModal() {
 	$(".modal").fadeIn();
 }
 
+/* closeModal
+ * fades the user preferences modal dialog out from view
+ */
 function closeModal() {
 	$(".modal-bg").fadeOut();
 	$(".modal").fadeOut();
 }
 
+/* changeButtonTheme
+ * changes visual appearance (bg color, text color) of div containing buttons
+ * @input theme the JSON theme object to change to
+ */
 function changeButtonTheme(theme) {
     $('#buttons div').css("color", theme.fontColor);
     $('#buttons div').css("background-color", theme.bgColor);
