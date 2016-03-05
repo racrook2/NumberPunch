@@ -4,24 +4,26 @@ window.onload = reset();
 // Selects or deselects a number button
 function select(id) {
 	// Get right button index
-	var light = document.getElementsByTagName("div")[id.slice(-1) - 1];
-	if (light.style.backgroundColor != "lime") {
+	var buttonWrapper = document.getElementsByClassName("button-wrapper player-button")[id.slice(-2) - 1];
+	//var light = buttonWrapper.getElementsByClassName("light")[0];
+	if (!buttonWrapper.classList.contains("selected")&&!buttonWrapper.classList.contains("used")) {
 		// If not selected, activate light
-		light.style.backgroundColor = "lime";
+		buttonWrapper.classList.add("selected");
 	}
-	else {
+	else if (buttonWrapper.classList.contains("selected")&&!buttonWrapper.classList.contains("used")) {
 		// If selected, deactivate light
-		light.style.backgroundColor = "red";
+		buttonWrapper.classList.remove("selected")
 	}
 };
 
 // Deselects all buttons and generates new number
 function reset() {
 	// Generate and display random number
-	var number = document.getElementById("randomNumber");
-    number.innerHTML = Math.floor(Math.random() * 100) + 1;;
+	//TODO: replace with call to game logic function
+	var number = document.getElementById("playerTarget");
+    number.innerHTML = Math.floor(Math.random() * 100) + 1;
 	// Deactivate all lights
-	var lights = document.getElementsByTagName("div");
+	var lights = document.getElementsByClassName("light");
 	for (i = 0; i < lights.length; i++) {
 		lights[i].style.backgroundColor = "red";
 	}
