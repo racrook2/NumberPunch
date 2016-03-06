@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<script src="database.js"></script>
+		<script>
+			var db = new DB({
+				name: "Guest",
+				stupid: true,
+				silly: false
+			})
+			document.body.appendChild(db.generateGUI());
+		</script>
+	</body>
+	
+</html>

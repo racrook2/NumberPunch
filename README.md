@@ -1,3 +1,7 @@
+NumberPunch
+===========
+Number Punch for CS 429
+
 # Simple Node Server
 
 1. Install Node.js: http://nodejs.org (add to PATH if necessary)
@@ -11,10 +15,33 @@ node_modules - libraries, auto-generated/downloaded with npm per requirements in
 public - resources/libraries for client
 app.js - entry point for node per package.json, sets up server with Express and sets default route to index.html
 
-NumberPunch
-===========
+# DB documentation
+### init
+```javascript
+var db = new DB({
+	Username: "Guest",
+	Stupid: true,
+	Silly: false
+})
+```
+Initialize the DB with default values for the fields you want to track.
 
-Number Punch for CS 429
+### getValue
+```javascript
+db.getValue("Silly");
+```
+
+### setValue
+```javascript
+db.setValue("Stupid",false);
+```
+
+### generateGUI
+```javascript
+document.body.appendChild(db.generateGUI());
+```
+generateGUI returns a DOMElement containing the preferences page. Changes to the values will automatically be stored.
+
 
 # CTW Documentation
 
@@ -22,12 +49,12 @@ Number Punch for CS 429
 
 ### Create Game
 ```javascript
-	socket.emit("creategame", {
-		title:"The Title",
-		type: 1234,
-		max: 2,
-		syncOrders: false
-	});
+socket.emit("creategame", {
+	title:"The Title",
+	type: 1234,
+	max: 2,
+	syncOrders: false
+});
 ```
 title - String, the title
 
