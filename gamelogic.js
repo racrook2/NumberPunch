@@ -112,10 +112,12 @@ GameInstance.prototype = {
     var combination = 0;
     if(this.selectedNum[userID].length > 0) {
       combination = this.selectedNum[userID].reduce( (prev, curr) => prev + curr );
+      console.log(combination);
     }
     if(tar === combination) {
       this.resetTarNum(userID);
-      for(var n in this.selectedNum[userID]) {
+      for(var i = 0; i < this.selectedNum[userID].length; i++) {
+        var n = this.selectedNum[userID][i];
         this.unavailNum[userID].push(n);
         this.availNum[userID].splice(this.availNum[userID].indexOf(n), 1);
       }

@@ -27,6 +27,7 @@ QUnit.test("Press Reset", function (assert) {
 });
 
 QUnit.test("Select Number", function (assert) {
+    console.log("starting select");
     // Attempt to select unavailable number
     gi.targetNum[1] = 17;
     gi.unavailNum[1] = [5,15];
@@ -51,11 +52,37 @@ QUnit.test("Add User", function (assert) {
     assert.ok(ret == false, "Attempt to add pre-existing user");
 
     // Add new user and assert default values
-    ret = gi.AddUser(2);
+    ret = gi.addUser(2);
     assert.ok(ret == true, "New user added to instance");
-    assert.ok(gi.targetNum[2] > 0 && gi.targetNum[2] <= (15+14+13));
+    assert.ok(gi.targetNum[2] > 0 && gi.targetNum[2] <= (15+14+13),
+        "Check for valid default target number");
     for(var i = 1; i <= 15; i++) {
-        assert.ok(this.availNum[2][i-1] == i);
+        assert.ok(gi.availNum[2][i-1] == i,
+            "Check that "+i+" is available by default");
     }
-    assert.ok(gi.userIDs.indexOf(2) >= 0);
+    assert.ok(gi.userIDs.indexOf(2) >= 0,
+        "Check that user ID now exists in the instance");
+});
+
+QUnit.test("Evaluate User", function (assert) {
+    console.log("starting eval user");
+    gi.targetNum[1] = 17;
+    gi.selectedNum[1] = [2, 15];
+
+    // Evaluate on correctly selected numbers
+    gi.evaluateUser(1);
+    assert.ok(gi.selectedNum[1].length == 0,
+        "Selected numbers is empty on correct combo");
+    assert.ok(gi.unavailNum[1].indexOf(2) >= 0 &&
+        gi.unavailNum[1].indexOf(15) >= 0,
+        "Selected numbers moved to unavailable on correct combo");
+    assert.ok(gi.availNum[1].indexOf(2) < 0 &&
+        gi.availNum[1].indexOf(15) < 0,
+        "Selected numbers are removed from available on correct combo");
+
+    gi.targetNum[1] = 2;
+    gi.selectedNum[1] = [1,3];
+    gi.evaluateUser(1);
+    assert.ok(gi.selectedNum[1].length == 0,
+        "Check that a combo larger than target resets selected numbers");
 });
