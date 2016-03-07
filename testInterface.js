@@ -154,9 +154,75 @@ QUnit.test("Test reset()", function (assert) {
     assert.ok(!playerButtonWrappers[9].classList.contains("selected"), "Tenth player button was deselected properly");
 
 
+})
+
+QUnit.test("Test Light Color Changed", function (assert) {
+
+    playerButtonWrappers = document.getElementsByClassName("button-wrapper player-button");
+    assert.equal(playerButtonWrappers.length, NUM_BUTTONS, "Loaded all player buttons");
+    firstLight = playerButtonWrappers[0].getElementsByClassName("light")[0];
+    assert.ok(firstLight, "Found light");
+    lightStyle = window.getComputedStyle(firstLight);
+    lightColor = lightStyle.getPropertyCSSValue("color");
+    select("number01");
+    lightStyle = window.getComputedStyle(firstLight);
+    newLightColor = lightStyle.getPropertyCSSValue("color");
+
+    assert.notEqual(newLightColor, lightColor, "Light Color changed");
 });
 
+QUnit.test("Test Click Event on Player Button", function (assert) {
+    playerButtonWrappers = $(".button-wrapper.player-button");
+    opponentButtonWrappers = document.getElementsByClassName("button-wrapper opponent-button");
+    assert.equal(playerButtonWrappers.length, NUM_BUTTONS, "Loaded all player buttons");
+    assert.equal(opponentButtonWrappers.length, NUM_BUTTONS, "Loaded all opponent buttons");
+    firstWrapper = $(playerButtonWrappers)[0];
+    buttonList = $(firstWrapper).find("button");
+    button = $(buttonList)[0];
+    button.click();
+    assert.ok(playerButtonWrappers[0].classList.contains("selected"), "First player button was selected properly");
+    for (i=1; i<playerButtonWrappers.length; i++){
+        assert.ok(!playerButtonWrappers[i].classList.contains("selected"), "Non-selected player button not affected");
+    }
+    for (i=0; i<opponentButtonWrappers.length; i++){
+        assert.ok(!opponentButtonWrappers[i].classList.contains("selected"), "Opponent button not affected");
+    }
 
-QUnit.test("Key Press", function (assert) {
-    assert.ok(true);
+});
+
+QUnit.test("Test Click Event on Opponent Button", function (assert) {
+    opponentButtonWrappers = $(".button-wrapper.opponent-button");
+    playerButtonWrappers = document.getElementsByClassName("button-wrapper player-button");
+    assert.equal(playerButtonWrappers.length, NUM_BUTTONS, "Loaded all player buttons");
+    assert.equal(opponentButtonWrappers.length, NUM_BUTTONS, "Loaded all opponent buttons");
+    firstWrapper = $(opponentButtonWrappers)[0];
+    buttonList = $(firstWrapper).find("button");
+    button = $(buttonList)[0];
+    button.click();
+    for (i=0; i<playerButtonWrappers.length; i++){
+        assert.ok(!playerButtonWrappers[i].classList.contains("selected"), "Non-selected player button not affected");
+    }
+    for (i=0; i<opponentButtonWrappers.length; i++){
+        assert.ok(!opponentButtonWrappers[i].classList.contains("selected"), "Opponent button not affected");
+    }
+});
+
+QUnit.test("Test '1' Key Press", function (assert) {
+    var event = jQuery.Event("keypress");
+    event.ctrlKey=false;
+    event.which= 49;
+    $("#qunit-fixture").trigger(event);
+    playerButtonWrappers = document.getElementsByClassName("button-wrapper player-button");
+    opponentButtonWrappers = document.getElementsByClassName("button-wrapper opponent-button");
+
+    assert.equal(playerButtonWrappers.length, NUM_BUTTONS, "Loaded all player buttons");
+    assert.equal(opponentButtonWrappers.length, NUM_BUTTONS, "Loaded all opponent buttons");
+
+    assert.ok(playerButtonWrappers[0].classList.contains("selected"), "First player button was selected properly");
+    for (i=1; i<playerButtonWrappers.length; i++){
+        assert.ok(!playerButtonWrappers[i].classList.contains("selected"), "Non-selected player button not affected");
+    }
+    for (i=0; i<opponentButtonWrappers.length; i++){
+        assert.ok(!opponentButtonWrappers[i].classList.contains("selected"), "Opponent button not affected");
+    }
 });
