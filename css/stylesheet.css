@@ -13,20 +13,20 @@
 	margin: 5px;
 }
 
-.button-wrapper > .light {
+.button-wrapper .light {
 	margin: 0 auto;
 	height: 15px;
 	width: 15px;
 	display: block;
 	border: 1px;
 	border-style: solid;
+	background-color: red;
+
 }
 
-.button-wrapper.selected > .light {
+.button-wrapper.selected .light {
 	background-color: lime;
 }
-
-
 
 .button-wrapper.player-button > button:active {
 	background-image: url(../media/button-pressed.png);

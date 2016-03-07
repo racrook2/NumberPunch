@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>QUnit Tests for Interface</title>
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.21.0.css">
 </head>
 <body>
-
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/qunit/qunit-1.21.0.js"></script>
+<script src="testInterface.js"></script>
+<script>
+    QUnit.config.autostart = false;
+    QUnit.start();
+</script>
 </body>
 </html>
