@@ -18,18 +18,18 @@ function changeName(name) {
  * fades the user preferences modal dialog into view
  */
 function openModal() {
-	$(".modal").css("marginTop", "0");
-	$(".modal").css("marginLeft", ($(window).width() - $(".modal").width())/2);
-	$(".modal-bg").fadeIn();
-	$(".modal").fadeIn();
+    $(".modal").css("marginTop", "0");
+    $(".modal").css("marginLeft", ($(window).width() - $(".modal").width())/2);
+    $(".modal-bg").fadeIn();
+    $(".modal").fadeIn();
 }
 
 /* closeModal
  * fades the user preferences modal dialog out from view
  */
 function closeModal() {
-	$(".modal-bg").fadeOut();
-	$(".modal").fadeOut();
+    $(".modal-bg").fadeOut();
+    $(".modal").fadeOut();
 }
 
 /* changeButtonTheme
@@ -47,11 +47,11 @@ function applySettings(settings) {
 }
 
 $(document).ready(function() {
-	
-	//handle clicking preferences button
+    
+    //handle clicking preferences button
     $('#preferences').on('click', function(event) {
         console.log("Clicked Preferences");
-		openModal();
+        openModal();
     });
 
     //handle preference submit
@@ -62,14 +62,14 @@ $(document).ready(function() {
         } else if (checked == 'blackWhite') {
             changeButtonTheme(blackWhiteTheme);
         }
-		closeModal();
+        closeModal();
         event.preventDefault();
     });
-	
-	//handle clicking 'x' in modal to exit
-	$(".close-modal").on('click', function(){
-		closeModal();
-	});
+    
+    //handle clicking 'x' in modal to exit
+    $(".close-modal").on('click', function(){
+        closeModal();
+    });
 });
 
 
