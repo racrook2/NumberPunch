@@ -1,5 +1,5 @@
 function DB(defaultValues){
-	var data = defaultValues;
+	var data = JSON.parse(JSON.stringify(defaultValues));
 	var _this = this;
 	if (typeof data != "object")
 		data = {};
@@ -22,6 +22,10 @@ function DB(defaultValues){
 			gui.appendChild(generateField(key));
 		}
 		return gui;
+	}
+	_this.clear = function(){
+		data = JSON.parse(JSON.stringify(defaultValues));
+		localStorage.clear();
 	}
 	function generateField(key){
 		var div = document.createElement("div");
