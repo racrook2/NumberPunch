@@ -13,8 +13,9 @@ $(document).ready(function() {
 	Multiplayer.refreshGameList();
 
 	//Hide leave game and game upon loading as they are not needed until a game is starting.
-	$('#leaveGame').css('display', 'none'); 
-	$('#gameSpace').css('display', 'none');
+	$('#leaveGame').css('display', 'none');
+	$('#gameCanvas').css('display', 'none');
+
 
 	//Refresh when refresh button is clicked.
 	$('#refresh').on('click', function() {
@@ -33,6 +34,7 @@ $(document).ready(function() {
 		$('#createGame').css('display', 'none');
 		$('#refresh').css('display', 'none');
 		$('#gamesList').css('display', 'none');
+		$('#preferences').css('display', 'none');
 
 		$('#gameSpace').load('./interface.html');
 
@@ -49,6 +51,7 @@ $(document).ready(function() {
 		$('#createGame').css('display', 'inline-block');
 		$('#refresh').css('display', 'inline-block');
 		$('#gamesList').css('display', 'block');
+		$('#preferences').css('display', 'inline-block');
 
 		return false;
 	});
@@ -64,10 +67,10 @@ $(document).ready(function() {
 		$('#createGame').css('display', 'none');
 		$('#refresh').css('display', 'none');
 		$('#gamesList').css('display', 'none');
+		$('#preferences').css('display', 'none');
 
 		$('#gameSpace').load('./interface.html');
 		return false;
 	});
 
 });
-

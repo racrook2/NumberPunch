@@ -1,23 +1,36 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 		<script src="http://ctw.firecaster.com/socket.io/socket.io.js"></script>
-		<script src="multiplayer.js"></script>
-		<script src="lobby.js"></script>
-
+		<script src="js/multiplayer.js"></script>
+		<script src="js/userprefs.js"></script>
+		<script src="js/lobby.js"></script>
 	</head>
 	<body>
-
 		<h1>Number Punch</h1>
 		<div id="buttons">
 			<div id="createGame">Create Game</div>
 			<div id="refresh">Refresh</div>
+			<div id="preferences">Preferences</div>
 			<div id="leaveGame">Leave Game</div>
 		</div>
 		<div id="gamesList"></div>
 		<div id="gameSpace"></div>
+		<canvas id="gameCanvas" height=400 width=800 ></canvas>
+		<div class="modal-bg"></div>
+		<div class="modal">
+			<a class="close-modal">&#10005;</a>
+			<div id="settings">
+				<form id="settingsForm">
+					Button color:<br>
+					<input type="radio" name="theme" value="blueOrange" checked> Blue/Orange<br>
+					<input type="radio" name="theme" value="blackWhite"> Black/White<br>
+					<input type="submit" value="Save">
+				</form>
+			</div>
+		</div>
 	</body>
 </html>
 

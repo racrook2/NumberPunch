@@ -1,0 +1,72 @@
+#gamesList {
+	border-style: solid;
+	border-width: 3px;
+}
+
+#buttons {
+	width: 100%
+}
+
+#buttons > div {
+	display: inline-block;
+	padding: 5px;
+	background-color: orange;
+	color: blue;
+}
+
+#buttons > div:hover {
+	cursor: pointer;
+}
+
+#createGame {
+	
+}
+
+#leaveGame, #refresh {
+	
+}
+
+#gameCanvas {
+	
+}
+
+.game:hover {
+	cursor: pointer;
+}
+
+.modal-bg {
+	background: black;
+	opacity: 0.7;
+	filter: alpha(opacity=70);
+	display: none;
+	position: fixed;	
+	height: 100%;
+	width: 100%;
+	z-index: 1;	
+	left: 0;
+	top: 0;		
+}
+
+.modal {
+	background: white;
+	display: none;
+	position: fixed;
+	padding: 10px;
+	border-radius: 6px;
+	width: auto;
+	height: auto;
+	z-index: 2;
+}
+
+.modal a {			
+	float: right;	
+}
+
+#settings {
+	padding: 20px;
+}
+
+#gameSpace {
+	border-style: solid;
+	border-width: 1px;
+}
