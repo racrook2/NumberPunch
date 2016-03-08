@@ -1,27 +1,107 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 		<link rel="stylesheet" href="css/stylesheet.css">
 		<title>Number Punch</title>
 	</head>
 	
 	<body>
-		<button onclick="select('number1')"><var id="number1">1</var></button>
-		<div class="light"></div>
-		<br>
-		<button onclick="select('number2')"><var id="number2">2</var></button>
-		<div class="light"></div>
-		<br>
-		<button onclick="select('number3')"><var id="number3">3</var></button>
-		<div class="light"></div>
-		<button onclick="reset()" id="center-button">X</button>
-		<var id="randomNumber"></var>
-		<br>
-		<button onclick="select('number4')"><var id="number4">4</var></button>
-		<div class="light"></div>
-		<br>
-		<button onclick="select('number5')"><var id="number5">5</var></button>
-		<div class="light"></div>
+		<div class="button-block">
+			<div class="button-wrapper opponent-button" >
+				<button disabled>1</button>
+				<div class="light"></div>
+			</div>
+			<div class="button-wrapper opponent-button">
+				<button disabled>2</button>
+				<div class="light"></div>
+			</div>
+			<div class="button-wrapper opponent-button">
+				<button disabled>3</button>
+				<div class="light"></div>
+			</div>
+			<div class="button-wrapper opponent-button">
+				<button disabled>4</button>
+				<div class="light"></div>
+			</div>
+			<div class="button-wrapper opponent-button">
+				<button disabled>5</button>
+				<div class="light"></div>
+			</div>
+			<div class="button-wrapper opponent-button">
+				<button disabled>6</button>
+				<div class="light"></div>
+			</div>
+			<div class="button-wrapper opponent-button">
+				<button disabled>7</button>
+				<div class="light"></div>
+			</div>
+			<div class="button-wrapper opponent-button">
+				<button disabled>8</button>
+				<div class="light"></div>
+			</div>
+			<div class="button-wrapper opponent-button">
+				<button disabled>9</button>
+				<div class="light"></div>
+			</div>
+			<div class="button-wrapper opponent-button">
+				<button disabled>10</button>
+				<div class="light"></div>
+			</div>
+		</div>
+
+		<div class="button-block">
+			<button class="center-button opponent-button" disabled>X</button>
+			<var id="opponentTarget"></var>
+		</div>
+
+		<div class="button-block">
+			<button onclick="reset()" class="center-button player-button">X</button>
+			<var id="playerTarget"></var>
+		</div>
+
+		<div class="button-block">
+			<div class="button-wrapper player-button" id="wrapper1" >
+				<div class="light"></div>
+				<button onclick="select('number01')"><var id="number01">1</var></button>
+			</div>
+			<div class="button-wrapper player-button">
+				<div class="light"></div>
+				<button onclick="select('number02')"><var id="number02">2</var></button>
+			</div>
+			<div class="button-wrapper player-button">
+				<div class="light"></div>
+				<button onclick="select('number03')"><var id="number03">3</var></button>
+			</div>
+			<div class="button-wrapper player-button">
+				<div class="light"></div>
+				<button onclick="select('number04')"><var id="number04">4</var></button>
+			</div>
+			<div class="button-wrapper player-button">
+				<div class="light"></div>
+				<button onclick="select('number05')"><var id="number05">5</var></button>
+			</div>
+			<div class="button-wrapper player-button">
+				<div class="light"></div>
+				<button onclick="select('number06')"><var id="number06">6</var></button>
+			</div>
+			<div class="button-wrapper player-button">
+				<div class="light"></div>
+				<button onclick="select('number07')"><var id="number07">7</var></button>
+			</div>
+			<div class="button-wrapper player-button">
+				<div class="light"></div>
+				<button onclick="select('number08')"><var id="number08">8</var></button>
+			</div>
+			<div class="button-wrapper player-button">
+				<div class="light"></div>
+				<button onclick="select('number09')"><var id="number09">9</var></button>
+			</div>
+			<div class="button-wrapper player-button">
+				<div class="light"></div>
+				<button onclick="select('number10')"><var id="number10">10</var></button>
+			</div>
+		</div>
 	</body>
 	
 	<script src="js/script.js"></script>
