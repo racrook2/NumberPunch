@@ -34,7 +34,7 @@ var Multiplayer;
     });
     socket.on('start', function (data) {
         console.log("Game is starting ", data);
-        GameInstance.handleStartGame(data);
+        GameInstance.startGameHandle(data);
     });
     socket.on('players', function (data) {
         console.log("Players:", data);
@@ -56,20 +56,15 @@ var Multiplayer;
     }
     function handleOrder(data) {
       var orderType = data['type'];
-      var playerID = data['id'];
+      var playerID = data['playerid'];
       switch(orderType) {
         case "selectnum":
           var num = data['num'];
-          GameInstance.selectNum(playerID, num);
+          GameInstance.selectNumHandle(playerID, num);
           break;
 
         case "resettar":
-          GameInstance.resetTarNum(playerID);
-          break;
-
-        case "declarewinner":
-          var winner = data['winner'];
-          // End game and declare winner actions
+          GameInstance.resetTarNumHandle(playerID);
           break;
 
         default:

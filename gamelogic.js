@@ -4,24 +4,19 @@
  *  This file defines data structure and logic behind
  *  an instance of the Number Punch game
  */
-var GameInstance;
-
 POOL_NUMBER_COUNT = 15;
-
-/*function GameInstance(e) {
-  for(var i in e) {
-    this[i] = e[i];
-  }
-  instances.push(this);
-}*/
 
 /**
  * Data structure defining a game instance
  */
-(function() {
+
+var createGameInstance = function() {
 
   var myID;
   var seed;
+
+  var inProgress = false;
+  var winner = null;
 
   // List of users in the game instance by ID
   var userIDs = [];
@@ -38,31 +33,42 @@ POOL_NUMBER_COUNT = 15;
   var selectedNum = {};
 
   /** 
-  * handleStartGame
+  * startGameHandle
   *
   * @param data (json) : sent from a 'start' 
   * socket.on to initialize game instance
   */
-  var handleStartGame = function(data) {
+  var startGameHandle = function(data) {
     this.myID = data['myID'];
     this.seed = data['seed'];
-    this.userIDs = data['allIDs'];
-    for(var i = 0; i < this.userIDs.length; i++) {
-      this.addUser(this.userIDs[i]);
+    for(var i = 0; i < data['allIDs'].length; i++) {
+      this.addUser(data['allIDs'][i]);
     }
+    this.inProgress = true;
+    this.winner = null;
   };
 
-  var resetTarNum = function(userID) {
+  var resetTarNumHandle = function(userID) {
     if(!userID) return false;
 
     this.targetNum[userID] = Math.floor(Math.random() * POOL_NUMBER_COUNT) + 
       Math.floor(Math.random() * (POOL_NUMBER_COUNT-1)) +
       Math.floor(Math.random() * (POOL_NUMBER_COUNT-2)) + 1;
 
-    this.selectNum[userID] = [];
+    this.selectedNum[userID] = [];
 
     return true;
   };
+
+
+  var resetTarNum = function() {
+    if(!this.inProgress) return;
+
+    Multiplayer.sendOrder({
+      "type": "resettar",
+      "playerid": this.myID
+    });
+  }
 
   /**
    * Add a number to a user's selected numbers array
@@ -79,6 +85,8 @@ POOL_NUMBER_COUNT = 15;
       return false;
     }
 
+    console.log(this.selectedNum);
+    console.log(this.userIDs);
     var i = this.selectedNum[userID].indexOf(num);
 
     // If num is in the array, then remove it
@@ -93,12 +101,14 @@ POOL_NUMBER_COUNT = 15;
     return true;
   };
 
-  var selectNum = function(userID, num) {
+  var selectNum = function(num) {
+    if(!this.inProgress) return;
+
     Multiplayer.sendOrder({
       'type': 'selectnum',
       'num': num,
-      'playerid': userID
-    })
+      'playerid': this.myID
+    });
   }
 
   /**
@@ -113,9 +123,10 @@ POOL_NUMBER_COUNT = 15;
       Math.floor(Math.random() * (POOL_NUMBER_COUNT-1)) +
       Math.floor(Math.random() * (POOL_NUMBER_COUNT-2)) + 1;
 
-      this.availNum[userID] = [];
-      this.unavailNum[userID] = [];
-      this.selectedNum[userID] = [];
+      this.availNum[userID] = new Array();
+      this.unavailNum[userID] = new Array();
+      this.selectedNum[userID] = new Array();
+      console.log("in addUser("+userID+"), ", this.selectedNum);
       // Initialize the user's available numbers
       for(var i = 1; i <= POOL_NUMBER_COUNT; i++) {
         this.availNum[userID].push(i);
@@ -137,10 +148,9 @@ POOL_NUMBER_COUNT = 15;
     var combination = 0;
     if(this.selectedNum[userID].length > 0) {
       combination = this.selectedNum[userID].reduce( (prev, curr) => prev + curr );
-      console.log(combination);
     }
     if(tar === combination) {
-      this.resetTarNum(userID);
+      this.resetTarNumHandle(userID);
       for(var i = 0; i < this.selectedNum[userID].length; i++) {
         var n = this.selectedNum[userID][i];
         this.unavailNum[userID].push(n);
@@ -163,26 +173,30 @@ POOL_NUMBER_COUNT = 15;
    * @param userID (int)
    */
   var declareWinner = function(userID) {
-    Multiplayer.sendOrder({
-      "type": "declarewinner", 
-      "winner": userID
-    });
+    this.inProgress = false;
+    this.winner = userID;
   };
 
-  GameInstance = {
+  var anInstance = {
     myID: myID,
     seed: seed,
+    inProgress: inProgress,
+    winner: winner,
     userIDs: userIDs,
     targetNum: targetNum,
     availNum: availNum,
     unavailNum: unavailNum,
     selectedNum: selectedNum,
-    handleStartGame: handleStartGame,
-    handleOrder: handleOrder,
+    startGameHandle: startGameHandle,
+    resetTarNumHandle: resetTarNumHandle,
     resetTarNum: resetTarNum,
     selectNum: selectNum,
+    selectNumHandle, selectNumHandle,
     addUser: addUser,
-    evaluateUser: evaluateUser,
-    declareWinner: declareWinner
+    evaluateUser: evaluateUser
   };
-})();
+
+  return anInstance;
+};
+
+var GameInstance = createGameInstance();
