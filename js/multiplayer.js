@@ -24,6 +24,7 @@ var Multiplayer;
     });
     socket.on('order', function (data) {
         console.log("Got order", data);
+        GameInstance.handleOrder(data);
     });
     socket.on('orders', function (data) {
         console.log("Got orders", data);
@@ -32,7 +33,8 @@ var Multiplayer;
         console.log("youjoined");
     });
     socket.on('start', function (data) {
-        console.log("Game is starting", data);
+        console.log("Game is starting ", data);
+        GameInstance.handleStartGame(data);
     });
     socket.on('players', function (data) {
         console.log("Players:", data);
@@ -52,6 +54,29 @@ var Multiplayer;
     function startGame() {
         socket.emit("startgame");
     }
+    function handleOrder(data) {
+      var orderType = data['type'];
+      var playerID = data['id'];
+      switch(orderType) {
+        case "selectnum":
+          var num = data['num'];
+          GameInstance.selectNum(playerID, num);
+          break;
+
+        case "resettar":
+          GameInstance.resetTarNum(playerID);
+          break;
+
+        case "declarewinner":
+          var winner = data['winner'];
+          // End game and declare winner actions
+          break;
+
+        default:
+          // Do nothing
+          break;
+    }
+  };
     Multiplayer = {
         socket: socket,
         createGame: createGame,

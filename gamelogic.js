@@ -4,42 +4,57 @@
  *  This file defines data structure and logic behind
  *  an instance of the Number Punch game
  */
-
-var instances = [];
+var GameInstance;
 
 POOL_NUMBER_COUNT = 15;
 
-function GameInstance(e) {
+/*function GameInstance(e) {
   for(var i in e) {
     this[i] = e[i];
   }
   instances.push(this);
-}
+}*/
 
 /**
  * Data structure defining a game instance
  */
-GameInstance.prototype = {
+(function() {
+
+  var myID;
+  var seed;
+
   // List of users in the game instance by ID
-  userIDs: [],
+  var userIDs = [];
 
   // Mappings between user id's and their target number
-  targetNum: {},
+  var targetNum = {};
 
   // Mappings between user id's 
   // and a list of their avail. and unvail. numbers
-  availNum: {},
-  unavailNum: {},
+  var availNum = {};
+  var unavailNum = {};
 
   // Mappings between user id's and their selected numbers
-  selectedNum: {},
+  var selectedNum = {};
 
   /** 
-  * Reset a target number for a user
+  * handleStartGame
   *
-  * @param userID (int)
+  * @param data (json) : sent from a 'start' 
+  * socket.on to initialize game instance
   */
-  resetTarNum: function(userID) {
+  var handleStartGame = function(data) {
+    this.myID = data['myID'];
+    this.seed = data['seed'];
+    this.userIDs = data['allIDs'];
+    for(var i = 0; i < this.userIDs.length; i++) {
+      this.addUser(this.userIDs[i]);
+    }
+  };
+
+  var resetTarNum = function(userID) {
+    if(!userID) return false;
+
     this.targetNum[userID] = Math.floor(Math.random() * POOL_NUMBER_COUNT) + 
       Math.floor(Math.random() * (POOL_NUMBER_COUNT-1)) +
       Math.floor(Math.random() * (POOL_NUMBER_COUNT-2)) + 1;
@@ -47,7 +62,7 @@ GameInstance.prototype = {
     this.selectNum[userID] = [];
 
     return true;
-  },
+  };
 
   /**
    * Add a number to a user's selected numbers array
@@ -56,7 +71,9 @@ GameInstance.prototype = {
    * @param userID (int)
    * @param num (int) 1<=num<=POOL_NUMBER_COUNT
    */
-  selectNum: function(userID, num) {
+  var selectNumHandle = function(userID, num) {
+    if(!userID) return false;
+
     // Only accept available numbers
     if(this.unavailNum[userID].indexOf(num) >= 0) {
       return false;
@@ -74,14 +91,22 @@ GameInstance.prototype = {
     // Check for combination and other conditions
     this.evaluateUser(userID);
     return true;
-  },
+  };
+
+  var selectNum = function(userID, num) {
+    Multiplayer.sendOrder({
+      'type': 'selectnum',
+      'num': num,
+      'playerid': userID
+    })
+  }
 
   /**
    *  Adds a user to this game instance and initializes their values/arrays
    *
    *  @param userID (int)
    */
-  addUser: function(userID) {
+  var addUser = function(userID) {
     if(this.userIDs.indexOf(userID) < 0) {
       this.userIDs.push(userID);
       this.targetNum[userID] = Math.floor(Math.random() * POOL_NUMBER_COUNT) + 
@@ -99,7 +124,7 @@ GameInstance.prototype = {
     } else {
       return false;
     }
-  },
+  };
 
   /**
    * Evaluates the current selected numbers to see if they match target
@@ -107,7 +132,7 @@ GameInstance.prototype = {
    *
    * @param userID (int)
    */
-  evaluateUser: function(userID) {
+  var evaluateUser = function(userID) {
     var tar = this.targetNum[userID];
     var combination = 0;
     if(this.selectedNum[userID].length > 0) {
@@ -130,14 +155,34 @@ GameInstance.prototype = {
       this.declareWinner(userID);
     }
     return true;
-  },
+  };
 
   /**
    * Called when a player wins, emits winner data containing winner's user ID
    *
    * @param userID (int)
    */
-  declareWinner: function(userID) {
-    //socket.emit('winner', {"winner": userID});
-  }
-}
+  var declareWinner = function(userID) {
+    Multiplayer.sendOrder({
+      "type": "declarewinner", 
+      "winner": userID
+    });
+  };
+
+  GameInstance = {
+    myID: myID,
+    seed: seed,
+    userIDs: userIDs,
+    targetNum: targetNum,
+    availNum: availNum,
+    unavailNum: unavailNum,
+    selectedNum: selectedNum,
+    handleStartGame: handleStartGame,
+    handleOrder: handleOrder,
+    resetTarNum: resetTarNum,
+    selectNum: selectNum,
+    addUser: addUser,
+    evaluateUser: evaluateUser,
+    declareWinner: declareWinner
+  };
+})();
