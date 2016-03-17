@@ -33,6 +33,7 @@ var Multiplayer;
     });
     socket.on('start', function (data) {
         console.log("Game is starting", data);
+        Multiplayer.sendOrder({x:24});
     });
     socket.on('players', function (data) {
         console.log("Players:", data);

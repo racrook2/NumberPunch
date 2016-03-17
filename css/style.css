@@ -1,3 +1,8 @@
+body, html{
+    margin:0;
+    padding:0;
+    background:#333;
+}
 #gamesList {
 	border-style: solid;
 	border-width: 3px;
@@ -10,12 +15,23 @@
 #buttons > div {
 	display: inline-block;
 	padding: 5px;
-	background-color: orange;
-	color: blue;
+    font-family: sans-serif;
+    color: #FFF;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 0px 0px 10px #000;
+    border: solid #FFF;
+    border-radius: 15px 15px 0px 0px;
+	cursor: pointer;
 }
 
 #buttons > div:hover {
-	cursor: pointer;
+    background-color:#666;
+    color:#99F;
+}
+#buttons > div:active {
+    border: solid #99F;
 }
 
 #createGame {
@@ -69,4 +85,14 @@
 #gameSpace {
 	border-style: solid;
 	border-width: 1px;
+}
+h1{
+    font-family: sans-serif;
+    color:#FFF;
+    text-shadow:0px 0px 15px #000;
+    text-align: center;
+    font-size: 60px;
+}
+.hotkey{
+    color:yellow;
 }
