@@ -49,7 +49,9 @@ function changeButtonTheme(theme) {
 };
 
 function changeFontSize(font_size) {
-    $('body').css("font-size", font_size);
+    $('#buttons').css("font-size", font_size);
+    $('#gamesList').css("font-size", font_size);
+    $('#gameSpace').css("font-size", font_size);
 }
 
 function changeBackgroundColor(color) {
@@ -87,16 +89,16 @@ $(document).ready(function() {
         }
     	var checkedFont = $('input[name=font]:radio:checked').val();
     	if(checkedFont == 'largeFont') {
-    		
+    		changeFontSize('x-large');
     	} else if (checkedFont == 'mediumFont'){
-    		
+    		changeFontSize('medium');
     	} else if (checkedFont == 'smallFont') {
-    		
+    		changeFontSize('small');
     	}
     	var checkedColor = $('input[name=bcolor]:radio:checked').val();
     	console.log(checkedColor);
         changeBackgroundColor(checkedColor);
-        
+
         closeModal();
         event.preventDefault();
     });
