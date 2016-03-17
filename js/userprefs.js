@@ -56,12 +56,31 @@ $(document).ready(function() {
 
     //handle preference submit
     $('#settingsForm').on('submit', function(event) {
-        var checked = $('input[type=radio]:checked').val();
-        if(checked == 'blueOrange') {
+        var checkedTheme = $('input[name=theme]:radio:checked').val();
+        if(checkedTheme == 'blueOrange') {
             changeButtonTheme(blueOrangeTheme);
-        } else if (checked == 'blackWhite') {
+        } else if (checkedTheme == 'blackWhite') {
             changeButtonTheme(blackWhiteTheme);
         }
+	var checkedFont = $('input[name=font]:radio:checked').val();
+	if(checkedFont == 'largeFont') {
+		
+	} else if (checkedFont == 'mediumFont'){
+		
+	} else if (checkedFont == 'smallFont') {
+		
+	}
+	var checkedColor = $('input[name=bcolor]:radio:checked').val();
+	console.log(checkedColor);
+	if(checkedColor == 'white'){
+		
+	} else if(checkedColor == 'red'){
+		
+	} else if(checkedColor == 'blue'){
+		
+	} else if(checkedColor == 'green'){
+		
+	}
         closeModal();
         event.preventDefault();
     });
