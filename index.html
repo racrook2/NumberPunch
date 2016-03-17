@@ -5,6 +5,7 @@
 		<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 		<script src="http://ctw.firecaster.com/socket.io/socket.io.js"></script>
 		<script src="js/multiplayer.js"></script>
+		<script src="database.js"></script>	
 		<script src="js/userprefs.js"></script>
 		<script src="js/lobby.js"></script>
 	</head>
@@ -23,6 +24,7 @@
 		<div class="modal">
 			<a class="close-modal">&#10005;</a>
 			<div id="settings">
+				<!--<script>$('#settings').append(db.generateGUI());</script>-->
 				<form id="settingsForm">
 					Button color:<br>
 					<input type="radio" name="theme" value="blueOrange" checked> Blue/Orange<br>
@@ -34,7 +36,7 @@
 					Site Background:<br>
 					<input type="radio" name="bcolor" value="white" checked> White<br>
 					<input type="radio" name="bcolor" value="red"> Red<br>
-					<input type="radio" name=""bcolor" value="blue"> Blue<br>
+					<input type="radio" name="bcolor" value="blue"> Blue<br>
 					<input type="radio" name="bcolor" value="green"> Green<br>
 					<input type="submit" value="Save">
 				</form>

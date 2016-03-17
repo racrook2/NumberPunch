@@ -1,3 +1,10 @@
+var db = new DB({
+    Username: "Guest",
+    blueOrange: true,
+    blackWhite: false
+})
+
+
 //themes
 var blueOrangeTheme = {
     name : 'blueOrange',
@@ -41,6 +48,13 @@ function changeButtonTheme(theme) {
     $('#buttons div').css("background-color", theme.bgColor);
 };
 
+function changeFontSize(font_size) {
+    $('body').css("font-size", font_size);
+}
+
+function changeBackgroundColor(color) {
+    $('body').css("background-color", color);
+}
 
 function applySettings(settings) {
     changeButtonTheme(settings.buttonTheme);
@@ -62,25 +76,25 @@ $(document).ready(function() {
         } else if (checkedTheme == 'blackWhite') {
             changeButtonTheme(blackWhiteTheme);
         }
-	var checkedFont = $('input[name=font]:radio:checked').val();
-	if(checkedFont == 'largeFont') {
-		
-	} else if (checkedFont == 'mediumFont'){
-		
-	} else if (checkedFont == 'smallFont') {
-		
-	}
-	var checkedColor = $('input[name=bcolor]:radio:checked').val();
-	console.log(checkedColor);
-	if(checkedColor == 'white'){
-		
-	} else if(checkedColor == 'red'){
-		
-	} else if(checkedColor == 'blue'){
-		
-	} else if(checkedColor == 'green'){
-		
-	}
+    	var checkedFont = $('input[name=font]:radio:checked').val();
+    	if(checkedFont == 'largeFont') {
+    		
+    	} else if (checkedFont == 'mediumFont'){
+    		
+    	} else if (checkedFont == 'smallFont') {
+    		
+    	}
+    	var checkedColor = $('input[name=bcolor]:radio:checked').val();
+    	console.log(checkedColor);
+    	if(checkedColor == 'white'){
+    		changeBackgroundColor('WHITE');
+    	} else if(checkedColor == 'red'){
+    		changeBackgroundColor('RED');
+    	} else if(checkedColor == 'blue'){
+    		changeBackgroundColor('BLUE');
+    	} else if(checkedColor == 'green'){
+    		changeBackgroundColor('GREEN');
+    	}
         closeModal();
         event.preventDefault();
     });
@@ -89,6 +103,7 @@ $(document).ready(function() {
     $(".close-modal").on('click', function(){
         closeModal();
     });
+
 });
 
 
