@@ -56,16 +56,12 @@ var GameInterface;
 			wrappers = document.getElementsByClassName("button-wrapper opponent-button selected");
 		}
 
-		console.log(wrappers);
-
 		for(var i = 0; i < wrappers.length; i++) {
 			wrappers[i].classList.add("unavail");
-			//wrappers[i].classList.add("unavail");
 		}
-		
+
 		for(var i = 0; i < wrappers.length; i++) {
 			wrappers[i].classList.remove("selected");
-			//wrappers[i].classList.add("unavail");
 		}
 	};
 
