@@ -28,6 +28,10 @@
 	background-color: lime;
 }
 
+.button-wrapper.unavail .light {
+	background-color: gray;
+}
+
 .button-wrapper.player-button > button:active {
 	background-image: url(../media/button-pressed.png);
 }

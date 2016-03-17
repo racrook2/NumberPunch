@@ -56,53 +56,54 @@
 		</div>
 
 		<div class="button-block">
-			<button onclick="reset()" class="center-button player-button">X</button>
+			<button onclick="GameInstance.resetTarNum()" class="center-button player-button">X</button>
 			<var id="playerTarget"></var>
 		</div>
 
 		<div class="button-block">
 			<div class="button-wrapper player-button" id="wrapper1" >
 				<div class="light"></div>
-				<button onclick="select('number01')"><var id="number01">1</var></button>
+				<button onclick="GameInstance.selectNum(1)"><var id="number01">1</var></button>
 			</div>
 			<div class="button-wrapper player-button">
 				<div class="light"></div>
-				<button onclick="select('number02')"><var id="number02">2</var></button>
+				<button onclick="GameInstance.selectNum(2)"><var id="number02">2</var></button>
 			</div>
 			<div class="button-wrapper player-button">
 				<div class="light"></div>
-				<button onclick="select('number03')"><var id="number03">3</var></button>
+				<button onclick="GameInstance.selectNum(3)"><var id="number03">3</var></button>
 			</div>
 			<div class="button-wrapper player-button">
 				<div class="light"></div>
-				<button onclick="select('number04')"><var id="number04">4</var></button>
+				<button onclick="GameInstance.selectNum(4)"><var id="number04">4</var></button>
 			</div>
 			<div class="button-wrapper player-button">
 				<div class="light"></div>
-				<button onclick="select('number05')"><var id="number05">5</var></button>
+				<button onclick="GameInstance.selectNum(5)"><var id="number05">5</var></button>
 			</div>
 			<div class="button-wrapper player-button">
 				<div class="light"></div>
-				<button onclick="select('number06')"><var id="number06">6</var></button>
+				<button onclick="GameInstance.selectNum(6)"><var id="number06">6</var></button>
 			</div>
 			<div class="button-wrapper player-button">
 				<div class="light"></div>
-				<button onclick="select('number07')"><var id="number07">7</var></button>
+				<button onclick="GameInstance.selectNum(7)"><var id="number07">7</var></button>
 			</div>
 			<div class="button-wrapper player-button">
 				<div class="light"></div>
-				<button onclick="select('number08')"><var id="number08">8</var></button>
+				<button onclick="GameInstance.selectNum(8)"><var id="number08">8</var></button>
 			</div>
 			<div class="button-wrapper player-button">
 				<div class="light"></div>
-				<button onclick="select('number09')"><var id="number09">9</var></button>
+				<button onclick="GameInstance.selectNum(9)"><var id="number09">9</var></button>
 			</div>
 			<div class="button-wrapper player-button">
 				<div class="light"></div>
-				<button onclick="select('number10')"><var id="number10">10</var></button>
+				<button onclick="GameInstance.selectNum(10)"><var id="number10">10</var></button>
 			</div>
 		</div>
 	</body>
 	
 	<script src="js/script.js"></script>
+	<script src="gamelogic.js"></script>
 </html> 

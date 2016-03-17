@@ -56,17 +56,11 @@ Game.prototype = {
     start: function () {
         this.started = true;
         var seed = Math.random();
-        names = [];
-        for(var i in this.players) {
-            names.push(this.players[i].name);
-        }
         for (var i = 0; i < this.players.length; i++) {
             this.players[i].emit('start', {
                 'pc': this.players.length,
                 'me': i,
-                'seed': seed,
-                'myID': this.players[i].name,
-                'allIDs': names
+                'seed': seed
             });
         }
 

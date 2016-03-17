@@ -2,6 +2,7 @@ var Multiplayer;
 (function () {
     var GAMETYPE = 5023;
     var socket = io.connect("ctw.firecaster.com:80");
+    var players = new Array();
     function createGame() {
         socket.emit("creategame", {
             title: "A game",
@@ -24,7 +25,7 @@ var Multiplayer;
     });
     socket.on('order', function (data) {
         console.log("Got order", data);
-        GameInstance.handleOrder(data);
+        handleOrder(data);
     });
     socket.on('orders', function (data) {
         console.log("Got orders", data);
@@ -34,10 +35,11 @@ var Multiplayer;
     });
     socket.on('start', function (data) {
         console.log("Game is starting ", data);
-        GameInstance.startGameHandle(data);
+        GameInstance.startGameHandle(data, Multiplayer.players);
     });
     socket.on('players', function (data) {
         console.log("Players:", data);
+        Multiplayer.players = data;
     });
     function joinGame(id) {
         socket.emit('joingame', id);
@@ -57,14 +59,32 @@ var Multiplayer;
     function handleOrder(data) {
       var orderType = data['type'];
       var playerID = data['playerid'];
+      var myID = GameInstance.myID;
+      var isMine = (myID == playerID);
       switch(orderType) {
         case "selectnum":
           var num = data['num'];
-          GameInstance.selectNumHandle(playerID, num);
+          var retCode = GameInstance.selectNumHandle(playerID, num);
+
+          if(retCode == 1) {
+            GameInterface.deselect(num, isMine);
+          } else if(retCode == 2) {
+            GameInterface.select(num, isMine);
+          } else if(retCode == 3) {
+            GameInterface.select(num, isMine);
+            GameInterface.makeUnavail(isMine);
+            var newTar = GameInstance.targetNum[playerID];
+            GameInterface.reset(newTar, isMine);
+          } else if(retCode == 4) {
+            var newTar = GameInstance.targetNum[playerID];
+            GameInterface.reset(newTar, isMine);
+          }
           break;
 
         case "resettar":
           GameInstance.resetTarNumHandle(playerID);
+          var tarNum = GameInstance.targetNum[playerID];
+          GameInterface.reset(tarNum, isMine);
           break;
 
         default:
@@ -75,6 +95,7 @@ var Multiplayer;
     Multiplayer = {
         socket: socket,
         createGame: createGame,
+        players: players,
         joinGame: joinGame,
         sendOrder: sendOrder,
         refreshGameList: refreshGameList,

@@ -4,13 +4,13 @@
  *  This file defines data structure and logic behind
  *  an instance of the Number Punch game
  */
-POOL_NUMBER_COUNT = 15;
+POOL_NUMBER_COUNT = 10;
 
 /**
  * Data structure defining a game instance
  */
-
-var createGameInstance = function() {
+var GameInstance;
+(function() {
 
   var myID;
   var seed;
@@ -38,11 +38,20 @@ var createGameInstance = function() {
   * @param data (json) : sent from a 'start' 
   * socket.on to initialize game instance
   */
-  var startGameHandle = function(data) {
-    this.myID = data['myID'];
+  var startGameHandle = function(data, players) {
+    this.myID = players[data['me']];
     this.seed = data['seed'];
-    for(var i = 0; i < data['allIDs'].length; i++) {
-      this.addUser(data['allIDs'][i]);
+
+    // Empty fields for new game
+    this.userIDs = [];
+    this.targetNum = {};
+    this.availNum = {};
+    this.unavailNum = {};
+    this.selectedNum = {};
+
+    // Respective player fields correct re-initialized in addUser calls
+    for(var i = 0; i < players.length; i++) {
+      this.addUser(players[i]);
     }
     this.inProgress = true;
     this.winner = null;
@@ -76,34 +85,41 @@ var createGameInstance = function() {
    *
    * @param userID (int)
    * @param num (int) 1<=num<=POOL_NUMBER_COUNT
+   *
+   * Return codes:
+   * -1: Nothing happens
+   * 1: Selected but available, is de-selected
+   * 2: Available and not selected button is selected and evaluation does nothing
+   * 3: Selected numbers were correct combination & moved to unavail
+   * 4: Selected numbers were over target number & all selected numbers reset
+   * 5: Selected numbers were correct and there is a winner
    */
   var selectNumHandle = function(userID, num) {
-    if(!userID) return false;
+    if(!userID) return -1;
 
     // Only accept available numbers
     if(this.unavailNum[userID].indexOf(num) >= 0) {
-      return false;
+      return -1;
     }
 
-    console.log(this.selectedNum);
-    console.log(this.userIDs);
     var i = this.selectedNum[userID].indexOf(num);
 
     // If num is in the array, then remove it
     if(i != -1) {
       this.selectedNum[userID].splice(i, 1);
+      return 1;
     } else {
       this.selectedNum[userID].push(num);
     }
 
     // Check for combination and other conditions
-    this.evaluateUser(userID);
-    return true;
+    return this.evaluateUser(userID);
   };
 
   var selectNum = function(num) {
     if(!this.inProgress) return;
 
+    console.log("select num called, this.myID: "+this.myID+", num: "+num);
     Multiplayer.sendOrder({
       'type': 'selectnum',
       'num': num,
@@ -126,7 +142,6 @@ var createGameInstance = function() {
       this.availNum[userID] = new Array();
       this.unavailNum[userID] = new Array();
       this.selectedNum[userID] = new Array();
-      console.log("in addUser("+userID+"), ", this.selectedNum);
       // Initialize the user's available numbers
       for(var i = 1; i <= POOL_NUMBER_COUNT; i++) {
         this.availNum[userID].push(i);
@@ -142,6 +157,12 @@ var createGameInstance = function() {
    * Perform necessary post actions and check game-winning conditions
    *
    * @param userID (int)
+   *
+   * Return codes:
+   * 2: Nothing happened upon select
+   * 3: Combination was correct
+   * 4: Combination was over target
+   * 5: Winner declared
    */
   var evaluateUser = function(userID) {
     var tar = this.targetNum[userID];
@@ -150,21 +171,25 @@ var createGameInstance = function() {
       combination = this.selectedNum[userID].reduce( (prev, curr) => prev + curr );
     }
     if(tar === combination) {
-      this.resetTarNumHandle(userID);
+      this.resetTarNum(userID);
       for(var i = 0; i < this.selectedNum[userID].length; i++) {
         var n = this.selectedNum[userID][i];
         this.unavailNum[userID].push(n);
         this.availNum[userID].splice(this.availNum[userID].indexOf(n), 1);
       }
       this.selectedNum[userID] = [];
+      return 3;
     } else if(tar < combination) {
       this.selectedNum[userID] = [];
+      return 4;
     }
 
     if(this.availNum[userID].length === 0) {
       this.declareWinner(userID);
+      return 5;
+    } else {
+      return 2;
     }
-    return true;
   };
 
   /**
@@ -177,7 +202,7 @@ var createGameInstance = function() {
     this.winner = userID;
   };
 
-  var anInstance = {
+  GameInstance = {
     myID: myID,
     seed: seed,
     inProgress: inProgress,
@@ -195,8 +220,4 @@ var createGameInstance = function() {
     addUser: addUser,
     evaluateUser: evaluateUser
   };
-
-  return anInstance;
-};
-
-var GameInstance = createGameInstance();
+})();
