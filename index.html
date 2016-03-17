@@ -11,6 +11,7 @@
 	</head>
 	<body>
 		<h1>Number Punch</h1>
+		<h3>Welcome <span id="username"></span></h3>
 		<div id="buttons">
 			<div id="createGame">Create Game</div>
 			<div id="refresh">Refresh</div>
@@ -24,7 +25,7 @@
 		<div class="modal">
 			<a class="close-modal">&#10005;</a>
 			<div id="settings">
-				<!--<script>$('#settings').append(db.generateGUI());</script>-->
+				<script>$('#settings').append(db.generateGUI());</script>
 				<form id="settingsForm">
 					Button color:<br>
 					<input type="radio" name="theme" value="blueOrange" checked> Blue/Orange<br>

@@ -1,9 +1,8 @@
 var db = new DB({
-    Username: "Guest",
-    blueOrange: true,
-    blackWhite: false
+    Username: "Guest"
+    //blueOrange: true,
+    //blackWhite: false
 })
-
 
 //themes
 var blueOrangeTheme = {
@@ -18,7 +17,8 @@ var blackWhiteTheme = {
 };
 
 function changeName(name) {
-    //change user's name
+    db.setValue('Username', name);
+    updateName();
 };
 
 /* openModal
@@ -56,11 +56,17 @@ function changeBackgroundColor(color) {
     $('body').css("background-color", color);
 }
 
+function updateName() {
+    $('#username').text(db.getValue('Username'));
+}
+
 function applySettings(settings) {
     changeButtonTheme(settings.buttonTheme);
 }
 
 $(document).ready(function() {
+
+    updateName();
     
     //handle clicking preferences button
     $('#preferences').on('click', function(event) {
@@ -70,6 +76,9 @@ $(document).ready(function() {
 
     //handle preference submit
     $('#settingsForm').on('submit', function(event) {
+
+        changeName($('input[type=text]').val());
+
         var checkedTheme = $('input[name=theme]:radio:checked').val();
         if(checkedTheme == 'blueOrange') {
             changeButtonTheme(blueOrangeTheme);
