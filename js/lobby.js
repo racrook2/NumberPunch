@@ -52,7 +52,7 @@ $(document).ready(function() {
 
 		$('#leaveGame').css('display', 'none');
 		$('#ready').css('display', 'none');
-
+		$('#startGame').css('display', 'none');
 		$('#gameSpace').css('display', 'none');
 		$('#createGame').css('display', 'inline-block');
 		$('#refresh').css('display', 'inline-block');
@@ -65,16 +65,16 @@ $(document).ready(function() {
 	$('#ready').on('click', function() {
 		console.log("Clicked Ready");
 		$('#ready').css('display', 'none');
-		$('#startGame').css('display', 'none');
 		Multiplayer.readyGame();
 
 	});
 
 	$('#startGame').on('click', function() {
 		console.log("Clicked Start");
-		$('#startGame').css('display', 'none');
-		Multiplayer.startGameCheck();
-
+		if(Multiplayer.startGameCheck()){
+			$('#startGame').css('display', 'none');
+			Multiplayer.startGame();
+		}
 	});
 
 

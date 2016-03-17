@@ -30,6 +30,10 @@ var Multiplayer;
         console.log("Got order", data);
         handleOrder(data);
     });
+    socket.on('shout', function (data) {
+        console.log("Got shout", data);
+        handleOrder(data);
+    });
     socket.on('orders', function (data) {
         console.log("Got orders", data);
     });
@@ -69,11 +73,12 @@ var Multiplayer;
         console.log("start");
         if(readyPlayers === 2)
         {
-            socket.emit("startgame");
+            return true;
         }
         else
         {
           console.log("both players not ready");
+          return false;
         }
         
     }
@@ -87,7 +92,7 @@ var Multiplayer;
       else
       {
         console.log("ready from joined player");
-        socket.emit("order",{type:"ready" , playerid: Multiplayer.players[1]});
+        socket.emit("shout",{type:"ready" , playerid: Multiplayer.players[1]});
         console.log("ranSend");
       }
 
@@ -127,8 +132,13 @@ var Multiplayer;
           break;
 
         case "ready":
-          readyPlayers = readyPlayers+1;
-          console.log("got ready from joined");
+          if(playerID === Multiplayer.players[1] && gameStarter)
+          {
+            console.log("got ready from joined");
+            readyPlayers = readyPlayers+1;
+          }
+          
+          
           console.log(readyPlayers);
           break;
 
