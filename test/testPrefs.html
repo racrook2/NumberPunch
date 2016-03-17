@@ -12,6 +12,7 @@
 <body>
   <div id="qunit"></div>
   <div id="qunit-fixture">
+   <div id="greeting">Hello, guest</div>
    <div id="buttons">
       <div id="createGame">Create Game</div>
       <div id="refresh">Refresh</div>
@@ -21,6 +22,12 @@
       <div class="modal" style="display: none">
       </div>
     </div>
+	<div id="main">
+	  <img id='chat' src='media/chat.png'/>
+	  <div id="gamesList"></div>
+	  <div id="gameSpace"></div>
+	  <canvas id="gameCanvas" height=400 width=800 ></canvas>
+	</div>
   </div>
   <script src="../js/userprefs.js"></script>
   <script src="testPrefs.js"></script>

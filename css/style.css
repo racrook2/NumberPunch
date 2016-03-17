@@ -46,7 +46,7 @@ body {
 }
 
 #main {
-	background: url(../media/bg1.png);
+	background-image: url(../media/bg1.png);
 	background-size: 100%;
 	overflow: auto;
 }
