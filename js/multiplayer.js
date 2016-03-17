@@ -3,10 +3,12 @@ var Multiplayer;
     var GAMETYPE = 5023;
     var socket = io.connect("ctw.firecaster.com:80");
     var players = new Array();
-    var gameStarter =false;
     var readyPlayers  = 0;
+    var gameStarter = false;
+    var ready = false;
     function createGame() {
         gameStarter  = true;
+        readyPlayers  = 0;
         socket.emit("creategame", {
             title: "A game",
             type: GAMETYPE,
@@ -32,7 +34,7 @@ var Multiplayer;
     });
     socket.on('shout', function (data) {
         console.log("Got shout", data);
-        handleOrder(data);
+        handleShout(data);
     });
     socket.on('orders', function (data) {
         console.log("Got orders", data);
@@ -46,6 +48,7 @@ var Multiplayer;
     });
     socket.on('players', function (data) {
         console.log("Players:", data);
+        
         Multiplayer.players = data;
     });
 
@@ -53,7 +56,13 @@ var Multiplayer;
         socket.emit('joingame', id);
     }
     function leaveGame() {
-        socket.emit('leavegame');
+      if (ready){
+        socket.emit('shout', {type: 'unready'})
+      }
+      ready = false;
+      socket.emit('leavegame');
+      Multiplayer.readyPlayers = 0;
+
     }
     function sendOrder(data) {
         console.log("entered send Order");
@@ -70,7 +79,7 @@ var Multiplayer;
         socket.emit("startgame");
     }
     function startGameCheck() {
-        console.log("start");
+        console.log("startGame");
         if(readyPlayers === 2)
         {
             return true;
@@ -83,23 +92,37 @@ var Multiplayer;
         
     }
     function readyGame(){
-      console.log("readying the game");
+      if (ready) return;
 
-      if(gameStarter)
-      {
-        readyPlayers = readyPlayers+1;
-      }
-      else
-      {
-        console.log("ready from joined player");
-        socket.emit("shout",{type:"ready" , playerid: Multiplayer.players[1]});
-        console.log("ranSend");
-      }
+      console.log("readying the game");
+      
+      socket.emit("shout",{type:"ready"});
 
       console.log(readyPlayers);
       console.log(Multiplayer.players);
 
+      ready = true;
+
     }
+    function handleShout (data) {
+      var orderType = data['type'];
+
+      switch(orderType){
+          
+          case "ready":
+            readyPlayers = readyPlayers+1;
+            console.log(readyPlayers);
+            break;
+          case "unready":
+            readyPlayers = readyPlayers-1;
+            break;
+          default:
+            break;
+
+      }
+
+    }
+
     function handleOrder(data) {
       var orderType = data['type'];
       var playerID = data['playerid'];
@@ -129,17 +152,6 @@ var Multiplayer;
           GameInstance.resetTarNumHandle(playerID);
           var tarNum = GameInstance.targetNum[playerID];
           GameInterface.reset(tarNum, isMine);
-          break;
-
-        case "ready":
-          if(playerID === Multiplayer.players[1] && gameStarter)
-          {
-            console.log("got ready from joined");
-            readyPlayers = readyPlayers+1;
-          }
-          
-          
-          console.log(readyPlayers);
           break;
 
 
