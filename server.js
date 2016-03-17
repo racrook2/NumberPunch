@@ -66,7 +66,6 @@ Game.prototype = {
 
     },
     order: function (data, socket) {
-
         if (this.started) {
             for (var i = 0; i < this.players.length; i++) {
                 if (socket == this.players[i]) {

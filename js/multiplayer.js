@@ -3,7 +3,10 @@ var Multiplayer;
     var GAMETYPE = 5023;
     var socket = io.connect("ctw.firecaster.com:80");
     var players = new Array();
+    var gameStarter =false;
+    var readyPlayers  = 0;
     function createGame() {
+        gameStarter  = true;
         socket.emit("creategame", {
             title: "A game",
             type: GAMETYPE,
@@ -41,6 +44,7 @@ var Multiplayer;
         console.log("Players:", data);
         Multiplayer.players = data;
     });
+
     function joinGame(id) {
         socket.emit('joingame', id);
     }
@@ -48,13 +52,48 @@ var Multiplayer;
         socket.emit('leavegame');
     }
     function sendOrder(data) {
+        console.log("entered send Order");
+        //console.log(data);
         socket.emit("order", data);
+        console.log("exited send Order");
+
     }
     function refreshGameList() {
         socket.emit('listgames');
     }
     function startGame() {
+        console.log("start");
         socket.emit("startgame");
+    }
+    function startGameCheck() {
+        console.log("start");
+        if(readyPlayers === 2)
+        {
+            socket.emit("startgame");
+        }
+        else
+        {
+          console.log("both players not ready");
+        }
+        
+    }
+    function readyGame(){
+      console.log("readying the game");
+
+      if(gameStarter)
+      {
+        readyPlayers = readyPlayers+1;
+      }
+      else
+      {
+        console.log("ready from joined player");
+        socket.emit("order",{type:"ready" , playerid: Multiplayer.players[1]});
+        console.log("ranSend");
+      }
+
+      console.log(readyPlayers);
+      console.log(Multiplayer.players);
+
     }
     function handleOrder(data) {
       var orderType = data['type'];
@@ -87,6 +126,13 @@ var Multiplayer;
           GameInterface.reset(tarNum, isMine);
           break;
 
+        case "ready":
+          readyPlayers = readyPlayers+1;
+          console.log("got ready from joined");
+          console.log(readyPlayers);
+          break;
+
+
         default:
           // Do nothing
           break;
@@ -100,6 +146,8 @@ var Multiplayer;
         sendOrder: sendOrder,
         refreshGameList: refreshGameList,
         startGame: startGame,
-        leaveGame: leaveGame
+        leaveGame: leaveGame,
+        readyGame: readyGame,
+        startGameCheck: startGameCheck
     }
 })();
