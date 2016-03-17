@@ -95,15 +95,8 @@ $(document).ready(function() {
     	}
     	var checkedColor = $('input[name=bcolor]:radio:checked').val();
     	console.log(checkedColor);
-    	if(checkedColor == 'white'){
-    		changeBackgroundColor('WHITE');
-    	} else if(checkedColor == 'red'){
-    		changeBackgroundColor('RED');
-    	} else if(checkedColor == 'blue'){
-    		changeBackgroundColor('BLUE');
-    	} else if(checkedColor == 'green'){
-    		changeBackgroundColor('GREEN');
-    	}
+        changeBackgroundColor(checkedColor);
+        
         closeModal();
         event.preventDefault();
     });
