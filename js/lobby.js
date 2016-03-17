@@ -1,11 +1,14 @@
 //updateGamesList recieves a list of games passed in and adds them to the games list on index. If no games are available, the div displays "No Available Games"
 function updateGamesList(games) {
+	//$('#gamesList').html("<img id='chat' src='media/chat.png'/>");
 	$('#gamesList').html('');
 	if (games.length<1) {
-		$('#gamesList').html('No Available Games');
+		$('#gamesList').append('No Available Games');
 	}
-	for (var i = 0; i < games.length; i++){
-		$('#gamesList').append("<div class='game' id='"+games[i].id+"'>"+games[i].id+": Players - "+games[i].players+"</div>");
+	else {
+		for (var i = 0; i < games.length; i++){
+			$('#gamesList').append("<div class='game' id='"+games[i].id+"'>"+games[i].id+": Players - "+games[i].players+"</div>");
+		}
 	}
 }
 
@@ -35,6 +38,7 @@ $(document).ready(function() {
 		$('#refresh').css('display', 'none');
 		$('#gamesList').css('display', 'none');
 		$('#preferences').css('display', 'none');
+		$('#chat').css('display', 'none');
 
 		$('#gameSpace').load('./interface.html');
 
@@ -52,6 +56,7 @@ $(document).ready(function() {
 		$('#refresh').css('display', 'inline-block');
 		$('#gamesList').css('display', 'block');
 		$('#preferences').css('display', 'inline-block');
+		$('#chat').css('display', 'inline');
 
 		return false;
 	});
@@ -68,6 +73,7 @@ $(document).ready(function() {
 		$('#refresh').css('display', 'none');
 		$('#gamesList').css('display', 'none');
 		$('#preferences').css('display', 'none');
+		$('#chat').css('display', 'none');
 
 		$('#gameSpace').load('./interface.html');
 		return false;

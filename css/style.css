@@ -3,11 +3,6 @@ body {
 	font-family: Arial;
 }
 
-#gamesList {
-	border-style: solid;
-	border-width: 3px;
-}
-
 #buttons {
 	width: 100%
 }
@@ -37,26 +32,27 @@ body {
 	float: right;
 }
 
-#createGame {
-	
-}
-
-#leaveGame, #refresh {
-	
-}
-
-#gameCanvas {
-	
+#gamesList {
+	padding: 20px;
+	color: white;
+	text-shadow: -1px -1px 0 black,  
+		1px -1px 0 black,
+		-1px 1px 0 black,
+		1px 1px 0 black;
 }
 
 .game:hover {
 	cursor: pointer;
 }
 
-#background {
+#main {
 	background: url(../media/bg1.png);
 	background-size: 100%;
-	/*opacity: 0.6;*/
+	overflow: auto;
+}
+
+#chat {
+	float: right;
 }
 
 .modal-bg {
@@ -95,9 +91,4 @@ body {
 
 #settings {
 	padding: 20px;
-}
-
-#gameSpace {
-	border-style: solid;
-	border-width: 1px;
 }

@@ -56,7 +56,7 @@ function changeButtonTheme(theme) {
 };
 
 function changeBackground(src) {
-	$('#background').css("background-image", "url('media/" + src + ".png')");
+	$('#main').css("background-image", "url('media/" + src + ".png')");
 }
 
 $(document).ready(function() {
