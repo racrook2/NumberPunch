@@ -223,7 +223,7 @@ var GameInstance;
     resetTarNumHandle: resetTarNumHandle,
     resetTarNum: resetTarNum,
     selectNum: selectNum,
-    selectNumHandle, selectNumHandle,
+    selectNumHandle: selectNumHandle,
     addUser: addUser,
     evaluateUser: evaluateUser
   };

@@ -35,7 +35,11 @@ var Multiplayer;
     });
     socket.on('start', function (data) {
         console.log("Game is starting ", data);
+        var myIndex = data['me'];
         GameInstance.startGameHandle(data, Multiplayer.players);
+        for(var i=0; i < Multiplayer.players.length; i++){
+            GameInterface.reset(GameInstance.targetNum[Multiplayer.players[i]], i===myIndex);
+        }
     });
     socket.on('players', function (data) {
         console.log("Players:", data);

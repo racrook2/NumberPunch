@@ -74,7 +74,10 @@ var GameInterface;
 })();
 
 // Generate random number on page load
-window.onload=GameInterface.reset();
+window.onload= function() {
+	GameInterface.reset("", true);
+	GameInterface.reset("", false);
+}
 
 function checkKey(e) {
 	charCode = (e.which)? e.which : e.keyCode;
