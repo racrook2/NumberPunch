@@ -29,21 +29,33 @@
 			<div id="settings">
 				<script>$('#settings').append(db.generateGUI());</script>
 				<form id="settingsForm">
-					Button color:<br>
-					<input type="radio" name="theme" value="blueOrange" checked> Blue/Orange<br>
-					<input type="radio" name="theme" value="blackWhite"> Black/White<br>
-					Font size:<br>
-					<input type="radio" name="font" value="largeFont"> Large<br>
-					<input type="radio" name="font" value="mediumFont" checked> Medium<br>
-					<input type="radio" name="font" value="smallFont"> Small<br>
-					Site Background:<br>
-					<input type="radio" name="bcolor" value="white" checked> White<br>
-					<input type="radio" name="bcolor" value="red"> Red<br>
-					<input type="radio" name="bcolor" value="blue"> Blue<br>
-					<input type="radio" name="bcolor" value="green"> Green<br>
+
+					Color:<br>
+					<input type="radio" name="theme" value="purple" checked> Purple<br>
+					<input type="radio" name="theme" value="orange"> Orange<br>
+					<input type="radio" name="theme" value="black"> Black<br><br>
+					Background:<br>
+					<input type="radio" name="bg" value="bg1" checked> Charizard<br>
+					<input type="radio" name="bg" value="bg2"> Greninja<br><br>
+					Screen name:<br>
+					<input type="text" name="name"><br><br>
 					<input type="submit" value="Save">
 				</form>
 			</div>
+		</div>
+		<h1 align="center"><img src="media/logo.png"/></h1>
+		<div id="greeting">Hello, guest</div>
+		<div id="buttons">
+			<div id="createGame">Create Game</div>
+			<div id="refresh">Refresh</div>
+			<div id="preferences">Preferences</div>
+			<div id="leaveGame">Leave Game</div>
+		</div>
+		<div id="main">
+			<img id='chat' src='media/chat.png'/>
+			<div id="gamesList"></div>
+			<div id="gameSpace"></div>
+			<canvas id="gameCanvas" height=400 width=800 ></canvas>
 		</div>
 	</body>
 </html>

@@ -1,37 +1,58 @@
-#gamesList {
-	border-style: solid;
-	border-width: 3px;
+body {
+	background-color: #993399;
+	font-family: Arial;
 }
 
 #buttons {
 	width: 100%
 }
 
-#buttons > div {
+#buttons div {
 	display: inline-block;
 	padding: 5px;
-	background-color: orange;
-	color: blue;
+	background-color: #660066;
+	color: white;
+	border-radius: 6px 6px 0px 0px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 10px;
+	width: 100px;
+	text-align: center;
+	box-shadow: 0 2px 2px rgba(255, 255, 255, 0.7) inset;
+	font-weight: bold;
 }
 
-#buttons > div:hover {
+#buttons div:hover {
 	cursor: pointer;
 }
 
-#createGame {
-	
+#greeting {
+	color: white;
+	font-weight: bold;
+	float: right;
 }
 
-#leaveGame, #refresh {
-	
-}
-
-#gameCanvas {
-	
+#gamesList {
+	padding: 20px;
+	color: white;
+	text-shadow: -1px -1px 0 black,  
+		1px -1px 0 black,
+		-1px 1px 0 black,
+		1px 1px 0 black;
 }
 
 .game:hover {
 	cursor: pointer;
+}
+
+#main {
+	background-image: url(../media/bg1.png);
+	background-size: 100%;
+	overflow: auto;
+}
+
+#chat {
+	float: right;
 }
 
 .modal-bg {
@@ -48,7 +69,8 @@
 }
 
 .modal {
-	background: white;
+	background-color: #660066;
+	color: white;
 	display: none;
 	position: fixed;
 	padding: 10px;
@@ -56,17 +78,17 @@
 	width: auto;
 	height: auto;
 	z-index: 2;
+	font-weight: bold;
 }
 
 .modal a {			
 	float: right;	
 }
 
-#settings {
-	padding: 20px;
+.close-modal:hover {
+	cursor: pointer;
 }
 
-#gameSpace {
-	border-style: solid;
-	border-width: 1px;
+#settings {
+	padding: 20px;
 }

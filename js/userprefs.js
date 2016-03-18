@@ -5,19 +5,31 @@ var db = new DB({
 })
 
 //themes
-var blueOrangeTheme = {
-    name : 'blueOrange',
-    bgColor : 'orange',
-    fontColor : 'blue'
+var purpleTheme = {
+    name : 'purple',
+	bg : '#993399',
+    bgColor : '#660066',
+    fontColor : 'white'
 };
-var blackWhiteTheme = {
-    name : 'blackWhite',
+var orangeTheme = {
+    name : 'orange',
+    bg : 'orange',
+	bgColor : '#ff6600',
+    fontColor : 'white'
+};
+var blackTheme = {
+    name : 'black',
+	bg : '#1f1f1f',
     bgColor : 'black',
     fontColor : 'white'
 };
 
-
-
+function changeName(name) {
+    //change user's name
+	if (name != "") {
+		document.getElementById("greeting").innerHTML = "Hello, " + name;
+	}
+};
 /* openModal
  * fades the user preferences modal dialog into view
  */
@@ -41,8 +53,11 @@ function closeModal() {
  * @input theme the JSON theme object to change to
  */
 function changeButtonTheme(theme) {
+	$('body').css("background-color", theme.bg);
     $('#buttons div').css("color", theme.fontColor);
     $('#buttons div').css("background-color", theme.bgColor);
+	$('.modal').css("background-color", theme.bgColor);
+	$('.modal').css("color", theme.fontColor);
 };
 
 function changeFontSize(font_size) {
@@ -65,6 +80,9 @@ function changeName(name) {
 
 function applySettings(settings) {
     changeButtonTheme(settings.buttonTheme);
+}
+function changeBackground(src) {
+	$('#main').css("background-image", "url('media/" + src + ".png')");
 }
 
 $(document).ready(function() {
@@ -100,6 +118,20 @@ $(document).ready(function() {
     	console.log(checkedColor);
         changeBackgroundColor(checkedColor);
 
+        var checked = $('input[name=theme]:checked').val();
+        if (checked == 'purple') {
+            changeButtonTheme(purpleTheme);
+        }
+		else if (checked == 'orange') {
+            changeButtonTheme(orangeTheme);
+        }
+		else if (checked == 'black') {
+            changeButtonTheme(blackTheme);
+        }
+		checked = $('input[name=bg]:checked').val();
+        changeBackground(checked);
+		var name = $('input[name=name]').val();
+		changeName(name);
         closeModal();
         event.preventDefault();
     });
@@ -109,6 +141,10 @@ $(document).ready(function() {
         closeModal();
     });
 
+	
+	$(".modal-bg").on('click', function(){
+        closeModal();
+    });
 });
 
 
