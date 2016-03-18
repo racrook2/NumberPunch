@@ -13,7 +13,7 @@ var GameInstance;
 (function() {
 
   var myID;
-  var seed;
+  var seed = 0.4;
 
   var inProgress = false;
   var winner = null;
@@ -40,7 +40,8 @@ var GameInstance;
   */
   var startGameHandle = function(data, players) {
     this.myID = players[data['me']];
-    this.seed = data['seed'];
+    GameInstance.seed = data['seed'];
+    console.log("Got start game handle with seed "+data['seed']);
 
     // Empty fields for new game
     this.userIDs = [];
@@ -57,12 +58,18 @@ var GameInstance;
     this.winner = null;
   };
 
+  var rng = function() {
+    GameInstance.seed += 1.0;
+    var x = Math.sin(GameInstance.seed)*10000;
+    return x - Math.floor(x);
+  };
+
   var resetTarNumHandle = function(userID) {
     if(!userID) return false;
 
-    this.targetNum[userID] = Math.floor(Math.random() * POOL_NUMBER_COUNT) + 
-      Math.floor(Math.random() * (POOL_NUMBER_COUNT-1)) +
-      Math.floor(Math.random() * (POOL_NUMBER_COUNT-2)) + 1;
+    this.targetNum[userID] = Math.floor(rng() * ((POOL_NUMBER_COUNT*3)-3))+1;
+
+    console.log(this.targetNum[userID]);
 
     this.selectedNum[userID] = [];
 
@@ -135,9 +142,7 @@ var GameInstance;
   var addUser = function(userID) {
     if(this.userIDs.indexOf(userID) < 0) {
       this.userIDs.push(userID);
-      this.targetNum[userID] = Math.floor(Math.random() * POOL_NUMBER_COUNT) + 
-      Math.floor(Math.random() * (POOL_NUMBER_COUNT-1)) +
-      Math.floor(Math.random() * (POOL_NUMBER_COUNT-2)) + 1;
+      this.targetNum[userID] = Math.floor(rng() * ((POOL_NUMBER_COUNT*3)-3))+1;
 
       this.availNum[userID] = new Array();
       this.unavailNum[userID] = new Array();
@@ -171,7 +176,9 @@ var GameInstance;
       combination = this.selectedNum[userID].reduce( (prev, curr) => prev + curr );
     }
     if(tar === combination) {
-      this.resetTarNum(userID);
+      if(userID == this.myID) {
+        this.resetTarNum();
+      }
       for(var i = 0; i < this.selectedNum[userID].length; i++) {
         var n = this.selectedNum[userID][i];
         this.unavailNum[userID].push(n);
@@ -216,7 +223,7 @@ var GameInstance;
     resetTarNumHandle: resetTarNumHandle,
     resetTarNum: resetTarNum,
     selectNum: selectNum,
-    selectNumHandle, selectNumHandle,
+    selectNumHandle: selectNumHandle,
     addUser: addUser,
     evaluateUser: evaluateUser
   };
