@@ -1,11 +1,6 @@
 
 QUnit.module("User Preferences Test", {
     beforeEach: function () {
-        /*var done = assert.async();
-        $('#qunit-fixture').load('../index.html');
-        $('document').ready(function() {
-            done();
-        })*/
     },
     afterEach: function () {
     }
@@ -31,10 +26,16 @@ QUnit.test("Did Buttons Change to Blue/Orange:", function (assert) {
     assert.equal(buttonBgColor, 'rgb(255, 165, 0)');
 });
 
-QUnit.test("Did Background change to Red:", function (assert) {
-    changeBackgroundColor('red');
+QUnit.test("Did Background change to Blue:", function (assert) {
+    changeBackgroundColor('blue');
     var bgColor = $('body').css('background-color');
-    assert.equal(bgColor, 'rgb(255, 0, 0)');
+    assert.equal(bgColor, 'rgb(0, 0, 255)');
+});
+
+QUnit.test("Did Background change to White:", function (assert) {
+    changeBackgroundColor('white');
+    var bgColor = $('body').css('background-color');
+    assert.equal(bgColor, 'rgb(255, 255, 255)');
 });
 
 QUnit.test("Did Name change to TestName:", function (assert) {
