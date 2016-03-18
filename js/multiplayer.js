@@ -2,7 +2,13 @@ var Multiplayer;
 (function () {
     var GAMETYPE = 5023;
     var socket = io.connect("ctw.firecaster.com:80");
+    var players = new Array();
+    var readyPlayers  = 0;
+    var gameStarter = false;
+    var ready = false;
     function createGame() {
+        gameStarter  = true;
+        readyPlayers  = 0;
         socket.emit("creategame", {
             title: "A game",
             type: GAMETYPE,
@@ -24,6 +30,11 @@ var Multiplayer;
     });
     socket.on('order', function (data) {
         console.log("Got order", data);
+        handleOrder(data);
+    });
+    socket.on('shout', function (data) {
+        console.log("Got shout", data);
+        handleShout(data);
     });
     socket.on('orders', function (data) {
         console.log("Got orders", data);
@@ -32,33 +43,133 @@ var Multiplayer;
         console.log("youjoined");
     });
     socket.on('start', function (data) {
-        console.log("Game is starting", data);
+        console.log("Game is starting ", data);
+        GameInstance.startGameHandle(data, Multiplayer.players);
     });
     socket.on('players', function (data) {
         console.log("Players:", data);
+        
+        Multiplayer.players = data;
     });
+
     function joinGame(id) {
         socket.emit('joingame', id);
     }
     function leaveGame() {
-        socket.emit('leavegame');
+      if (ready){
+        socket.emit('shout', {type: 'unready'})
+      }
+      ready = false;
+      socket.emit('leavegame');
+      Multiplayer.readyPlayers = 0;
+
     }
     function sendOrder(data) {
+        console.log("entered send Order");
+        //console.log(data);
         socket.emit("order", data);
+        console.log("exited send Order");
+
     }
     function refreshGameList() {
         socket.emit('listgames');
     }
     function startGame() {
+        console.log("start");
         socket.emit("startgame");
     }
+    function startGameCheck() {
+        console.log("startGame");
+        if(readyPlayers === 2)
+        {
+            return true;
+        }
+        else
+        {
+          console.log("both players not ready");
+          return false;
+        }
+        
+    }
+    function readyGame(){
+      if (ready) return;
+
+      console.log("readying the game");
+      
+      socket.emit("shout",{type:"ready"});
+
+      console.log(readyPlayers);
+      console.log(Multiplayer.players);
+
+      ready = true;
+
+    }
+    function handleShout (data) {
+      var orderType = data['type'];
+
+      switch(orderType){
+          
+          case "ready":
+            readyPlayers = readyPlayers+1;
+            console.log(readyPlayers);
+            break;
+          case "unready":
+            readyPlayers = readyPlayers-1;
+            break;
+          default:
+            break;
+
+      }
+
+    }
+
+    function handleOrder(data) {
+      var orderType = data['type'];
+      var playerID = data['playerid'];
+      var myID = GameInstance.myID;
+      var isMine = (myID == playerID);
+      switch(orderType) {
+        case "selectnum":
+          var num = data['num'];
+          var retCode = GameInstance.selectNumHandle(playerID, num);
+
+          if(retCode == 1) {
+            GameInterface.deselect(num, isMine);
+          } else if(retCode == 2) {
+            GameInterface.select(num, isMine);
+          } else if(retCode == 3) {
+            GameInterface.select(num, isMine);
+            GameInterface.makeUnavail(isMine);
+            var newTar = GameInstance.targetNum[playerID];
+            GameInterface.reset(newTar, isMine);
+          } else if(retCode == 4) {
+            var newTar = GameInstance.targetNum[playerID];
+            GameInterface.reset(newTar, isMine);
+          }
+          break;
+
+        case "resettar":
+          GameInstance.resetTarNumHandle(playerID);
+          var tarNum = GameInstance.targetNum[playerID];
+          GameInterface.reset(tarNum, isMine);
+          break;
+
+
+        default:
+          // Do nothing
+          break;
+    }
+  };
     Multiplayer = {
         socket: socket,
         createGame: createGame,
+        players: players,
         joinGame: joinGame,
         sendOrder: sendOrder,
         refreshGameList: refreshGameList,
         startGame: startGame,
-        leaveGame: leaveGame
+        leaveGame: leaveGame,
+        readyGame: readyGame,
+        startGameCheck: startGameCheck
     }
 })();

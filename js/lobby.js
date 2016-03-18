@@ -14,6 +14,8 @@ $(document).ready(function() {
 
 	//Hide leave game and game upon loading as they are not needed until a game is starting.
 	$('#leaveGame').css('display', 'none');
+	$('#ready').css('display', 'none');
+	$('#startGame').css('display', 'none');
 	$('#gameCanvas').css('display', 'none');
 
 
@@ -30,6 +32,8 @@ $(document).ready(function() {
 		Multiplayer.createGame();
 		
 		$('#leaveGame').css('display', 'inline-block');
+		$('#ready').css('display', 'inline-block');
+		$('#startGame').css('display', 'inline-block');
 		$('#gameSpace').css('display', 'block');
 		$('#createGame').css('display', 'none');
 		$('#refresh').css('display', 'none');
@@ -47,6 +51,8 @@ $(document).ready(function() {
 		Multiplayer.leaveGame();
 
 		$('#leaveGame').css('display', 'none');
+		$('#ready').css('display', 'none');
+		$('#startGame').css('display', 'none');
 		$('#gameSpace').css('display', 'none');
 		$('#createGame').css('display', 'inline-block');
 		$('#refresh').css('display', 'inline-block');
@@ -56,6 +62,22 @@ $(document).ready(function() {
 		return false;
 	});
 
+	$('#ready').on('click', function() {
+		console.log("Clicked Ready");
+		$('#ready').css('display', 'none');
+		Multiplayer.readyGame();
+
+	});
+
+	$('#startGame').on('click', function() {
+		console.log("Clicked Start");
+		if(Multiplayer.startGameCheck()){
+			$('#startGame').css('display', 'none');
+			Multiplayer.startGame();
+		}
+	});
+
+
 	//TODO: figure out why this deprecated function works and "onclick" doesnt
 	//Upon clicking a game, the backend will recieve an order to join the game clicked. The create game and refresh buttons will disappear, being replaced by leave game.
 	$(document.body).delegate('.game', 'click' ,function(){
@@ -63,6 +85,8 @@ $(document).ready(function() {
 		Multiplayer.joinGame($(this).attr('id'));
 
 		$('#leaveGame').css('display', 'inline-block');
+		$('#startGame').css('display', 'none');
+		$('#ready').css('display', 'inline-block');
 		$('#gameSpace').css('display', 'block');
 		$('#createGame').css('display', 'none');
 		$('#refresh').css('display', 'none');

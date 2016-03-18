@@ -58,15 +58,14 @@ Game.prototype = {
         var seed = Math.random();
         for (var i = 0; i < this.players.length; i++) {
             this.players[i].emit('start', {
-                pc: this.players.length,
-                me: i,
-                seed: seed
+                'pc': this.players.length,
+                'me': i,
+                'seed': seed
             });
         }
 
     },
     order: function (data, socket) {
-
         if (this.started) {
             for (var i = 0; i < this.players.length; i++) {
                 if (socket == this.players[i]) {

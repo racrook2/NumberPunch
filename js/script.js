@@ -1,38 +1,84 @@
-// Generate random number on page load
-window.onload=reset();
 
-// Selects or deselects a number button
-function select(id) {
-	// Get right button index
-	var buttonWrapper = document.getElementsByClassName("button-wrapper player-button")[id.slice(-2) - 1];
-	if (!buttonWrapper){
-		return false;
-	}
-	if (!buttonWrapper.classList.contains("selected")&&!buttonWrapper.classList.contains("used")) {
-		// If not selected, activate light
+
+var GameInterface;
+(function() {
+	function select(num, isYours) {
+		var buttonWrappers;
+		if(isYours) {
+			buttonWrappers = document.getElementsByClassName("button-wrapper player-button");
+		} else {
+			buttonWrappers = document.getElementsByClassName("button-wrapper opponent-button");
+		}
+
+		var buttonWrapper = buttonWrappers[num-1];
+		if(!buttonWrapper) return false;
 		buttonWrapper.classList.add("selected");
-	}
-	else if (buttonWrapper.classList.contains("selected")&&!buttonWrapper.classList.contains("used")) {
-		// If selected, deactivate light
-		buttonWrapper.classList.remove("selected")
-	}
-	return true;
-};
+	};
 
-// Deselects all buttons and generates new number
-function reset() {
-	// Generate and display random number
-	//TODO: replace with call to game logic function
-	var number = document.getElementById("playerTarget");
-	if(number) {
-		number.innerHTML = Math.floor(Math.random() * 100) + 1;
-	}
-	// Deactivate all lights
-	var wrappers = document.getElementsByClassName("button-wrapper player-button");
-	for (i = 0; i < wrappers.length; i++) {
-		wrappers[i].classList.remove("selected");
-	}
-};
+	function deselect(num, isYours) {
+		var buttonWrappers;
+		if(isYours) {
+			buttonWrappers = document.getElementsByClassName("button-wrapper player-button");
+		} else {
+			buttonWrappers = document.getElementsByClassName("button-wrapper opponent-button");
+		}
+
+		var buttonWrapper = buttonWrappers[num-1];
+		if(!buttonWrapper) return false;
+		buttonWrapper.classList.remove("selected");
+	};
+
+	function reset(newTarget, isYours) {
+		var tarNum;
+		var wrappers;
+		if(isYours) {
+			tarNum = document.getElementById("playerTarget");
+			wrappers = document.getElementsByClassName("button-wrapper player-button");
+		} else {
+			tarNum = document.getElementById("opponentTarget");
+			wrappers = document.getElementsByClassName("button-wrapper opponent-button");
+		}
+
+		if(tarNum) {
+			tarNum.innerHTML = newTarget;
+		}
+
+		for(var i = 0; i < wrappers.length; i++) {
+			wrappers[i].classList.remove("selected");
+		}
+	};
+
+	function makeUnavail(isYours) {
+		var wrappers;
+		if(isYours) {
+			wrappers = document.getElementsByClassName("button-wrapper player-button selected");
+		} else {
+			wrappers = document.getElementsByClassName("button-wrapper opponent-button selected");
+		}
+
+		console.log(wrappers);
+
+		for(var i = 0; i < wrappers.length; i++) {
+			wrappers[i].classList.add("unavail");
+			//wrappers[i].classList.add("unavail");
+		}
+		
+		for(var i = 0; i < wrappers.length; i++) {
+			wrappers[i].classList.remove("selected");
+			//wrappers[i].classList.add("unavail");
+		}
+	};
+
+	GameInterface = {
+		select: select,
+		deselect: deselect,
+		reset: reset,
+		makeUnavail: makeUnavail
+	};
+})();
+
+// Generate random number on page load
+window.onload=GameInterface.reset();
 
 function checkKey(e) {
 	charCode = (e.which)? e.which : e.keyCode;
@@ -76,8 +122,8 @@ function checkKey(e) {
 }
 
 
-$(document).keypress(
+/*$(document).keypress(
 	function(evt) {
 		checkKey(evt);
 	}
-)
+)*/

@@ -1,88 +1,94 @@
+QUnit.config.autostart = false;
 var socket;
-var gi;
 var GAME_TYPE = 268201;
+Multiplayer.createGame();
+Multiplayer.startGame();
+setTimeout(function() {
+    QUnit.start();
+}, 1000);
 
 QUnit.module("Game Logic Test", {
     beforeEach: function () {
-        if (socket) {
-            socket.socket.connect();
-        }
-        else {
-            socket = io.connect("ctw.firecaster.com:80");
-        }
-        gi = new GameInstance({});
-        gi.addUser(1);
+        var pIds = [1,2];
+        GameInstance.startGameHandle({
+          'me': 0,
+          'seed': Math.random(),
+          'pc': 2
+        }, pIds);
     },
     afterEach: function () {
     }
 });
 
 QUnit.test("Press Reset", function (assert) {
-    gi.resetTarNum(1);
-    assert.ok(1 in gi.targetNum, "User ID exists in game instance target num set");
+    GameInstance.resetTarNum();
+    var done = assert.async();
+    setTimeout(function() {
+      done();
+    },1000);
+    assert.ok(1 in GameInstance.targetNum, "User ID exists in game instance target num set");
 
-    highestTarget = 15+14+13;
-    assert.ok(gi.targetNum[1] > 0 && gi.targetNum[1] <= highestTarget,
+    highestTarget = (POOL_NUMBER_COUNT*3)-3;
+    assert.ok(GameInstance.targetNum[1] > 0 && GameInstance.targetNum[1] <= highestTarget,
         "New target number is within desired ranged");
 });
 
 QUnit.test("Select Number", function (assert) {
-    console.log("starting select");
     // Attempt to select unavailable number
-    gi.targetNum[1] = 17;
-    gi.unavailNum[1] = [5,15];
-    gi.availNum[1] = [1,2,3,4,6,7,8,9,10,11,12,13,14];
-    var ret1 = gi.selectNum(1, 5);
-    var ret2 = gi.selectNum(1, 15);
-    assert.ok((ret1 == ret2) && (ret1 == false),
+    GameInstance.targetNum[1] = 17;
+    GameInstance.unavailNum[1] = [5,10];
+    GameInstance.availNum[1] = [1,2,3,4,6,7,8,9];
+    var ret1 = GameInstance.selectNumHandle(1, 5);
+    var ret2 = GameInstance.selectNumHandle(1, 10);
+    assert.ok((ret1 == ret2) && (ret1 == -1),
         "Check select unavailable number case");
 
     // Check removal of already selected num
     // and addition of not already selected num
-    gi.selectNum(1, 4);
-    assert.ok(gi.selectedNum[1].indexOf(4) >= 0, 
+    GameInstance.selectNumHandle(1, 4);
+    assert.ok(GameInstance.selectedNum[1].indexOf(4) >= 0, 
         "Check addition of newly selected number");
-    gi.selectNum(1, 4);
-    assert.ok(gi.selectedNum[1].indexOf(4) < 0,
+
+    GameInstance.selectNumHandle(1, 4);
+    assert.ok(GameInstance.selectedNum[1].indexOf(4) < 0,
         "Check selection of already selected number");
 });
 
 QUnit.test("Add User", function (assert) {
-    var ret = gi.addUser(1);
+    var ret = GameInstance.addUser(2);
     assert.ok(ret == false, "Attempt to add pre-existing user");
 
     // Add new user and assert default values
-    ret = gi.addUser(2);
+    ret = GameInstance.addUser(4);
     assert.ok(ret == true, "New user added to instance");
-    assert.ok(gi.targetNum[2] > 0 && gi.targetNum[2] <= (15+14+13),
+    assert.ok(GameInstance.targetNum[4] > 0 && GameInstance.targetNum[4] <= ((POOL_NUMBER_COUNT*3)-3),
         "Check for valid default target number");
-    for(var i = 1; i <= 15; i++) {
-        assert.ok(gi.availNum[2][i-1] == i,
+    for(var i = 1; i <= POOL_NUMBER_COUNT; i++) {
+        assert.ok(GameInstance.availNum[4][i-1] == i,
             "Check that "+i+" is available by default");
     }
-    assert.ok(gi.userIDs.indexOf(2) >= 0,
+    assert.ok(GameInstance.userIDs.indexOf(4) >= 0,
         "Check that user ID now exists in the instance");
 });
 
 QUnit.test("Evaluate User", function (assert) {
-    console.log("starting eval user");
-    gi.targetNum[1] = 17;
-    gi.selectedNum[1] = [2, 15];
+    GameInstance.targetNum[1] = 12;
+    GameInstance.selectedNum[1] = [2, 10];
 
     // Evaluate on correctly selected numbers
-    gi.evaluateUser(1);
-    assert.ok(gi.selectedNum[1].length == 0,
+    GameInstance.evaluateUser(1);
+    assert.ok(GameInstance.selectedNum[1].length == 0,
         "Selected numbers is empty on correct combo");
-    assert.ok(gi.unavailNum[1].indexOf(2) >= 0 &&
-        gi.unavailNum[1].indexOf(15) >= 0,
+    assert.ok(GameInstance.unavailNum[1].indexOf(2) >= 0 &&
+        GameInstance.unavailNum[1].indexOf(10) >= 0,
         "Selected numbers moved to unavailable on correct combo");
-    assert.ok(gi.availNum[1].indexOf(2) < 0 &&
-        gi.availNum[1].indexOf(15) < 0,
+    assert.ok(GameInstance.availNum[1].indexOf(2) < 0 &&
+        GameInstance.availNum[1].indexOf(10) < 0,
         "Selected numbers are removed from available on correct combo");
 
-    gi.targetNum[1] = 2;
-    gi.selectedNum[1] = [1,3];
-    gi.evaluateUser(1);
-    assert.ok(gi.selectedNum[1].length == 0,
+    GameInstance.targetNum[1] = 2;
+    GameInstance.selectedNum[1] = [1,3];
+    GameInstance.evaluateUser(1);
+    assert.ok(GameInstance.selectedNum[1].length == 0,
         "Check that a combo larger than target resets selected numbers");
 });
