@@ -34,7 +34,7 @@ function changeName(name) {
  * fades the user preferences modal dialog into view
  */
 function openModal() {
-    $(".modal").css("marginTop", "0");
+    //$(".modal").css("marginTop", "0");
     $(".modal").css("marginLeft", ($(window).width() - $(".modal").width())/2);
     $(".modal-bg").fadeIn();
     $(".modal").fadeIn();

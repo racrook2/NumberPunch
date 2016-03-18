@@ -80,6 +80,8 @@ body {
 	height: auto;
 	z-index: 2;
 	font-weight: bold;
+    top:145px;
+    
 }
 
 .modal a {			
