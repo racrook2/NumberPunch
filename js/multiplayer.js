@@ -3,12 +3,11 @@ var Multiplayer;
     var GAMETYPE = 5023;
     var socket = io.connect("ctw.firecaster.com:80");
     var players = new Array();
-    var readyPlayers  = 0;
     var gameStarter = false;
     var ready = false;
     function createGame() {
         gameStarter  = true;
-        readyPlayers  = 0;
+        Multiplayer.readyPlayers  = 0;
         socket.emit("creategame", {
             title: "A game",
             type: GAMETYPE,
@@ -84,7 +83,7 @@ var Multiplayer;
     }
     function startGameCheck() {
         console.log("startGame");
-        if(readyPlayers === 2)
+        if(Multiplayer.readyPlayers === 2)
         {
             return true;
         }
@@ -102,7 +101,7 @@ var Multiplayer;
       
       socket.emit("shout",{type:"ready"});
 
-      console.log(readyPlayers);
+      console.log(Multiplayer.readyPlayers);
       console.log(Multiplayer.players);
 
       ready = true;
@@ -114,11 +113,11 @@ var Multiplayer;
       switch(orderType){
           
           case "ready":
-            readyPlayers = readyPlayers+1;
-            console.log(readyPlayers);
+            Multiplayer.readyPlayers = Multiplayer.readyPlayers+1;
+            console.log(Multiplayer.readyPlayers);
             break;
           case "unready":
-            readyPlayers = readyPlayers-1;
+            Multiplayer.readyPlayers = Multiplayer.readyPlayers-1;
             break;
           default:
             break;
