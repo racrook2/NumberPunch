@@ -8,6 +8,7 @@
 		<script src="database.js"></script>	
 		<script src="js/userprefs.js"></script>
 		<script src="js/lobby.js"></script>
+        <script src="js/hotkeys.js"></script>
 	</head>
 	<body>
 		<h1 align="center"><img src="media/logo.png"/></h1>
@@ -45,6 +46,15 @@
 				</form>
 			</div>
 		</div>
+        <script>
+            makeHotkeys({
+                "e":"#preferences",
+                "r":"#refresh",
+                "c":"#createGame",
+                "l":"#leaveGame"
+            })
+        </script>
+
 	</body>
 </html>
 
