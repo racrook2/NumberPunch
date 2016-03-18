@@ -16,10 +16,7 @@ var blackWhiteTheme = {
     fontColor : 'white'
 };
 
-function changeName(name) {
-    db.setValue('Username', name);
-    updateName();
-};
+
 
 /* openModal
  * fades the user preferences modal dialog into view
@@ -61,6 +58,10 @@ function changeBackgroundColor(color) {
 function updateName() {
     $('#username').text(db.getValue('Username'));
 }
+function changeName(name) {
+    db.setValue('Username', name);
+    updateName();
+};
 
 function applySettings(settings) {
     changeButtonTheme(settings.buttonTheme);
