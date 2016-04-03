@@ -31,6 +31,21 @@ var GameInstance;
 
   // Mappings between user id's and their selected numbers
   var selectedNum = {};
+  
+  // Mappings between user id's and the number of times they've reset
+  var resets = {};
+  
+  // Number of resets before player gets penalized
+  var penaltyThreshold = 0;
+
+  var setPenaltyThreshold = function(num) {
+  	if (this.inProgress) return false;
+    penaltyThreshold = num;
+  };
+  
+  var getPenaltyThreshold = function() {
+    return penaltyThreshold;
+  };
 
   /** 
   * startGameHandle
@@ -49,6 +64,7 @@ var GameInstance;
     this.availNum = {};
     this.unavailNum = {};
     this.selectedNum = {};
+    this.resets = {};
 
     // Respective player fields correct re-initialized in addUser calls
     for(var i = 0; i < players.length; i++) {
@@ -64,8 +80,20 @@ var GameInstance;
     return x - Math.floor(x);
   };
 
+  /**
+   * Resets middle number
+   * If user resets too many times, unavailable number added back to available pool
+   *
+   * @param userID (int)
+   *
+   * Return codes:
+   * -1: Nothing happens
+   * 0: Default reset behavior
+   * >=1: Add unavailable number back to available pool and reset target number
+   */
   var resetTarNumHandle = function(userID) {
-    if(!userID) return false;
+    console.log("Reset tarNum for ", userID);
+    if(!userID) return -1;
 
     this.targetNum[userID] = Math.floor(rng() * ((POOL_NUMBER_COUNT*3)-3))+1;
 
@@ -73,7 +101,22 @@ var GameInstance;
 
     this.selectedNum[userID] = [];
 
-    return true;
+    this.resets[userID]++;
+    if (penaltyThreshold <= 0) {
+      return 0;
+    }
+
+    if (this.resets[userID] >= penaltyThreshold) {
+      this.resets[userID] = 0;
+      var unavailLen = this.unavailNum[userID].length;
+      var randInd = Math.floor(rng() * unavailLen);
+      var randNum = this.unavailNum[userID].splice(randInd, 1)[0];
+      this.availNum[userID].push(randNum);
+      
+      return randNum;
+    }
+
+    return 0;
   };
 
 
@@ -147,6 +190,7 @@ var GameInstance;
       this.availNum[userID] = new Array();
       this.unavailNum[userID] = new Array();
       this.selectedNum[userID] = new Array();
+      this.resets[userID] = 0;
       // Initialize the user's available numbers
       for(var i = 1; i <= POOL_NUMBER_COUNT; i++) {
         this.availNum[userID].push(i);
@@ -177,6 +221,7 @@ var GameInstance;
     }
     if(tar === combination) {
       if(userID == this.myID) {
+      	this.resets[userID]--;
         this.resetTarNum();
       }
       for(var i = 0; i < this.selectedNum[userID].length; i++) {
@@ -225,6 +270,8 @@ var GameInstance;
     selectNum: selectNum,
     selectNumHandle: selectNumHandle,
     addUser: addUser,
-    evaluateUser: evaluateUser
+    evaluateUser: evaluateUser,
+    setPenaltyThreshold: setPenaltyThreshold,
+    resets: resets
   };
 })();
