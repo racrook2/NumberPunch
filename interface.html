@@ -7,99 +7,109 @@
 	</head>
 	
 	<body>
-		<div class="button-block" align="center">
-			<div class="button-wrapper opponent-button" >
-				<button disabled>1</button>
-				<div class="light"></div>
-			</div>
-			<div class="button-wrapper opponent-button">
-				<button disabled>2</button>
-				<div class="light"></div>
-			</div>
-			<div class="button-wrapper opponent-button">
-				<button disabled>3</button>
-				<div class="light"></div>
-			</div>
-			<div class="button-wrapper opponent-button">
-				<button disabled>4</button>
-				<div class="light"></div>
-			</div>
-			<div class="button-wrapper opponent-button">
-				<button disabled>5</button>
-				<div class="light"></div>
-			</div>
-			<div class="button-wrapper opponent-button">
-				<button disabled>6</button>
-				<div class="light"></div>
-			</div>
-			<div class="button-wrapper opponent-button">
-				<button disabled>7</button>
-				<div class="light"></div>
-			</div>
-			<div class="button-wrapper opponent-button">
-				<button disabled>8</button>
-				<div class="light"></div>
-			</div>
-			<div class="button-wrapper opponent-button">
-				<button disabled>9</button>
-				<div class="light"></div>
-			</div>
-			<div class="button-wrapper opponent-button">
-				<button disabled>10</button>
-				<div class="light"></div>
+		<div class="block-wrapper">
+			<div class="button-block">
+				<div class="button-wrapper opponent-button" >
+					<button disabled>1</button>
+					<div class="light"></div>
+				</div>
+				<div class="button-wrapper opponent-button">
+					<button disabled>2</button>
+					<div class="light"></div>
+				</div>
+				<div class="button-wrapper opponent-button">
+					<button disabled>3</button>
+					<div class="light"></div>
+				</div>
+				<div class="button-wrapper opponent-button">
+					<button disabled>4</button>
+					<div class="light"></div>
+				</div>
+				<div class="button-wrapper opponent-button">
+					<button disabled>5</button>
+					<div class="light"></div>
+				</div>
+				<div class="button-wrapper opponent-button">
+					<button disabled>6</button>
+					<div class="light"></div>
+				</div>
+				<div class="button-wrapper opponent-button">
+					<button disabled>7</button>
+					<div class="light"></div>
+				</div>
+				<div class="button-wrapper opponent-button">
+					<button disabled>8</button>
+					<div class="light"></div>
+				</div>
+				<div class="button-wrapper opponent-button">
+					<button disabled>9</button>
+					<div class="light"></div>
+				</div>
+				<div class="button-wrapper opponent-button">
+					<button disabled>10</button>
+					<div class="light"></div>
+				</div>
 			</div>
 		</div>
 
-		<div class="button-block" align="center">
-			<button class="center-button opponent-button" disabled>X</button>
-			<var id="opponentTarget"></var>
+		<div class="block-wrapper">
+			<div class="button-block">
+				<button class="center-button opponent-button" disabled>
+					<var id="opponentTarget"></var>
+				</button>
+			</div>
 		</div>
-
-		<div class="button-block">
-			<button onclick="GameInstance.resetTarNum()" class="center-button player-button">X</button>
-			<var id="playerTarget"></var>
+		
+		<div class="block-wrapper">
+			<div class="button-block">
+				<button onclick="GameInstance.resetTarNum()" class="center-button player-button">
+					<var id="playerTarget"></var>
+				</button>
+			</div>
 		</div>
-
-		<div class="button-block" align="center">
-			<div class="button-wrapper player-button" id="wrapper1" >
-				<div class="light"></div>
-				<button onclick="GameInstance.selectNum(1)"><var id="number01">1</var></button>
-			</div>
-			<div class="button-wrapper player-button">
-				<div class="light"></div>
-				<button onclick="GameInstance.selectNum(2)"><var id="number02">2</var></button>
-			</div>
-			<div class="button-wrapper player-button">
-				<div class="light"></div>
-				<button onclick="GameInstance.selectNum(3)"><var id="number03">3</var></button>
-			</div>
-			<div class="button-wrapper player-button">
-				<div class="light"></div>
-				<button onclick="GameInstance.selectNum(4)"><var id="number04">4</var></button>
-			</div>
-			<div class="button-wrapper player-button">
-				<div class="light"></div>
-				<button onclick="GameInstance.selectNum(5)"><var id="number05">5</var></button>
-			</div>
-			<div class="button-wrapper player-button">
-				<div class="light"></div>
-				<button onclick="GameInstance.selectNum(6)"><var id="number06">6</var></button>
-			</div>
-			<div class="button-wrapper player-button">
-				<div class="light"></div>
-				<button onclick="GameInstance.selectNum(7)"><var id="number07">7</var></button>
-			</div>
-			<div class="button-wrapper player-button">
-				<div class="light"></div>
-				<button onclick="GameInstance.selectNum(8)"><var id="number08">8</var></button>
-			</div>
-			<div class="button-wrapper player-button">
-				<div class="light"></div>
-				<button onclick="GameInstance.selectNum(9)"><var id="number09">9</var></button>
-			</div>
-			<div class="button-wrapper player-button">
-				<div class="light"></div>
-				<button onclick="GameInstance.selectNum(10)"><var id="number10">10</var></button>
+		
+		<div class="block-wrapper">
+			<div class="button-block">
+				<div class="button-wrapper player-button" id="wrapper1" >
+					<div class="light"></div>
+					<button onclick="GameInstance.selectNum(1)"><var id="number01">1</var></button>
+				</div>
+				<div class="button-wrapper player-button">
+					<div class="light"></div>
+					<button onclick="GameInstance.selectNum(2)"><var id="number02">2</var></button>
+				</div>
+				<div class="button-wrapper player-button">
+					<div class="light"></div>
+					<button onclick="GameInstance.selectNum(3)"><var id="number03">3</var></button>
+				</div>
+				<div class="button-wrapper player-button">
+					<div class="light"></div>
+					<button onclick="GameInstance.selectNum(4)"><var id="number04">4</var></button>
+				</div>
+				<div class="button-wrapper player-button">
+					<div class="light"></div>
+					<button onclick="GameInstance.selectNum(5)"><var id="number05">5</var></button>
+				</div>
+				<div class="button-wrapper player-button">
+					<div class="light"></div>
+					<button onclick="GameInstance.selectNum(6)"><var id="number06">6</var></button>
+				</div>
+				<div class="button-wrapper player-button">
+					<div class="light"></div>
+					<button onclick="GameInstance.selectNum(7)"><var id="number07">7</var></button>
+				</div>
+				<div class="button-wrapper player-button">
+					<div class="light"></div>
+					<button onclick="GameInstance.selectNum(8)"><var id="number08">8</var></button>
+				</div>
+				<div class="button-wrapper player-button">
+					<div class="light"></div>
+					<button onclick="GameInstance.selectNum(9)"><var id="number09">9</var></button>
+				</div>
+				<div class="button-wrapper player-button">
+					<div class="light"></div>
+					<button onclick="GameInstance.selectNum(10)"><var id="number10">10</var></button>
+				</div>
 			</div>
 		</div>
 	</body>

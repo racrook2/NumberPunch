@@ -45,6 +45,7 @@
 	height:	110px;
 	width: 100px;
 	border:	none;
+	
 }
 
 .center-button.player-button:active {
@@ -52,7 +53,11 @@
 }
 
 .button-block {
-	display: block;
+	display: inline-block;
+}
+
+.block-wrapper {
+	text-align: center;
 }
 
 #playerTarget {
