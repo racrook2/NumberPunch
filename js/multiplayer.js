@@ -131,10 +131,11 @@ var Multiplayer;
       var playerID = data['playerid'];
       var myID = GameInstance.myID;
       var isMine = (myID == playerID);
+      var retCode = 0;
       switch(orderType) {
         case "selectnum":
           var num = data['num'];
-          var retCode = GameInstance.selectNumHandle(playerID, num);
+          retCode = GameInstance.selectNumHandle(playerID, num);
 
           if(retCode == 1) {
             GameInterface.deselect(num, isMine);
@@ -152,9 +153,12 @@ var Multiplayer;
           break;
 
         case "resettar":
-          GameInstance.resetTarNumHandle(playerID);
+          retCode = GameInstance.resetTarNumHandle(playerID);
           var tarNum = GameInstance.targetNum[playerID];
           GameInterface.reset(tarNum, isMine);
+          if(retCode > 0){
+            GameInterface.makeAvail(retCode, isMine);
+          }
           break;
 
 

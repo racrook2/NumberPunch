@@ -64,12 +64,28 @@ var GameInterface;
 			wrappers[i].classList.remove("selected");
 		}
 	};
+	
+	function makeAvail(num, isYours) {
+		var wrappers;
+		if (isYours) {
+			wrappers = document.getElementsByClassName("button-wrapper player-button");
+		} else {
+			wrappers = document.getElementsByClassName("button-wrapper opponent-button");
+		}
+		
+		if (num > wrappers.length) {
+			return;
+		}
+		
+		wrappers[num - 1].classList.remove("unavail");
+	};
 
 	GameInterface = {
 		select: select,
 		deselect: deselect,
 		reset: reset,
-		makeUnavail: makeUnavail
+		makeUnavail: makeUnavail,
+		makeAvail: makeAvail
 	};
 })();
 
