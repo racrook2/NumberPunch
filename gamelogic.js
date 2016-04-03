@@ -272,6 +272,7 @@ var GameInstance;
     addUser: addUser,
     evaluateUser: evaluateUser,
     setPenaltyThreshold: setPenaltyThreshold,
-    resets: resets
+    resets: resets,
+    getPenaltyThreshold: getPenaltyThreshold
   };
 })();

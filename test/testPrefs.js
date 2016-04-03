@@ -1,4 +1,3 @@
-
 QUnit.module("User Preferences Test", {
     beforeEach: function () {
         /*var done = assert.async();
