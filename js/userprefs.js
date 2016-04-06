@@ -143,7 +143,7 @@ $(document).ready(function() {
 
 	
 	$(".modal-bg").on('click', function(e){
-        closeModal("#"+e.target.id.slice(0, -3));
+        closeModal("#"+e.target.id.slice(0, -3)); //-3 for "-bg"
     });
 });
 
