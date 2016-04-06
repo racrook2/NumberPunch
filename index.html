@@ -26,8 +26,8 @@
     		<div id="gamesList"></div>
 	    	<div id="gameSpace"></div>
         </div>
-		<div class="modal-bg"></div>
-		<div class="modal">
+		<div id="userprefs-bg" class="modal-bg"></div>
+		<div id="userprefs" class="modal">
 			<a class="close-modal">&#10005;</a>
 			<div id="settings">
 				<script>$('#settings').append(db.generateGUI());</script>
@@ -46,6 +46,22 @@
 				</form>
 			</div>
 		</div>
+
+		<div class="modal-bg" id="gamesetttings-bg"></div>
+		<div class="modal" id="gamesettings">
+			<a class="close-modal">&#10005;</a>
+			<div id="gamesettingsdiv">
+				
+				<form id="gamesettingsForm">
+
+					Penalty Threshold:<br>
+					<input type="number" name="penalties"><br><br>
+					<input type="submit" value="Save">
+					
+				</form>
+			</div>
+		</div>
+
         <script>
             makeHotkeys({
                 "e":"#preferences",

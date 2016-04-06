@@ -33,19 +33,19 @@ function changeName(name) {
 /* openModal
  * fades the user preferences modal dialog into view
  */
-function openModal() {
+function openModal(modalToOpen) {
     //$(".modal").css("marginTop", "0");
-    $(".modal").css("marginLeft", ($(window).width() - $(".modal").width())/2);
-    $(".modal-bg").fadeIn();
-    $(".modal").fadeIn();
+    $(modalToOpen).css("marginLeft", ($(window).width() - $(modalToOpen).width())/2);
+    $(modalToOpen+"-bg").fadeIn();
+    $(modalToOpen).fadeIn();
 }
 
 /* closeModal
  * fades the user preferences modal dialog out from view
  */
-function closeModal() {
-    $(".modal-bg").fadeOut();
-    $(".modal").fadeOut();
+function closeModal(modalToClose) {
+    $(modalToClose+"-bg").fadeOut();
+    $(modalToClose).fadeOut();
 }
 
 /* changeButtonTheme
@@ -92,7 +92,7 @@ $(document).ready(function() {
     //handle clicking preferences button
     $('#preferences').on('click', function(event) {
         console.log("Clicked Preferences");
-        openModal();
+        openModal('#userprefs');
     });
 
     //handle preference submit
@@ -132,18 +132,18 @@ $(document).ready(function() {
         changeBackground(checked);
 		var name = $('input[name=name]').val();
 		changeName(name);
-        closeModal();
+        closeModal("#userprefs");
         event.preventDefault();
     });
     
     //handle clicking 'x' in modal to exit
     $(".close-modal").on('click', function(){
-        closeModal();
+        closeModal("#userprefs");
     });
 
 	
 	$(".modal-bg").on('click', function(){
-        closeModal();
+        closeModal("#userprefs");
     });
 });
 
