@@ -107,14 +107,11 @@ var Multiplayer;
       ready = true;
 
     }
-
-    function gameSettings(data) {
+    function gameSettings(data)
+    {
       var penalty = data["penalty"];
       GameInstance.setPenaltyThreshold(penalty);
-      var gameRule = data["gameRule"];
-      GameInstance.setGameRule(gameRule);
     }
-
     function handleShout (data) {
       var orderType = data['type'];
 
@@ -185,6 +182,7 @@ var Multiplayer;
         startGame: startGame,
         leaveGame: leaveGame,
         readyGame: readyGame,
-        startGameCheck: startGameCheck
+        startGameCheck: startGameCheck,
+        gameSettings: gameSettings
     }
 })();
