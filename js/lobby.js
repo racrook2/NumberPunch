@@ -46,6 +46,8 @@ $(document).ready(function() {
 
 		$('#gameSpace').load('./interface.html');
 
+		openModal("#gamesettings");
+		
 		return false;
 	});
 	

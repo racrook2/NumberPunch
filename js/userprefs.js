@@ -137,13 +137,13 @@ $(document).ready(function() {
     });
     
     //handle clicking 'x' in modal to exit
-    $(".close-modal").on('click', function(){
-        closeModal("#userprefs");
+    $(".close-modal").on('click', function(e){
+        closeModal("#"+e.target.parentElement.id);
     });
 
 	
-	$(".modal-bg").on('click', function(){
-        closeModal("#userprefs");
+	$(".modal-bg").on('click', function(e){
+        closeModal("#"+e.target.id.slice(0, -3));
     });
 });
 
