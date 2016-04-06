@@ -51,12 +51,20 @@
 		<div id="gamesettings" class="modal">
 			<a class="close-modal">&#10005;</a>
 			<div id="gamesettingsdiv">
-				
+				<h3>Game Settings</h3>
+				<br  />
 				<form id="gamesettingsForm">
 
-					Penalty Threshold:<br>
-					<input type="number" name="penalties"><br><br>
+					<label for="penalties">Penalty Threshold:</label>
+					<input id="penalties" type="number" name="penalties"><br><br>
+
+					Operator:<br>
+					<input type="radio" name="op" value="add" checked> Addition (Default)<br>
+					<input type="radio" name="op" value="mult"> Multiplication<br>
+					<input type="radio" name="op" value="rand"> Random<br><br><br>
+
 					<input type="submit" value="Save">
+
 					
 				</form>
 			</div>
