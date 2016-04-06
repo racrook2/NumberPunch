@@ -43,7 +43,6 @@ $(document).ready(function() {
 		$('#gamesList').css('display', 'none');
 		$('#preferences').css('display', 'none');
 		$('#chat').css('display', 'none');
-
 		$('#gameSpace').load('./interface.html');
 
 		openModal("#gamesettings");

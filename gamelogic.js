@@ -38,6 +38,14 @@ var GameInstance;
   // Number of resets before player gets penalized
   var penaltyThreshold = 0;
 
+  var gameRule = 0;
+
+  var setGameRule = function(num)
+  {
+      if(this.inProgress) return false;
+      gameRule = num;
+  }
+
   var setPenaltyThreshold = function(num) {
   	if (this.inProgress) return false;
     penaltyThreshold = num;

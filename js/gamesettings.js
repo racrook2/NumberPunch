@@ -19,5 +19,4 @@ $(document).ready(function() {
         closeModal("#gamesettings");
         event.preventDefault();
     });
-    
 });
