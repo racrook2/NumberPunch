@@ -124,8 +124,6 @@ var Multiplayer;
           case "unready":
             Multiplayer.readyPlayers = Multiplayer.readyPlayers-1;
             break;
-          case "settings":
-
           default:
             break;
 
