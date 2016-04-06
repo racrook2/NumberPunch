@@ -2,7 +2,6 @@ $(document).ready(function() {
 
     $('#gamesettingsForm').on('submit', function(event) {
 
-        changeName($('input[type=text]').val());
         var op = 0;
         var checkedOp = $('input[name=op]:radio:checked').val();
         if(checkedOp == 'add') {
@@ -19,7 +18,7 @@ $(document).ready(function() {
                      gameRule: op};
 
         Multiplayer.gameSettings(data);
-        
+
         closeModal("#gamesettings");
         event.preventDefault();
     });
