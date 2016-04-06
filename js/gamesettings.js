@@ -3,18 +3,22 @@ $(document).ready(function() {
     $('#gamesettingsForm').on('submit', function(event) {
 
         changeName($('input[type=text]').val());
-
+        var op = 0;
         var checkedOp = $('input[name=op]:radio:checked').val();
         if(checkedOp == 'add') {
-            changeButtonTheme(blueOrangeTheme);
+            op = 0;
         } else if (checkedOp == 'mult') {
-            changeButtonTheme(blackWhiteTheme);
+            op = 1;
         } else if (checkedOp == 'rand') {
-            changeButtonTheme(blackWhiteTheme);
+            op = 2;
         }
     	
 		var penThreshold = $('input[name=penalties]').val();
-		changeName(name);
+        
+        var data = { penalty: penThreshold ,
+                     gameRule: op};
+
+        Multiplayer.gameSettings(data);
         
         closeModal("#gamesettings");
         event.preventDefault();
