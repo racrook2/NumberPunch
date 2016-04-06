@@ -107,6 +107,11 @@ var Multiplayer;
       ready = true;
 
     }
+    function gameSettings(data)
+    {
+      var penalty = data["penalty"];
+      GameInstance.setPenaltyThreshold(penalty);
+    }
     function handleShout (data) {
       var orderType = data['type'];
 
@@ -119,6 +124,8 @@ var Multiplayer;
           case "unready":
             Multiplayer.readyPlayers = Multiplayer.readyPlayers-1;
             break;
+          case "settings":
+
           default:
             break;
 

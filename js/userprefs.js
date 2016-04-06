@@ -44,6 +44,11 @@ function openModal(modalToOpen) {
  * fades the user preferences modal dialog out from view
  */
 function closeModal(modalToClose) {
+
+    if (modalToClose == "#gamesettings") {
+            emitCreateGame();
+        };
+
     $(modalToClose+"-bg").fadeOut();
     $(modalToClose).fadeOut();
 }
