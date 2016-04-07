@@ -12,10 +12,11 @@ QUnit.module("Game Settings Test", {
 
 QUnit.test("Did Game Settings Modal Open:", function (assert) {
 
-    var modalDisplay = $('.modal').css('display');
+    var modalID = "#gamesettings";
+    var modalDisplay = $(modalID).css('display');
     assert.equal(modalDisplay, 'none');
     openModal();
-    modalDisplay = $('.modal').css('display');
+    modalDisplay = $(modalID).css('display');
     assert.equal(modalDisplay, 'block');
 });
 
