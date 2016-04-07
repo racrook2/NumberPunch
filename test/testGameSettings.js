@@ -3,7 +3,7 @@ QUnit.config.autostart = false;
 var socket;
 var GAME_TYPE = 268201;
 Multiplayer.createGame();
-Multiplayer.startGame();
+//Multiplayer.startGame();
 setTimeout(function() {
     QUnit.start();
 }, 1000);
@@ -32,15 +32,6 @@ QUnit.test("Did Game Settings Modal Open:", function (assert) {
     assert.equal(modalDisplay, 'block');
 });
 
-QUnit.test("Did Game Settings Modal Close:", function (assert) {
-
-    var modalDisplay = $(modalID).css('display');
-    assert.equal(modalDisplay, 'block');
-    closeModal(modalID);
-    modalDisplay = $(modalID).css('display');
-    assert.equal(modalDisplay, 'none');
-});
-
 QUnit.test("Did Default Settings Apply When Modal Closed:", function (assert) {
     closeModal(modalID);
     assert.equal(GameInstance.getPenaltyThreshold(), 0);
@@ -48,6 +39,14 @@ QUnit.test("Did Default Settings Apply When Modal Closed:", function (assert) {
 }); 
 
 QUnit.test("Did Game Settings Apply on Form Submission:", function (assert) {
-    //$('input[name=op]:radio').prop('checked', true);
+    $('input[name=penalties]').val('2');
+    $('input[name=op]')[1].checked = true;
+    assert.equal($('input[name=op]:radio:checked').val(), 'mult');
+    $('#gamesettingsForm').submit();
+    setTimeout(function() {
+        assert.equal(GameInstance.getPenaltyThreshold(), 2);
+        assert.equal(GameInstance.getGameRule(), 1);
+    }, 1000);
+    
 }); 
 
