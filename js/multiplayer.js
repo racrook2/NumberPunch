@@ -191,7 +191,10 @@ var Multiplayer;
             GameInstance.setGameRule(gameRule);
             console.log(GameInstance.getPenaltyThreshold());
             break;
-
+        case "message":
+          var msg = data['msg'];
+          GameInterface.displayMessage(msg, isMine);
+          break;
         default:
           // Do nothing
           break;
