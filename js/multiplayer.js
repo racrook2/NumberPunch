@@ -88,6 +88,7 @@ var Multiplayer;
     }
     function startGame() {
         console.log("start");
+
         socket.emit("startgame");
     }
     function startGameCheck() {
@@ -182,6 +183,14 @@ var Multiplayer;
             GameInterface.makeAvail(retCode, isMine);
           }
           break;
+
+          case "setting":
+            var penalty = data['penalty'];
+            var gameRule = data['gameRule'];
+            GameInstance.setPenaltyThreshold(penalty);
+            GameInstance.setGameRule(gameRule);
+            console.log(GameInstance.getPenaltyThreshold());
+            break;
 
         default:
           // Do nothing

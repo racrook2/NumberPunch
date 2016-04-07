@@ -232,10 +232,9 @@ var GameInstance;
       combination = this.selectedNum[userID].reduce( (prev, curr) => prev + curr );
     }
     if(tar === combination) {
-      if(userID == this.myID) {
+
       	this.resets[userID]--;
         this.resetTarNum();
-      }
       for(var i = 0; i < this.selectedNum[userID].length; i++) {
         var n = this.selectedNum[userID][i];
         this.unavailNum[userID].push(n);
