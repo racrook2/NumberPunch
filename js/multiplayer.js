@@ -127,7 +127,7 @@ var Multiplayer;
           case "setting":
             var setting = data["setting"];
             GameInstance.setPenaltyThreshold(setting["penalty"]);
-            GameInstance.setGameRule["gameRule"];
+            GameInstance.setGameRule(setting["gameRule"]);
             break;
           default:
             break;
