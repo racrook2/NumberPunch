@@ -43,6 +43,13 @@ var Multiplayer;
     });
     socket.on('start', function (data) {
         console.log("Game is starting ", data);
+        var pen = GameInstance.getPenaltyThreshold();
+        var gR = GameInstance.getGameRule();
+            
+        if(gameStarter)
+        {
+          socket.emit('shout', {type : "setting", penalty : pen, gameRule : gR });
+        }
         var myIndex = data['me'];
         GameInstance.startGameHandle(data, Multiplayer.players);
         for(var i=0; i < Multiplayer.players.length; i++){
