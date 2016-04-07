@@ -109,7 +109,8 @@ var Multiplayer;
     }
     function gameSettings(data)
     {
-      sockit.emit("shout", {type : "setting", setting : { penalty : data["penalty"], gameRule : data["penalty"]}});
+      console.log("in gameSettings");
+      socket.emit('shout', {type : "setting", penalty : data['penalty'], gameRule : data['gameRule']});
       
     }
     function handleShout (data) {
@@ -125,9 +126,10 @@ var Multiplayer;
             Multiplayer.readyPlayers = Multiplayer.readyPlayers-1;
             break;
           case "setting":
-            var setting = data["setting"];
-            GameInstance.setPenaltyThreshold(setting["penalty"]);
-            GameInstance.setGameRule(setting["gameRule"]);
+            var penalty = data['penalty'];
+            var gameRule = data['gameRule'];
+            GameInstance.setPenaltyThreshold(penalty);
+            GameInstance.setGameRule(gameRule);
             break;
           default:
             break;

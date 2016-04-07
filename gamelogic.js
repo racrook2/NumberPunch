@@ -46,6 +46,10 @@ var GameInstance;
       gameRule = num;
   }
 
+  var getGameRule = function() {
+    return gameRule;
+  };
+
   var setPenaltyThreshold = function(num) {
   	if (this.inProgress) return false;
     penaltyThreshold = num;
@@ -281,6 +285,8 @@ var GameInstance;
     evaluateUser: evaluateUser,
     setPenaltyThreshold: setPenaltyThreshold,
     resets: resets,
-    getPenaltyThreshold: getPenaltyThreshold
+    getPenaltyThreshold: getPenaltyThreshold,
+    setGameRule: setGameRule,
+    getGameRule: getGameRule
   };
 })();
