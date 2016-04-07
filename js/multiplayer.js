@@ -43,13 +43,7 @@ var Multiplayer;
     });
     socket.on('start', function (data) {
         console.log("Game is starting ", data);
-        var pen = GameInstance.getPenaltyThreshold();
-        var gR = GameInstance.getGameRule();
-            
-        if(gameStarter)
-        {
-          socket.emit('shout', {type : "setting", penalty : pen, gameRule : gR });
-        }
+
         var myIndex = data['me'];
         GameInstance.startGameHandle(data, Multiplayer.players);
         for(var i=0; i < Multiplayer.players.length; i++){
@@ -59,6 +53,14 @@ var Multiplayer;
     socket.on('players', function (data) {
         console.log("Players:", data);
         
+        var pen = GameInstance.getPenaltyThreshold();
+        var gR = GameInstance.getGameRule();
+            
+        if(gameStarter)
+        {
+          socket.emit('shout', {type : "setting", penalty : pen, gameRule : gR });
+        }
+
         Multiplayer.players = data;
     });
 
@@ -117,7 +119,7 @@ var Multiplayer;
     function gameSettings(data)
     {
       console.log("in gameSettings");
-      socket.emit('shout', {type : "setting", penalty : data['penalty'], gameRule : data['gameRule']});
+      socket.emit('shout', {type : "setting", playerid: GameInstance.myID, penalty : data['penalty'], gameRule : data['gameRule']});
       
     }
     function handleShout (data) {
@@ -137,6 +139,7 @@ var Multiplayer;
             var gameRule = data['gameRule'];
             GameInstance.setPenaltyThreshold(penalty);
             GameInstance.setGameRule(gameRule);
+            console.log(GameInstance.getPenaltyThreshold());
             break;
           default:
             break;
@@ -179,7 +182,6 @@ var Multiplayer;
             GameInterface.makeAvail(retCode, isMine);
           }
           break;
-
 
         default:
           // Do nothing
