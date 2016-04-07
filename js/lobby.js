@@ -20,8 +20,27 @@ $(document).ready(function() {
 	$('#ready').css('display', 'none');
 	$('#startGame').css('display', 'none');
 	$('#gameCanvas').css('display', 'none');
+	$('#exit').css('display', 'none');
+
+	$('#exit').on('click', function() {
+		console.log("Clicked Exit Game");
+		Multiplayer.leaveGame();
+
+		$('#leaveGame').css('display', 'none');
+		$('#ready').css('display', 'none');
+		$('#startGame').css('display', 'none');
+		$('#gameSpace').css('display', 'none');
+		$('#createGame').css('display', 'inline-block');
+		$('#refresh').css('display', 'inline-block');
+		$('#gamesList').css('display', 'block');
+		$('#preferences').css('display', 'inline-block');
+		$('#chat').css('display', 'inline');
+		$('#exit').css('display', 'none');
+
+		return false;
 
 
+	});
 	//Refresh when refresh button is clicked.
 	$('#refresh').on('click', function() {
 		console.log("Clicked Refresh");

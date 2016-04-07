@@ -251,19 +251,21 @@ var GameInstance;
         this.unavailNum[userID].push(n);
         this.availNum[userID].splice(this.availNum[userID].indexOf(n), 1);
       }
+
       this.selectedNum[userID] = [];
+      if(this.availNum[userID].length == 0) {
+        this.declareWinner(userID);
+        console.log("winner:");
+        console.log(userID);
+        // return 5;
+      } 
       return 3;
     } else if(tar < combination) {
       this.selectedNum[userID] = [];
       return 4;
     }
 
-    if(this.availNum[userID].length === 0) {
-      this.declareWinner(userID);
-      return 5;
-    } else {
-      return 2;
-    }
+    return 2;
   };
 
   /**
@@ -274,6 +276,10 @@ var GameInstance;
   var declareWinner = function(userID) {
     this.inProgress = false;
     this.winner = userID;
+        Multiplayer.sendOrder({
+      'type': 'winner declared',
+      'player': userID
+    });
   };
 
   GameInstance = {
@@ -298,6 +304,7 @@ var GameInstance;
     getPenaltyThreshold: getPenaltyThreshold,
     setGameRule: setGameRule,
     getGameRule: getGameRule,
-    processMessage: processMessage
+    processMessage: processMessage,
+    declareWinner: declareWinner
   };
 })();

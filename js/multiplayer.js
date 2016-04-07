@@ -5,6 +5,8 @@ var Multiplayer;
     var players = new Array();
     var gameStarter = false;
     var ready = false;
+    var inProgress = false;
+
     function createGame() {
         gameStarter  = true;
         Multiplayer.readyPlayers  = 0;
@@ -45,6 +47,7 @@ var Multiplayer;
         console.log("Game is starting ", data);
 
         var myIndex = data['me'];
+        inProgress = true;
         GameInstance.startGameHandle(data, Multiplayer.players);
         for(var i=0; i < Multiplayer.players.length; i++){
             GameInterface.reset(GameInstance.targetNum[Multiplayer.players[i]], i===myIndex);
@@ -69,7 +72,10 @@ var Multiplayer;
     }
     function leaveGame() {
       if (ready){
-        socket.emit('shout', {type: 'unready'})
+        if (inProgress){
+          socket.emit('order', {type:'loss', player:GameInstance.myID});
+        }
+        socket.emit('shout', {type: 'unready'});
       }
       ready = false;
       socket.emit('leavegame');
@@ -194,6 +200,29 @@ var Multiplayer;
         case "message":
           var msg = data['msg'];
           GameInterface.displayMessage(msg, isMine);
+          break;
+        case "loss":
+          console.log("Game ended");
+          var losing_player = data['player'];
+          console.log(losing_player);
+          player_1 = GameInstance.userIDs[0];
+          console.log(player_1);
+          if (player_1 == losing_player){
+            console.log("case 1");
+            GameInstance.declareWinner(GameInstance.userIDs[1]);
+          }
+          else {
+            console.log("case 2");
+            GameInstance.declareWinner(GameInstance.userIDs[0]);
+          }
+          break;
+          
+        case "winner declared":
+            if(data['player'] == myID){
+             $('#leaveGame').css('display', 'none');
+             $('#exit').css('display', 'inline-block');
+             $('#gameSpace').load('./winscreen.html');
+          }
           break;
         default:
           // Do nothing
