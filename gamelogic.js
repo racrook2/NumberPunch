@@ -219,9 +219,11 @@ var GameInstance;
     if(this.selectedNum[userID].length > 0) {
       combination = this.selectedNum[userID].reduce( (prev, curr) => prev + curr );
     }
-    if(tar === combination) {
+    if(tar === combination) { 
       this.resets[userID]--;
-      this.resetTarNum();
+      if (userID == this.myID) {
+        this.resetTarNum();
+      }
       for(var i = 0; i < this.selectedNum[userID].length; i++) {
         var n = this.selectedNum[userID][i];
         this.unavailNum[userID].push(n);
