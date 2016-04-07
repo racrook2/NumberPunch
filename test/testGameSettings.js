@@ -15,18 +15,21 @@ QUnit.test("Did Game Settings Modal Open:", function (assert) {
     var modalID = "#gamesettings";
     var modalDisplay = $(modalID).css('display');
     assert.equal(modalDisplay, 'none');
-    openModal();
+    openModal(modalID);
     modalDisplay = $(modalID).css('display');
     assert.equal(modalDisplay, 'block');
 });
 
-QUnit.test("Did Theme Change to Purple:", function (assert) {
-    changeButtonTheme(purpleTheme);
-    var buttonBgColor = $('#createGame').css('background-color');
-    assert.equal(buttonBgColor, 'rgb(102, 0, 102)');
-    var bgColor = $('body').css('background-color');
-    assert.equal(bgColor, 'rgb(153, 51, 153)');
+QUnit.test("Did Game Settings Modal Close:", function (assert) {
+
+    var modalID = "#gamesettings";
+    var modalDisplay = $(modalID).css('display');
+    assert.equal(modalDisplay, 'block');
+    closeModal(modalID);
+    modalDisplay = $(modalID).css('display');
+    assert.equal(modalDisplay, 'none');
 });
+
 
 QUnit.test("Did Theme Change to Orange:", function (assert) {
     changeButtonTheme(orangeTheme);
