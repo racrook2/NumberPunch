@@ -1,5 +1,5 @@
 var db = new DB({
-//    Username: "Guest"
+    Username: "Guest"
     //blueOrange: true,
     //blackWhite: false
 })
@@ -24,12 +24,7 @@ var blackTheme = {
     fontColor : 'white'
 };
 
-function changeName(name) {
-    //change user's name
-	if (name != "") {
-		document.getElementById("greeting").innerHTML = "Hello, " + name;
-	}
-};
+
 /* openModal
  * fades the user preferences modal dialog into view
  */
@@ -76,6 +71,9 @@ function updateName() {
 function changeName(name) {
     db.setValue('Username', name);
     updateName();
+    if (name != "") {
+		document.getElementById("greeting").innerHTML = "Hello, " + name;
+	}
 };
 
 function applySettings(settings) {
@@ -130,7 +128,7 @@ $(document).ready(function() {
         }
 		checked = $('input[name=bg]:checked').val();
         changeBackground(checked);
-		var name = $('input[name=name]').val();
+		var name = db.getValue("Username");
 		changeName(name);
         closeModal("#userprefs");
         event.preventDefault();

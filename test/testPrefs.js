@@ -13,7 +13,7 @@ QUnit.module("User Preferences Test", {
 QUnit.test("Did Preferences Modal Open:", function (assert) {
     var modalDisplay = $('.modal').css('display');
     assert.equal(modalDisplay, 'none');
-    openModal();
+    openModal('.modal');
     modalDisplay = $('.modal').css('display');
     assert.equal(modalDisplay, 'block');
 });
