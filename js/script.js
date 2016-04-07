@@ -65,11 +65,36 @@ var GameInterface;
 		}
 	};
 
+  function displayMessage(msg, isYours) {
+    var inputField = document.getElementById("user-msg-contents");
+
+    if(inputField.value.length < 1) {
+      return;
+    }
+
+    // Empty field
+    inputField.value = "";
+
+    // Get the chatbox in order to prepend a message to its children
+    var chatbox = document.getElementById("chatbox");
+    var d = new Date();
+    var datetime = d.getDate() + "/" + (d.getMonth()+1)  + "/" 
+                + d.getFullYear() + " , "  + d.getHours() + ":"  
+                + d.getMinutes() + ":" + d.getSeconds();
+
+    if(isYours) {
+      chatbox.innerHTML = "<p>(" + datetime + ") <b>You</b>: " + msg + chatbox.innerHTML + "</p>";
+    } else {
+      chatbox.innerHTML = "<p>(" + datetime + ") <b>Opponent</b>: " + msg + chatbox.innerHTML + "</p>";
+    }
+  }
+
 	GameInterface = {
 		select: select,
 		deselect: deselect,
 		reset: reset,
-		makeUnavail: makeUnavail
+		makeUnavail: makeUnavail,
+    displayMessage: displayMessage
 	};
 })();
 

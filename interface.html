@@ -102,6 +102,16 @@
 				<button onclick="GameInstance.selectNum(10)"><var id="number10">10</var></button>
 			</div>
 		</div>
+
+		<div id="chatbox-wrapper" align="center">
+			<h3>Chat</h3>
+
+			<input name="msgcontents" type="text" id="user-msg-contents" />
+			<button onclick="GameInstance.processMessage()" id="user-msg-submit">Send Message</button>
+
+			<div id="chatbox"></div>
+
+		</div>
 	</body>
 	
 	<script src="js/script.js"></script>

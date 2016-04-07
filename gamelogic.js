@@ -86,6 +86,14 @@ var GameInstance;
     });
   }
 
+  var processMessage = function() {
+    Multiplayer.sendOrder({
+      "type": "message",
+      "msg": document.getElementById("user-msg-contents").value,
+      "playerid": this.myID
+    });
+  }
+
   /**
    * Add a number to a user's selected numbers array
    * Deselects (removes the number from the array) if already existent
@@ -225,6 +233,7 @@ var GameInstance;
     selectNum: selectNum,
     selectNumHandle: selectNumHandle,
     addUser: addUser,
-    evaluateUser: evaluateUser
+    evaluateUser: evaluateUser,
+    processMessage, processMessage
   };
 })();

@@ -157,6 +157,9 @@ var Multiplayer;
           GameInterface.reset(tarNum, isMine);
           break;
 
+        case "message":
+          var msg = data['msg'];
+          GameInterface.displayMessage(msg, isMine);
 
         default:
           // Do nothing
