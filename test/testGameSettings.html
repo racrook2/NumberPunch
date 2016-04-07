@@ -6,11 +6,36 @@
   <title>Game Settings Frontend Test</title>
   <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.21.0.css">
   <script src="http://ctw.firecaster.com/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script> 
+  <script src="http://code.jquery.com/qunit/qunit-1.21.0.js"></script>
 </head>
 <body>
   <div id="qunit"></div>
   <div id="qunit-fixture"></div>
-  <script src="http://code.jquery.com/qunit/qunit-1.21.0.js"></script>
+  
+  <div id="gamesettings-bg" class="modal-bg"></div>
+    <div id="gamesettings" class="modal" style="display: none">
+      <a class="close-modal">&#10005;</a>
+      <div id="gamesettingsdiv">
+        <h3>Game Settings</h3>
+        <hr  /><br  />
+        <form id="gamesettingsForm">
+
+          <label for="penalties">Penalty Threshold:</label>
+          <input id="penalties" type="number" name="penalties" value="0"><br><br>
+
+          Operator:<br>
+          <input type="radio" name="op" value="add" checked> Addition (Default)<br>
+          <input type="radio" name="op" value="mult"> Multiplication<br>
+          <input type="radio" name="op" value="rand"> Random<br><br><br>
+
+          <input type="submit" value="Save">
+
+          
+        </form>
+      </div>
+    </div>
+    <script src="http://code.jquery.com/qunit/qunit-1.21.0.js"></script>
   <script src="../gamelogic.js"></script>
   <script src="../js/multiplayer.js"></script>
   <script src="../js/script.js"></script>
