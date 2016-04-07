@@ -142,9 +142,14 @@ var GameInstance;
   }
 
   var processMessage = function() {
+      var input = document.getElementById("user-msg-contents");
+      var value = document.getElementById("user-msg-contents").value;
+      if (value.length <= 0)
+        return;
+      input.value = "";
     Multiplayer.sendOrder({
       "type": "message",
-      "msg": document.getElementById("user-msg-contents").value,
+      "msg": value,
       "playerid": this.myID
     });
   }
