@@ -285,6 +285,7 @@ var GameInstance;
       'type': 'winner declared',
       'player': userID
     });
+    return userID;
   };
 
   GameInstance = {
