@@ -22,7 +22,7 @@ QUnit.test("Test set penalty threshold", function(assert) {
     assert.equal(GameInstance.getPenaltyThreshold(), 1);
 });
 
-QUnit.test("Test penalty on reset", function(assert) {
+QUnit.test("Test penalty on one reset", function(assert) {
 	var userID = 1;
 	GameInstance.setPenaltyThreshold(1);
 	GameInstance.inProgress = true;
@@ -35,4 +35,29 @@ QUnit.test("Test penalty on reset", function(assert) {
 	GameInstance.resetTarNumHandle(userID);
 	assert.equal(GameInstance.availNum[userID].length, availLen);
 	assert.equal(GameInstance.unavailNum[userID].length, unavailLen);
+});
+
+QUnit.test("Test penalty on two resets", function(assert) {
+	var userID = 1;
+	GameInstance.setPenaltyThreshold(2);
+	GameInstance.inProgress = true;
+	var availLen = GameInstance.availNum[userID].length;
+	var unavailLen = GameInstance.unavailNum[userID].length;
+	var num = GameInstance.availNum[userID].pop();
+	GameInstance.unavailNum[userID].push(num);
+	assert.equal(GameInstance.availNum[userID].length, availLen-1);
+	assert.equal(GameInstance.unavailNum[userID].length, unavailLen+1);
+	GameInstance.resetTarNumHandle(userID);
+	assert.equal(GameInstance.availNum[userID].length, availLen-1);
+	assert.equal(GameInstance.unavailNum[userID].length, unavailLen+1);
+	GameInstance.resetTarNumHandle(userID);
+	assert.equal(GameInstance.availNum[userID].length, availLen);
+	assert.equal(GameInstance.unavailNum[userID].length, unavailLen);
+});
+
+QUnit.test("Test change penalty threshold", function(assert) {
+	GameInstance.setPenaltyThreshold(1);
+	assert.equal(GameInstance.getPenaltyThreshold(), 1);
+	GameInstance.setPenaltyThreshold(2);
+	assert.equal(GameInstance.getPenaltyThreshold(), 2);
 });
