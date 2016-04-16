@@ -13,8 +13,6 @@ $(document).ready(function() {
         } else if (checkedOp == 'rand') {
             op = 2;
         }
-
-        console.log("in gameSettings2");
     	
 		var penThreshold = $('input[name=penalties]').val();
         
