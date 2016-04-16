@@ -4,7 +4,6 @@
  *  This file defines data structure and logic behind
  *  an instance of the Number Punch game
  */
-POOL_NUMBER_COUNT = 10;
 
 /**
  * Data structure defining a game instance
@@ -44,8 +43,26 @@ var GameInstance;
   var gameRule = 0;
 
   var setPoolSize = function(num) {
-      if(this.inProgress) return false;
+      if(this.inProgress || num < 1) return false;
       poolSize = num;
+
+      var opButtons = $('#opponent-buttons');
+      opButtons.html("");
+      for (var x = 1; x <= num; x++) {
+        $('<div/>', {
+            'class': 'button-wrapper opponent-button',
+            'html': ('<button disabled>'+x+'</button><div class="light"></div>')
+        }).appendTo(opButtons);
+      }
+      var myButtons = $('#player-buttons');
+      myButtons.html("");
+      for (var x = 1; x <= num; x++) {
+        $('<div/>', {
+            'class': 'button-wrapper player-button',
+            'id': 'wrapper'+x,
+            'html': ('<button onclick="GameInstance.selectNum('+x+')">'+x+'</button><div class="light"></div>')
+        }).appendTo(myButtons);
+      }
   }
 
   var getPoolSize = function() {
@@ -118,7 +135,7 @@ var GameInstance;
     console.log("Reset tarNum for ", userID);
     if(!userID) return -1;
 
-    this.targetNum[userID] = Math.floor(rng() * ((POOL_NUMBER_COUNT*3)-3))+1;
+    this.targetNum[userID] = Math.floor(rng() * ((poolSize*3)-3))+1;
 
     console.log(this.targetNum[userID]);
 
@@ -170,7 +187,7 @@ var GameInstance;
    * Deselects (removes the number from the array) if already existent
    *
    * @param userID (int)
-   * @param num (int) 1<=num<=POOL_NUMBER_COUNT
+   * @param num (int) 1<=num<=poolSize
    *
    * Return codes:
    * -1: Nothing happens
@@ -221,14 +238,14 @@ var GameInstance;
   var addUser = function(userID) {
     if(this.userIDs.indexOf(userID) < 0) {
       this.userIDs.push(userID);
-      this.targetNum[userID] = Math.floor(rng() * ((POOL_NUMBER_COUNT*3)-3))+1;
+      this.targetNum[userID] = Math.floor(rng() * ((poolSize*3)-3))+1;
 
       this.availNum[userID] = new Array();
       this.unavailNum[userID] = new Array();
       this.selectedNum[userID] = new Array();
       this.resets[userID] = 0;
       // Initialize the user's available numbers
-      for(var i = 1; i <= POOL_NUMBER_COUNT; i++) {
+      for(var i = 1; i <= poolSize; i++) {
         this.availNum[userID].push(i);
       }
       return true;
