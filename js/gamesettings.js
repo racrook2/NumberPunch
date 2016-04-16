@@ -5,6 +5,9 @@ $(document).ready(function() {
         var op = 0;
         console.log("in gameSettings");
 
+    	var poolsize = $('input[name=poolsize]').val();
+		var penThreshold = $('input[name=penalties]').val();
+
         var checkedOp = $('input[name=op]:radio:checked').val();
         if(checkedOp == 'add') {
             op = 0;
@@ -13,13 +16,10 @@ $(document).ready(function() {
         } else if (checkedOp == 'rand') {
             op = 2;
         }
-    	
-		var penThreshold = $('input[name=penalties]').val();
-        
-        var data = { penalty: penThreshold ,
-                     gameRule: op};
 
-        console.log("in gameSettings");
+        var data = { poolsize: poolsize, 
+                     penalty: penThreshold,
+                     gameRule: op};
         
         Multiplayer.gameSettings(data);
 
