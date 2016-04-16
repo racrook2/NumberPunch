@@ -35,13 +35,24 @@ var GameInstance;
   // Mappings between user id's and the number of times they've reset
   var resets = {};
   
+  //Number of numbers in number pool
+  var poolSize = 10;
+
   // Number of resets before player gets penalized
   var penaltyThreshold = 0;
 
   var gameRule = 0;
 
-  var setGameRule = function(num)
-  {
+  var setPoolSize = function(num) {
+      if(this.inProgress) return false;
+      poolSize = num;
+  }
+
+  var getPoolSize = function() {
+      return poolSize;
+  };
+
+  var setGameRule = function(num) {
       if(this.inProgress) return false;
       gameRule = num;
   }
