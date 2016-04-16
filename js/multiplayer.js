@@ -148,6 +148,7 @@ var Multiplayer;
             GameInstance.setPenaltyThreshold(penalty);
             GameInstance.setGameRule(gameRule);
             GameInstance.setPoolSize(poolSize);
+            GameInterface.createButtons(poolSize);
             //console.log(GameInstance.getPenaltyThreshold());
             break;
           default:

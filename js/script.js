@@ -2,6 +2,27 @@
 
 var GameInterface;
 (function() {
+
+	function createButtons(poolsize) {
+	  var opButtons = $('#opponent-buttons');
+      opButtons.html("");
+      for (var x = 1; x <= poolsize; x++) {
+        $('<div/>', {
+            'class': 'button-wrapper opponent-button',
+            'html': ('<button disabled>'+x+'</button><div class="light"></div>')
+        }).appendTo(opButtons);
+      }
+      var myButtons = $('#player-buttons');
+      myButtons.html("");
+      for (var x = 1; x <= poolsize; x++) {
+        $('<div/>', {
+            'class': 'button-wrapper player-button',
+            'id': 'wrapper'+x,
+            'html': ('<button onclick="GameInstance.selectNum('+x+')">'+x+'</button><div class="light"></div>')
+        }).appendTo(myButtons);
+      }
+	}
+
 	function select(num, isYours) {
 		var buttonWrappers;
 		if(isYours) {
@@ -98,6 +119,7 @@ var GameInterface;
   }
 
 	GameInterface = {
+		createButtons: createButtons,
 		select: select,
 		deselect: deselect,
 		reset: reset,
