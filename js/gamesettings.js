@@ -17,7 +17,7 @@ $(document).ready(function() {
             op = 2;
         }
 
-        var data = { poolsize: poolsize, 
+        var data = { poolSize: poolsize, 
                      penalty: penThreshold,
                      gameRule: op};
         

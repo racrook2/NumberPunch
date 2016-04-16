@@ -58,10 +58,10 @@ var Multiplayer;
         
         var pen = GameInstance.getPenaltyThreshold();
         var gR = GameInstance.getGameRule();
+        var pS = GameInstance.getPoolSize();
             
-        if(gameStarter)
-        {
-          socket.emit('shout', {type : "setting", penalty : pen, gameRule : gR });
+        if(gameStarter) {
+          socket.emit('shout', {type : "setting", poolSize: pS, penalty : pen, gameRule: gR });
         }
 
         Multiplayer.players = data;
@@ -126,7 +126,7 @@ var Multiplayer;
     function gameSettings(data)
     {
       console.log("in gameSettings");
-      socket.emit('shout', {type : "setting", playerid: GameInstance.myID, penalty : data['penalty'], gameRule : data['gameRule']});
+      socket.emit('shout', {type : "setting", playerid: GameInstance.myID, penalty : data['penalty'], gameRule : data['gameRule'], poolSize: data['poolSize']});
       
     }
     function handleShout (data) {
@@ -144,9 +144,11 @@ var Multiplayer;
           case "setting":
             var penalty = data['penalty'];
             var gameRule = data['gameRule'];
+            var poolSize = data['poolSize'];
             GameInstance.setPenaltyThreshold(penalty);
             GameInstance.setGameRule(gameRule);
-            console.log(GameInstance.getPenaltyThreshold());
+            GameInstance.setPoolSize(poolSize);
+            //console.log(GameInstance.getPenaltyThreshold());
             break;
           default:
             break;

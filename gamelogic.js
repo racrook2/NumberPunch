@@ -321,6 +321,8 @@ var GameInstance;
     getPenaltyThreshold: getPenaltyThreshold,
     setGameRule: setGameRule,
     getGameRule: getGameRule,
+    setPoolSize: setPoolSize,
+    getPoolSize: getPoolSize,
     processMessage: processMessage,
     declareWinner: declareWinner
   };
