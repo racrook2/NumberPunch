@@ -43,8 +43,15 @@ var GameInstance;
   var gameRule = 0;
 
   var setPoolSize = function(num) {
-      if(this.inProgress || num < 1 || num > 20) return false;
-      poolSize = num;
+    if(this.inProgress){
+      return false;
+    }
+    if(num < 1 || num > 20){
+      poolSize=10;
+      return false;
+    }
+    poolSize = num;
+    return true;
   }
 
   var getPoolSize = function() {
