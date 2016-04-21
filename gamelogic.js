@@ -107,7 +107,24 @@ var GameInstance;
     console.log("Reset tarNum for ", userID);
     if(!userID) return -1;
 
-    this.targetNum[userID] = Math.floor(rng() * ((POOL_NUMBER_COUNT*3)-3))+1;
+	if (gameRule == 0) {
+    	this.targetNum[userID] = Math.floor(rng() * ((POOL_NUMBER_COUNT*3)-3))+1;
+    }
+    else if (gameRule == 1) {
+    	var num1 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+    	var sw = rng();
+    	var num2 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+    	if (sw >= 0.2) {
+    		num2 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+    	}
+    	else {
+    		num2 = 1;
+    	}
+    	while (num1 == num2) {
+    		num2 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+    	}
+    	this.targetNum[userID] = num1 * num2;
+    }
 
     console.log(this.targetNum[userID]);
 
@@ -242,7 +259,12 @@ var GameInstance;
     var tar = this.targetNum[userID];
     var combination = 0;
     if(this.selectedNum[userID].length > 0) {
-      combination = this.selectedNum[userID].reduce( (prev, curr) => prev + curr );
+    	if (gameRule == 0) {
+      		combination = this.selectedNum[userID].reduce( (prev, curr) => prev + curr );
+      	}
+      	else if (gameRule == 1) {
+      		combination = this.selectedNum[userID].reduce( (prev, curr) => prev * curr );
+      	}
     }
     if(tar === combination) {
 
