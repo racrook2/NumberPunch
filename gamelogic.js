@@ -227,7 +227,24 @@ var GameInstance;
   var addUser = function(userID) {
     if(this.userIDs.indexOf(userID) < 0) {
       this.userIDs.push(userID);
-      this.targetNum[userID] = Math.floor(rng() * ((POOL_NUMBER_COUNT*3)-3))+1;
+      if (gameRule == 0) {
+      	this.targetNum[userID] = Math.floor(rng() * ((POOL_NUMBER_COUNT*3)-3))+1;
+      }
+      else if (gameRule == 1) {
+        var num1 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+    	var sw = rng();
+    	var num2 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+    	if (sw >= 0.2) {
+    		num2 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+    	}
+    	else {
+    		num2 = 1;
+    	}
+    	while (num1 == num2) {
+    		num2 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+    	}
+    	this.targetNum[userID] = num1 * num2;
+      }
 
       this.availNum[userID] = new Array();
       this.unavailNum[userID] = new Array();
