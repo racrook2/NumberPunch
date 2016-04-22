@@ -50,7 +50,7 @@ var Multiplayer;
         inProgress = true;
         GameInstance.startGameHandle(data, Multiplayer.players);
         for(var i=0; i < Multiplayer.players.length; i++){
-            GameInterface.reset(GameInstance.targetNum[Multiplayer.players[i]], i===myIndex);
+            GameInterface.reset(makeTarget(Multiplayer.players[i]), i===myIndex);
         }
     });
     socket.on('players', function (data) {
@@ -154,7 +154,9 @@ var Multiplayer;
       }
 
     }
-
+function makeTarget(playerID){
+    return GameInstance.targetNum[playerID] + " <b>" + (GameInstance.targetOp[playerID] ? "x" : "+") + "</b>";
+}
     function handleOrder(data) {
       var orderType = data['type'];
       var playerID = data['playerid'];
@@ -173,17 +175,17 @@ var Multiplayer;
           } else if(retCode == 3) {
             GameInterface.select(num, isMine);
             GameInterface.makeUnavail(isMine);
-            var newTar = GameInstance.targetNum[playerID];
+            var newTar = makeTarget(playerID);
             GameInterface.reset(newTar, isMine);
           } else if(retCode == 4) {
-            var newTar = GameInstance.targetNum[playerID];
+            var newTar = makeTarget(playerID);
             GameInterface.reset(newTar, isMine);
           }
           break;
 
         case "resettar":
           retCode = GameInstance.resetTarNumHandle(playerID);
-          var tarNum = GameInstance.targetNum[playerID];
+          var tarNum = makeTarget(playerID);
           GameInterface.reset(tarNum, isMine);
           if(retCode > 0){
             GameInterface.makeAvail(retCode, isMine);
