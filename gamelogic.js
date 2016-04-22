@@ -49,6 +49,18 @@ var GameInstance;
         return gameRule;
     };
 
+    var setTargetOp = function(num) {
+        if(num)
+            targetOp[myID] = num
+        else
+            targetOp[myID] = false
+    }
+
+    var getTargetOp = function() {
+        return targetOp[myID];
+    };
+
+
     var setPenaltyThreshold = function(num) {
         if (this.inProgress) return false;
         penaltyThreshold = num;
@@ -352,6 +364,8 @@ var GameInstance;
         setGameRule: setGameRule,
         getGameRule: getGameRule,
         processMessage: processMessage,
-        declareWinner: declareWinner
+        declareWinner: declareWinner,
+        setTargetOp: setTargetOp,
+        getTargetOp: getTargetOp
     };
 })();

@@ -242,6 +242,7 @@ function makeTarget(playerID){
         leaveGame: leaveGame,
         readyGame: readyGame,
         startGameCheck: startGameCheck,
-        gameSettings: gameSettings
+        gameSettings: gameSettings,
+        makeTarget: makeTarget
     }
 })();
