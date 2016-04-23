@@ -1,6 +1,5 @@
 //updateGamesList recieves a list of games passed in and adds them to the games list on index. If no games are available, the div displays "No Available Games"
 function updateGamesList(games) {
-	//$('#gamesList').html("<img id='chat' src='media/chat.png'/>");
 	$('#gamesList').html('');
 	if (games.length<1) {
 		$('#gamesList').append('No Available Games');
@@ -12,35 +11,49 @@ function updateGamesList(games) {
 	}
 }
 
-$(document).ready(function() {
-	Multiplayer.refreshGameList();
 
-	//Hide leave game and game upon loading as they are not needed until a game is starting.
-	$('#leaveGame').css('display', 'none');
-	$('#ready').css('display', 'none');
-	$('#startGame').css('display', 'none');
-	$('#gameCanvas').css('display', 'none');
-	$('#exit').css('display', 'none');
-
-	$('#exit').on('click', function() {
-		console.log("Clicked Exit Game");
-		Multiplayer.leaveGame();
-
-		$('#leaveGame').css('display', 'none');
-		$('#ready').css('display', 'none');
-		$('#startGame').css('display', 'none');
-		$('#gameSpace').css('display', 'none');
+function showLobby(flag) {
+	if (flag) {
 		$('#createGame').css('display', 'inline-block');
 		$('#refresh').css('display', 'inline-block');
 		$('#gamesList').css('display', 'block');
 		$('#preferences').css('display', 'inline-block');
-		$('#chat').css('display', 'inline');
+	} else {
+		$('#createGame').css('display', 'none');
+		$('#refresh').css('display', 'none');
+		$('#gamesList').css('display', 'none');
+		$('#preferences').css('display', 'none');
+	}
+}
+
+function showGame(flag) {
+	if (flag) {
+		$('#leaveGame').css('display', 'inline-block');
+		$('#ready').css('display', 'inline-block');
+		$('#gameSpace').css('display', 'block');
+	} else {
+		$('#leaveGame').css('display', 'none');
+		$('#ready').css('display', 'none');
+		$('#gameSpace').css('display', 'none');
+	}
+}
+
+$(document).ready(function() {
+	Multiplayer.refreshGameList();
+
+	//Hide leave game and game upon loading as they are not needed until a game is starting.
+	showGame(false);
+	$('#startGame').css('display', 'none');
+	$('#exit').css('display', 'none');
+
+	$('#exit').on('click', function() {
+		Multiplayer.leaveGame();
+		showGame(false);
+		$('#startGame').css('display', 'none');
+		showLobby(true);
 		$('#exit').css('display', 'none');
-
-		return false;
-
-
 	});
+
 	//Refresh when refresh button is clicked.
 	$('#refresh').on('click', function() {
 		console.log("Clicked Refresh");
@@ -53,15 +66,9 @@ $(document).ready(function() {
 		console.log("Clicked Create");
 		Multiplayer.createGame();
 		
-		$('#leaveGame').css('display', 'inline-block');
-		$('#ready').css('display', 'inline-block');
+		showGame(true);
 		$('#startGame').css('display', 'inline-block');
-		$('#gameSpace').css('display', 'block');
-		$('#createGame').css('display', 'none');
-		$('#refresh').css('display', 'none');
-		$('#gamesList').css('display', 'none');
-		$('#preferences').css('display', 'none');
-		$('#chat').css('display', 'none');
+		showLobby(false);
 		$('#gameSpace').load('./interface.html');
 
 		openModal("#gamesettings");
@@ -73,16 +80,11 @@ $(document).ready(function() {
 	$('#leaveGame').on('click', function() {
 		console.log("Clicked Leave");
 		Multiplayer.leaveGame();
+		Multiplayer.refreshGameList();
 
-		$('#leaveGame').css('display', 'none');
-		$('#ready').css('display', 'none');
+		showGame(false);
 		$('#startGame').css('display', 'none');
-		$('#gameSpace').css('display', 'none');
-		$('#createGame').css('display', 'inline-block');
-		$('#refresh').css('display', 'inline-block');
-		$('#gamesList').css('display', 'block');
-		$('#preferences').css('display', 'inline-block');
-		$('#chat').css('display', 'inline');
+		showLobby(true);
 
 		return false;
 	});
@@ -109,15 +111,9 @@ $(document).ready(function() {
 		console.log("Clicked a Game");
 		Multiplayer.joinGame($(this).attr('id'));
 
-		$('#leaveGame').css('display', 'inline-block');
+		showGame(true);
 		$('#startGame').css('display', 'none');
-		$('#ready').css('display', 'inline-block');
-		$('#gameSpace').css('display', 'block');
-		$('#createGame').css('display', 'none');
-		$('#refresh').css('display', 'none');
-		$('#gamesList').css('display', 'none');
-		$('#preferences').css('display', 'none');
-		$('#chat').css('display', 'none');
+		showLobby(false);
 
 		$('#gameSpace').load('./interface.html');
 		return false;

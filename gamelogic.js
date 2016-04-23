@@ -4,7 +4,6 @@
  *  This file defines data structure and logic behind
  *  an instance of the Number Punch game
  */
-POOL_NUMBER_COUNT = 10;
 
 /**
  * Data structure defining a game instance
@@ -35,10 +34,28 @@ var GameInstance;
     // Mappings between user id's and the number of times they've reset
     var resets = {};
 
+    //Number of numbers in number pool
+    var poolSize = 10;
+
     // Number of resets before player gets penalized
     var penaltyThreshold = 0;
 
     var gameRule = 0;
+
+    function setPoolSize(num) {
+        if (this.inProgress) {
+            return false;
+        }
+        if (num < 1 || num > 20) {
+            poolSize = 10;
+            return false;
+        }
+        poolSize = num;
+        return true;
+    }
+    function getPoolSize() {
+        return poolSize;
+    }
 
     var setGameRule = function(num) {
         if (this.inProgress) return false;
@@ -50,7 +67,7 @@ var GameInstance;
     };
 
     var setTargetOp = function(num) {
-        if(num)
+        if (num)
             targetOp[myID] = num
         else
             targetOp[myID] = false
@@ -177,7 +194,7 @@ var GameInstance;
      * Deselects (removes the number from the array) if already existent
      *
      * @param userID (int)
-     * @param num (int) 1<=num<=POOL_NUMBER_COUNT
+     * @param num (int) 1<=num<=poolSize
      *
      * Return codes:
      * -1: Nothing happens
@@ -221,22 +238,22 @@ var GameInstance;
     }
     function generateNumber(multiplication) {
         if (multiplication) {
-            var num1 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+            var num1 = Math.floor(rng() * poolSize) + 1;
             var sw = rng();
-            var num2 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+            var num2 = Math.floor(rng() * poolSize) + 1;
             if (sw >= 0.2) {
-                num2 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+                num2 = Math.floor(rng() * poolSize) + 1;
             }
             else {
                 num2 = 1;
             }
             while (num1 == num2) {
-                num2 = Math.floor(rng() * POOL_NUMBER_COUNT) + 1;
+                num2 = Math.floor(rng() * poolSize) + 1;
             }
             return num1 * num2;
         }
         else {
-            return Math.floor(rng() * ((POOL_NUMBER_COUNT * 3) - 3)) + 1;
+            return Math.floor(rng() * ((poolSize * 3) - 3)) + 1;
         }
     }
 
@@ -264,7 +281,7 @@ var GameInstance;
             this.selectedNum[userID] = new Array();
             this.resets[userID] = 0;
             // Initialize the user's available numbers
-            for (var i = 1; i <= POOL_NUMBER_COUNT; i++) {
+            for (var i = 1; i <= poolSize; i++) {
                 this.availNum[userID].push(i);
             }
             return true;
@@ -363,6 +380,8 @@ var GameInstance;
         getPenaltyThreshold: getPenaltyThreshold,
         setGameRule: setGameRule,
         getGameRule: getGameRule,
+        setPoolSize: setPoolSize,
+        getPoolSize: getPoolSize,
         processMessage: processMessage,
         declareWinner: declareWinner,
         setTargetOp: setTargetOp,

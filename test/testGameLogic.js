@@ -28,7 +28,7 @@ QUnit.test("Press Reset", function (assert) {
     },1000);
     assert.ok(1 in GameInstance.targetNum, "User ID exists in game instance target num set");
 
-    highestTarget = (POOL_NUMBER_COUNT*3)-3;
+    highestTarget = (GameInstance.getPoolSize()*3)-3;
     assert.ok(GameInstance.targetNum[1] > 0 && GameInstance.targetNum[1] <= highestTarget,
         "New target number is within desired ranged");
 });
@@ -61,9 +61,9 @@ QUnit.test("Add User", function (assert) {
     // Add new user and assert default values
     ret = GameInstance.addUser(4);
     assert.ok(ret == true, "New user added to instance");
-    assert.ok(GameInstance.targetNum[4] > 0 && GameInstance.targetNum[4] <= ((POOL_NUMBER_COUNT*3)-3),
+    assert.ok(GameInstance.targetNum[4] > 0 && GameInstance.targetNum[4] <= ((GameInstance.getPoolSize()*3)-3),
         "Check for valid default target number");
-    for(var i = 1; i <= POOL_NUMBER_COUNT; i++) {
+    for(var i = 1; i <= GameInstance.getPoolSize(); i++) {
         assert.ok(GameInstance.availNum[4][i-1] == i,
             "Check that "+i+" is available by default");
     }

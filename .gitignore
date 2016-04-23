@@ -1,3 +1,5 @@
 .DS_STORE
 node_modules
 i
+.idea/vcs.xml
+git.exe.stackdump

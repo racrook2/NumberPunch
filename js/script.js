@@ -2,83 +2,108 @@
 
 var GameInterface;
 (function() {
-	function select(num, isYours) {
-		var buttonWrappers;
-		if(isYours) {
-			buttonWrappers = document.getElementsByClassName("button-wrapper player-button");
-		} else {
-			buttonWrappers = document.getElementsByClassName("button-wrapper opponent-button");
-		}
 
-		var buttonWrapper = buttonWrappers[num-1];
-		if(!buttonWrapper) return false;
-		buttonWrapper.classList.add("selected");
-	};
+    function createButtons(poolsize) {
+        var actual = poolsize;
+        if (actual<1 || actual>20) {
+            actual = 10;
+        }
+        var opButtons = $('#opponent-buttons');
+        opButtons.html("");
+        for (var x = 1; x <= actual; x++) {
+            $('<div/>', {
+                'class': 'button-wrapper opponent-button',
+                'html': ('<button disabled>'+x+'</button><div class="light"></div>')
+            }).appendTo(opButtons);
+        }
+        var myButtons = $('#player-buttons');
+        myButtons.html("");
+        for (var x = 1; x <= actual; x++) {
+            $('<div/>', {
+                'class': 'button-wrapper player-button',
+                'id': 'wrapper'+x,
+                'html': ('<button onclick="GameInstance.selectNum('+x+')">'+x+'</button><div class="light"></div>')
+            }).appendTo(myButtons);
+        }
+    }
 
-	function deselect(num, isYours) {
-		var buttonWrappers;
-		if(isYours) {
-			buttonWrappers = document.getElementsByClassName("button-wrapper player-button");
-		} else {
-			buttonWrappers = document.getElementsByClassName("button-wrapper opponent-button");
-		}
+    function select(num, isYours) {
+        var buttonWrappers;
+        if(isYours) {
+            buttonWrappers = document.getElementsByClassName("button-wrapper player-button");
+        } else {
+            buttonWrappers = document.getElementsByClassName("button-wrapper opponent-button");
+        }
 
-		var buttonWrapper = buttonWrappers[num-1];
-		if(!buttonWrapper) return false;
-		buttonWrapper.classList.remove("selected");
-	};
+        var buttonWrapper = buttonWrappers[num-1];
+        if(!buttonWrapper) return false;
+        buttonWrapper.classList.add("selected");
+    };
 
-	function reset(newTarget, isYours) {
-		var tarNum;
-		var wrappers;
-		if(isYours) {
-			tarNum = document.getElementById("playerTarget");
-			wrappers = document.getElementsByClassName("button-wrapper player-button");
-		} else {
-			tarNum = document.getElementById("opponentTarget");
-			wrappers = document.getElementsByClassName("button-wrapper opponent-button");
-		}
+    function deselect(num, isYours) {
+        var buttonWrappers;
+        if(isYours) {
+            buttonWrappers = document.getElementsByClassName("button-wrapper player-button");
+        } else {
+            buttonWrappers = document.getElementsByClassName("button-wrapper opponent-button");
+        }
 
-		if(tarNum) {
-			tarNum.innerHTML = newTarget;
-		}
+        var buttonWrapper = buttonWrappers[num-1];
+        if(!buttonWrapper) return false;
+        buttonWrapper.classList.remove("selected");
+    };
 
-		for(var i = 0; i < wrappers.length; i++) {
-			wrappers[i].classList.remove("selected");
-		}
-	};
+    function reset(newTarget, isYours) {
+        var tarNum;
+        var wrappers;
+        if(isYours) {
+            tarNum = document.getElementById("playerTarget");
+            wrappers = document.getElementsByClassName("button-wrapper player-button");
+        } else {
+            tarNum = document.getElementById("opponentTarget");
+            wrappers = document.getElementsByClassName("button-wrapper opponent-button");
+        }
 
-	function makeUnavail(isYours) {
-		var wrappers;
-		if(isYours) {
-			wrappers = document.getElementsByClassName("button-wrapper player-button selected");
-		} else {
-			wrappers = document.getElementsByClassName("button-wrapper opponent-button selected");
-		}
+        if(tarNum) {
+            tarNum.innerHTML = newTarget;
+        }
 
-		for(var i = 0; i < wrappers.length; i++) {
-			wrappers[i].classList.add("unavail");
-		}
+        for(var i = 0; i < wrappers.length; i++) {
+            wrappers[i].classList.remove("selected");
+        }
+    };
 
-		for(var i = 0; i < wrappers.length; i++) {
-			wrappers[i].classList.remove("selected");
-		}
-	};
-	
-	function makeAvail(num, isYours) {
-		var wrappers;
-		if (isYours) {
-			wrappers = document.getElementsByClassName("button-wrapper player-button");
-		} else {
-			wrappers = document.getElementsByClassName("button-wrapper opponent-button");
-		}
-		
-		if (num > wrappers.length) {
-			return;
-		}
-		
-		wrappers[num - 1].classList.remove("unavail");
-	};
+    function makeUnavail(isYours) {
+        var wrappers;
+        if(isYours) {
+            wrappers = document.getElementsByClassName("button-wrapper player-button selected");
+        } else {
+            wrappers = document.getElementsByClassName("button-wrapper opponent-button selected");
+        }
+
+        for(var i = 0; i < wrappers.length; i++) {
+            wrappers[i].classList.add("unavail");
+        }
+
+        for(var i = 0; i < wrappers.length; i++) {
+            wrappers[i].classList.remove("selected");
+        }
+    };
+
+    function makeAvail(num, isYours) {
+        var wrappers;
+        if (isYours) {
+            wrappers = document.getElementsByClassName("button-wrapper player-button");
+        } else {
+            wrappers = document.getElementsByClassName("button-wrapper opponent-button");
+        }
+
+        if (num > wrappers.length) {
+            return;
+        }
+
+        wrappers[num - 1].classList.remove("unavail");
+    };
 
   function displayMessage(msg, isYours) {
 
@@ -98,6 +123,7 @@ var GameInterface;
   }
 
 	GameInterface = {
+		createButtons: createButtons,
 		select: select,
 		deselect: deselect,
 		reset: reset,
