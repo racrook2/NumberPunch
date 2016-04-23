@@ -61,6 +61,23 @@ function runTests(){
             assert.equal(GameInstance.gameStats().wins,s.wins+1);
         }
     });
-
+    QUnit.test("Clear sets to 0", function (assert) {
+        localStorage.clear();
+        assert.equal(GameInstance.gameStats().wins, 0);
+        assert.equal(GameInstance.gameStats().losses, 0);
+    });
+    QUnit.test("Wins and losses after clear", function (assert) {
+        localStorage.clear();
+        var otherID = Math.random().toString();
+        var s;
+        for (var i = 0; i < 1000; i++){
+            s = GameInstance.gameStats();
+            GameInstance.gameResult(GameInstance.myID);
+            GameInstance.gameResult(otherID);
+            assert.equal(GameInstance.gameStats().wins,s.wins+1);
+            assert.equal(GameInstance.gameStats().losses,s.losses+1);
+        }
+    });
+    
     
 }
