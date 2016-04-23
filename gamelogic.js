@@ -11,7 +11,6 @@
 var GameInstance;
 (function() {
 
-    var myID;
     var seed = 0.4;
 
     var inProgress = false;
@@ -68,13 +67,13 @@ var GameInstance;
 
     var setTargetOp = function(num) {
         if (num)
-            targetOp[myID] = num
+            targetOp[this.myID] = num
         else
-            targetOp[myID] = false
+            targetOp[this.myID] = false
     }
 
     var getTargetOp = function() {
-        return targetOp[myID];
+        return targetOp[this.myID];
     };
 
 
@@ -357,8 +356,19 @@ var GameInstance;
         return userID;
     };
 
+    function gameStats(){
+        return JSON.parse(localStorage.stats || 0) || {wins: 0, losses: 0};
+    }
+    function gameResult(whoWon){
+        var stats = gameStats();
+        if (whoWon === this.myID)
+            stats.wins ++;
+        else
+            stats.losses++;
+        localStorage.stats = JSON.stringify(stats);
+    }
     GameInstance = {
-        myID: myID,
+        myID: 0,
         seed: seed,
         inProgress: inProgress,
         winner: winner,
@@ -385,6 +395,8 @@ var GameInstance;
         processMessage: processMessage,
         declareWinner: declareWinner,
         setTargetOp: setTargetOp,
-        getTargetOp: getTargetOp
+        getTargetOp: getTargetOp,
+        gameResult: gameResult,
+        gameStats: gameStats
     };
 })();

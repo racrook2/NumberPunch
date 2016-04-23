@@ -102,3 +102,17 @@ body {
     color:#FFF;
     text-shadow:2px 2px 2px #000;
 }
+#gameresult{
+    color: #FFF;
+    font-size: 100px;
+    text-align: center;
+    padding: 10px;
+    text-shadow: 1px 1px 5px #000;
+}
+#stats{
+    color: #FFF;
+    font-size: 60px;
+    text-align: center;
+    padding: 10px;
+    text-shadow: 1px 1px 5px #000;
+}
