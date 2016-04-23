@@ -38,3 +38,23 @@ QUnit.test("Testing setTargetOp/getTargetOp with bad input", function(assert) {
 	GameInstance.setTargetOp(null);
 	assert.ok(!GameInstance.getTargetOp());
 });
+
+
+QUnit.test("Mock win condition with randomop", function(assert) {
+  var wincall = false;
+  GameInstance.declareWinner = function mockDeclareWinner() {
+    wincall = true;
+  }
+  GameInstance.myID = 1;
+  GameInstance.setTargetOp(true);
+  GameInstance.targetNum[1] = 8;
+  GameInstance.availNum[1] = [1, 3];
+  GameInstance.selectedNum[1] = [2, 4];
+  GameInstance.unavailNum[1] = [];
+  GameInstance.evaluateUser(1);
+  GameInstance.setTargetOp(false);
+  GameInstance.selectedNum[1] = [1, 3];
+  GameInstance.unavailNum[1] = [];
+  GameInstance.evaluateUser(1);
+  assert.ok(wincall == true);
+});
