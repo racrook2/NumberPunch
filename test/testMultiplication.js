@@ -28,10 +28,10 @@ QUnit.test("Test multiplication with one number", function(assert) {
 });
 
 QUnit.test("Test multiplication with two numbers", function(assert) {
+	GameInstance.targetOp[1] = true;
 	GameInstance.targetNum[1] = 6;
 	GameInstance.selectedNum[1] = [2, 3];
 	GameInstance.evaluateUser(1);
-	
 	assert.ok(GameInstance.selectedNum[1].length == 0,
         "Selected numbers is empty on correct combo");
     assert.ok(GameInstance.unavailNum[1].indexOf(2) >= 0 && GameInstance.unavailNum[1].indexOf(3) >= 0,
@@ -41,6 +41,7 @@ QUnit.test("Test multiplication with two numbers", function(assert) {
 });
 
 QUnit.test("Test deselect numbers if going over target", function(assert) {
+	GameInstance.targetOp[1] = true;
 	GameInstance.targetNum[1] = 6;
 	GameInstance.selectedNum[1] = [2, 4];
 	GameInstance.evaluateUser(1);
