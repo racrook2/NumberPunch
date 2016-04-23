@@ -40,14 +40,21 @@ var GameInstance;
 
   var gameRule = 0;
 
+  // Numbers indicating what kinds of operators are used in the random operator
+  // mode
+  // 0 - Plus (+)
+  // 1 - Minus (-)
+  // 2 - Multiply (*)
+  var operators = [0, 0, 0];
+
   var setGameRule = function(num)
   {
       if(this.inProgress) return false;
-      gameRule = num;
+      this.gameRule = num;
   }
 
   var getGameRule = function() {
-    return gameRule;
+    return this.gameRule;
   };
 
   var setPenaltyThreshold = function(num) {
@@ -69,6 +76,17 @@ var GameInstance;
     this.myID = players[data['me']];
     GameInstance.seed = data['seed'];
     console.log("Got start game handle with seed "+data['seed']);
+
+    if(this.gameRule == 2) {
+      operators[0] = 0;
+      operators[1] = Math.floor(Math.random()*3);
+      operators[2] = Math.floor(Math.random()*3);
+
+      Multiplayer.sendShout({
+        "type": "showOperators",
+        "operators": operators
+      });
+    }
 
     // Empty fields for new game
     this.userIDs = [];
@@ -107,7 +125,9 @@ var GameInstance;
     console.log("Reset tarNum for ", userID);
     if(!userID) return -1;
 
-    this.targetNum[userID] = Math.floor(rng() * ((POOL_NUMBER_COUNT*3)-3))+1;
+    if(this.gameRule == 0 || this.gameRule == 2) {
+      this.targetNum[userID] = Math.floor(rng() * ((POOL_NUMBER_COUNT*3)-3))+1;
+    }
 
     console.log(this.targetNum[userID]);
 
@@ -242,7 +262,23 @@ var GameInstance;
     var tar = this.targetNum[userID];
     var combination = 0;
     if(this.selectedNum[userID].length > 0) {
-      combination = this.selectedNum[userID].reduce( (prev, curr) => prev + curr );
+      if(this.gameRule == 0) {
+        combination = this.selectedNum[userID].reduce( (prev, curr) => prev + curr );
+      }
+      else if(this.gameRule == 1) {
+        // Multiplication code
+      }
+      else if(this.gameRule == 2) {
+        for(var i = 0; i < this.selectedNum[userID].length; i++) {
+          if(operators[i%3] == 0) {
+            combination += this.selectedNum[userID][i];
+          } else if(operators[i%3] == 1) {
+            combination -= this.selectedNum[userID][i];
+          } else {
+            combination *= this.selectedNum[userID][i];
+          }
+        }
+      }
     }
     if(tar === combination) {
 
@@ -265,7 +301,7 @@ var GameInstance;
         // return 5;
       } 
       return 3;
-    } else if(tar < combination) {
+    } else if(tar < combination && this.gameRule != 2) {
       this.selectedNum[userID] = [];
       return 4;
     }

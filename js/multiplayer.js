@@ -89,6 +89,11 @@ var Multiplayer;
         console.log("exited send Order");
 
     }
+    function sendShout(data) {
+      console.log("entered send Shout");
+      socket.emit("shout", data);
+      console.log("exited send Shout");
+    }
     function refreshGameList() {
         socket.emit('listgames');
     }
@@ -147,6 +152,10 @@ var Multiplayer;
             GameInstance.setPenaltyThreshold(penalty);
             GameInstance.setGameRule(gameRule);
             console.log(GameInstance.getPenaltyThreshold());
+            break;
+          case "showOperators":
+            var ops = data['operators'];
+            GameInterface.displayOperators(ops);
             break;
           default:
             break;
@@ -235,6 +244,7 @@ var Multiplayer;
         players: players,
         joinGame: joinGame,
         sendOrder: sendOrder,
+        sendShout: sendShout,
         refreshGameList: refreshGameList,
         startGame: startGame,
         leaveGame: leaveGame,

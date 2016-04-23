@@ -97,13 +97,33 @@ var GameInterface;
     }
   }
 
+  function displayOperators(ops) {
+
+    // Get the div that will contain my operators
+    var opdiv = document.getElementById('my-operators');
+    var opMsg = "<p><b>Your Random operators</b></p><p>";
+    for(var i = 0; i < ops.length; i ++) {
+      if(ops[i] == 0) {
+        opMsg += "+  ";
+      } else if(ops[i] == 1) {
+        opMsg += "-  ";
+      } else {
+        opMsg += "*  ";
+      }
+    }
+    opMsg += "</p>";
+
+    opdiv.innerHTML += opMsg;
+  }
+
 	GameInterface = {
 		select: select,
 		deselect: deselect,
 		reset: reset,
 		makeUnavail: makeUnavail,
 		makeAvail: makeAvail,
-        displayMessage: displayMessage
+    displayMessage: displayMessage,
+    displayOperators: displayOperators
 	};
 })();
 
