@@ -3,7 +3,7 @@ var socket;
 var GAME_TYPE = 268201;
 
 $.ajax({
-    url: "./interface.html",
+    url: "../interface.html",
     dataType: "html",
     success: function(html) {
         var inputField = $(html).find("#user-msg-contents");
