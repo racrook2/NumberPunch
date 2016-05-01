@@ -54,12 +54,9 @@ QUnit.test("Empty message box/chatbox on start", function(assert) {
 
 QUnit.test("Send first message", function(assert) {
     GameInstance.myID = Multiplayer.players[0];
-    console.log("brah" +GameInstance.myID);
-    var inputField = document.getElementById("user-msg-contents");
-    inputField.value = "test";
 
-    var submitbutton = document.getElementById("user-msg-submit");
-    submitbutton.click();
+    var inputField = document.getElementById("user-msg-contents");
+    submitTestField(inputField);
 
     var done = assert.async();
     setTimeout(function() {
@@ -71,10 +68,7 @@ QUnit.test("Send first message", function(assert) {
 
 QUnit.test("User input clears on message send", function(assert) {
     var inputField = document.getElementById("user-msg-contents");
-    inputField.value = "test";
-
-    var submitbutton = document.getElementById("user-msg-submit");
-    submitbutton.click();
+    submitTestField(inputField);
     
     assert.ok(inputField.value.length < 1,
         "User input box clears on message send");
@@ -111,3 +105,10 @@ QUnit.test("(Behavioral) New messages prepend to existing chatbox", function(ass
       done2();
     }, 2000);
 });
+
+function submitTestField(inputField) {
+    inputField.value = "test";
+
+    var submitbutton = document.getElementById("user-msg-submit");
+    submitbutton.click();
+};
