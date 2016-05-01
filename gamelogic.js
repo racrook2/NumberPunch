@@ -56,33 +56,33 @@ var GameInstance;
         return poolSize;
     }
 
-    var setGameRule = function(num) {
+    function setGameRule(num) {
         if (this.inProgress) return false;
         gameRule = num;
     }
 
-    var getGameRule = function() {
+    function getGameRule() {
         return gameRule;
     };
 
-    var setTargetOp = function(num) {
+    function setTargetOp(num) {
         if (num)
             targetOp[this.myID] = num
         else
             targetOp[this.myID] = false
     }
 
-    var getTargetOp = function() {
+    function getTargetOp() {
         return targetOp[this.myID];
     };
 
 
-    var setPenaltyThreshold = function(num) {
+    function setPenaltyThreshold(num) {
         if (this.inProgress) return false;
         penaltyThreshold = num;
     };
 
-    var getPenaltyThreshold = function() {
+    function getPenaltyThreshold() {
         return penaltyThreshold;
     };
 
@@ -92,7 +92,7 @@ var GameInstance;
     * @param data (json) : sent from a 'start' 
     * socket.on to initialize game instance
     */
-    var startGameHandle = function(data, players) {
+    function startGameHandle(data, players) {
         this.myID = players[data['me']];
         GameInstance.seed = data['seed'];
         console.log("Got start game handle with seed " + data['seed']);
@@ -113,7 +113,7 @@ var GameInstance;
         this.winner = null;
     };
 
-    var rng = function() {
+    function rng() {
         GameInstance.seed += 1.0;
         var x = Math.sin(GameInstance.seed) * 10000;
         return x - Math.floor(x);
@@ -130,7 +130,7 @@ var GameInstance;
      * 0: Default reset behavior
      * >=1: Add unavailable number back to available pool and reset target number
      */
-    var resetTarNumHandle = function(userID) {
+    function resetTarNumHandle(userID) {
         console.log("Reset tarNum for ", userID);
         if (!userID) return -1;
 
@@ -166,7 +166,7 @@ var GameInstance;
     };
 
 
-    var resetTarNum = function() {
+    function resetTarNum() {
         if (!this.inProgress) return;
 
         Multiplayer.sendOrder({
@@ -175,7 +175,7 @@ var GameInstance;
         });
     }
 
-    var processMessage = function() {
+    function processMessage() {
         var input = document.getElementById("user-msg-contents");
         var value = document.getElementById("user-msg-contents").value;
         if (value.length <= 0)
@@ -203,7 +203,7 @@ var GameInstance;
      * 4: Selected numbers were over target number & all selected numbers reset
      * 5: Selected numbers were correct and there is a winner
      */
-    var selectNumHandle = function(userID, num) {
+    function selectNumHandle(userID, num) {
         if (!userID) return -1;
 
         // Only accept available numbers
@@ -225,7 +225,7 @@ var GameInstance;
         return this.evaluateUser(userID);
     };
 
-    var selectNum = function(num) {
+    function selectNum(num) {
         if (!this.inProgress) return;
 
         console.log("select num called, this.myID: " + this.myID + ", num: " + num);
@@ -261,7 +261,7 @@ var GameInstance;
      *
      *  @param userID (int)
      */
-    var addUser = function(userID) {
+    function addUser(userID) {
         if (this.userIDs.indexOf(userID) < 0) {
             this.userIDs.push(userID);
             if (gameRule == 0) {
@@ -301,7 +301,7 @@ var GameInstance;
      * 4: Combination was over target
      * 5: Winner declared
      */
-    var evaluateUser = function(userID) {
+    function evaluateUser(userID) {
         var tar = this.targetNum[userID];
         var combination = 0;
         if (this.selectedNum[userID].length > 0) {
@@ -346,7 +346,7 @@ var GameInstance;
      *
      * @param userID (int)
      */
-    var declareWinner = function(userID) {
+    function declareWinner(userID) {
         this.inProgress = false;
         this.winner = userID;
         Multiplayer.sendOrder({
