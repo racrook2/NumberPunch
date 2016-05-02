@@ -1,6 +1,6 @@
 NumberPunch
 ===========
-Number Punch for CS 429
+Number Punch for CS 429. It's a really fun game!
 
 # Simple Node Server
 
@@ -86,3 +86,14 @@ data - Object, some data to be sent to everyone in game
 "players"
 "start"
 "order"
+
+
+#Team
+Matthew Pifko
+Patrick Sapin
+Garrett Nickel
+Matthew Balsamo
+Austin Mei
+Joel Einbinder
+Armaan Rai
+Ran Cook
