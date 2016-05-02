@@ -1,3 +1,6 @@
+/**
+ * Test that we can start the game
+ */
 QUnit.test("Test startGameCheck true", function(assert) {
    Multiplayer.createGame();
 

@@ -20,6 +20,9 @@ QUnit.module("Game Logic Test", {
     }
 });
 
+/**
+ * Test the reset button being pressed
+ */
 QUnit.test("Press Reset", function (assert) {
     GameInstance.resetTarNum();
     var done = assert.async();
@@ -33,6 +36,9 @@ QUnit.test("Press Reset", function (assert) {
         "New target number is within desired ranged");
 });
 
+/**
+ * Test selecting a number
+ */
 QUnit.test("Select Number", function (assert) {
     // Attempt to select unavailable number
     GameInstance.targetNum[1] = 17;
@@ -54,6 +60,9 @@ QUnit.test("Select Number", function (assert) {
         "Check selection of already selected number");
 });
 
+/**
+ * Test adding a user
+ */
 QUnit.test("Add User", function (assert) {
     var ret = GameInstance.addUser(2);
     assert.ok(ret == false, "Attempt to add pre-existing user");
@@ -71,6 +80,9 @@ QUnit.test("Add User", function (assert) {
         "Check that user ID now exists in the instance");
 });
 
+/**
+ * Test some combos of numbers
+ */
 QUnit.test("Evaluate User", function (assert) {
     GameInstance.targetNum[1] = 12;
     GameInstance.selectedNum[1] = [2, 10];

@@ -16,7 +16,9 @@ QUnit.module("Game Settings Test", {
     afterEach: function () {
     }
 });
-
+/**
+ * The game settings model needs to open
+ */
 QUnit.test("Did Game Settings Modal Open:", function (assert) {
 
     var modalDisplay = $(modalID).css('display');
@@ -26,12 +28,18 @@ QUnit.test("Did Game Settings Modal Open:", function (assert) {
     assert.equal(modalDisplay, 'block');
 });
 
+/**
+ * The modal should apply the settings
+ */
 QUnit.test("Did Default Settings Apply When Modal Closed:", function (assert) {
     closeModal(modalID);
     assert.equal(GameInstance.getPenaltyThreshold(), 0);
     assert.equal(GameInstance.getGameRule(), 0);
 }); 
 
+/**
+ * You should be able to change the penalty settings with the modal
+ */
 QUnit.test("Did Modified Penalty Settings Apply on Form Submission:", function (assert) {
     $('input[name=penalties]').val('2');
     assert.equal($('input[name=penalties]').val(), 2);
@@ -41,6 +49,9 @@ QUnit.test("Did Modified Penalty Settings Apply on Form Submission:", function (
     }, 1000);
 }); 
 
+/**
+ * You should be able to change the game type settings with the modal
+ */
 QUnit.test("Did Modified Game Type Settings Apply on Form Submission:", function (assert) {
     $('input[name=op]')[1].checked = true;
     assert.equal($('input[name=op]:radio:checked').val(), 'mult');
@@ -50,6 +61,9 @@ QUnit.test("Did Modified Game Type Settings Apply on Form Submission:", function
     }, 1000);
 }); 
 
+/**
+ * Submit button closes the modal
+ */
 QUnit.test("Did Game Settings Modal Close on Form Submission:", function (assert) {
     
     var modalDisplay = $(modalID).css('display');

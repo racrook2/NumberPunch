@@ -28,6 +28,9 @@ QUnit.module("Game Chat Test", {
     }
 });
 
+/**
+ * Make sure the chat section is created
+ */
 QUnit.test("Chat section created on page load", function(assert) {
 
     var inputbox = document.getElementById("user-msg-contents");
@@ -41,6 +44,9 @@ QUnit.test("Chat section created on page load", function(assert) {
         "Area for messages to appear created successfully");
 });
 
+/**
+ * The chatbox should be empty
+ */
 QUnit.test("Empty message box/chatbox on start", function(assert) {
 
     var inputField = document.getElementById("user-msg-contents");
@@ -52,6 +58,9 @@ QUnit.test("Empty message box/chatbox on start", function(assert) {
         "Empty chatbox on start");
 });
 
+/**
+ * Test sending a message
+ */
 QUnit.test("Send first message", function(assert) {
     GameInstance.myID = Multiplayer.players[0];
 
@@ -66,6 +75,9 @@ QUnit.test("Send first message", function(assert) {
     }, 2000);
 });
 
+/**
+ * The user input clears after a message is sent
+ */
 QUnit.test("User input clears on message send", function(assert) {
     var inputField = document.getElementById("user-msg-contents");
     submitTestField(inputField);
@@ -74,6 +86,9 @@ QUnit.test("User input clears on message send", function(assert) {
         "User input box clears on message send");
 });
 
+/**
+ * New messages prepend to existing chatbox
+ */
 QUnit.test("(Behavioral) New messages prepend to existing chatbox", function(assert) {
     // Get existing state of chatbox
     var chatbox = document.getElementById("chatbox");
@@ -106,6 +121,9 @@ QUnit.test("(Behavioral) New messages prepend to existing chatbox", function(ass
     }, 2000);
 });
 
+/**
+ * Click the submit button
+ */
 function submitTestField(inputField) {
     inputField.value = "test";
 

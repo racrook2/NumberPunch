@@ -1,7 +1,14 @@
+/**
+ * Initalize the database
+ */
 QUnit.test("Can init DB", function (assert) {
     var db = new DB({});
 	assert.ok(typeof db == "object", "can make new DB object");
 });
+
+/**
+ * The database can be given default values
+ */
 QUnit.test("Can provide default values", function (assert) {
     var db = new DB({
 		hey: 52,
@@ -13,6 +20,10 @@ QUnit.test("Can provide default values", function (assert) {
 	assert.ok(db.getValue("boolthing") == true, "default bool");
 	db.clear();
 });
+
+/**
+ * Make sure the default values can be overwritten
+ */
 QUnit.test("Can set and get values", function (assert) {
     var db = new DB({
 		hey: 52,
@@ -27,6 +38,10 @@ QUnit.test("Can set and get values", function (assert) {
 	assert.ok(db.getValue("cool") == false, "set bool");
 	db.clear();
 });
+
+/**
+ * Storage needs to stay even after a new database is made.
+ */
 QUnit.test("Persistant storage", function (assert) {
     var db = new DB({});
 	db.setValue("hey", 26);
@@ -39,6 +54,10 @@ QUnit.test("Persistant storage", function (assert) {
 	db.clear();
 	db2.clear();
 });
+
+/**
+ * The database can be cleared
+ */
 QUnit.test("Clear", function (assert) {
     var db = new DB({
 		"hey": 52
@@ -50,6 +69,10 @@ QUnit.test("Clear", function (assert) {
 	assert.ok(db.getValue("hey") == 52, "set int back");
 	db.clear();
 });
+
+/**
+ * A gui can be generated
+ */
 QUnit.test("GUI", function (assert) {
     var db = new DB({
 		hey: 52,

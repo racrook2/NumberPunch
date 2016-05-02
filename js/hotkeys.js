@@ -1,3 +1,11 @@
+/**
+ * Adds hotkey functionality to a set of elements
+ * keys is a dictionary of queries with lowercase keys as values, e.g.
+ *  {
+ *      "#login": "l",
+ *      ".back": "b"    
+ *  }
+ */
 function makeHotkeys(keys){
     var el, str, index;
     for (var i in keys){

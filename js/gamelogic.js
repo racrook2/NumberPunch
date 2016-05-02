@@ -356,9 +356,15 @@ var GameInstance;
         return userID;
     };
 
+    /**
+     * Returns the current wins and losses
+     */
     function gameStats(){
         return JSON.parse(localStorage.stats || 0) || {wins: 0, losses: 0};
     }
+    /**
+     * Logs a win or loss
+     */
     function gameResult(whoWon){
         var stats = gameStats();
         if (whoWon === this.myID)

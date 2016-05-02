@@ -1,3 +1,6 @@
+/**
+ * This gets the data from the game settings html structure
+ */
 $(document).ready(function() {
 
     $('#gamesettingsForm').on('submit', function(event) {

@@ -8,13 +8,22 @@ function DB(defaultValues){
 			data[key] = JSON.parse(localStorage.getItem(key));
 		}
 	}
+    /**
+     * Set the entry for 'key' to 'value'
+     */
 	_this.setValue = function(key, value){
 		data[key] = value;
 		localStorage.setItem(key,JSON.stringify(value));
 	}
+    /**
+     * Return the entry corresponding to key
+     */
 	_this.getValue = function(key){
 		return data[key];
 	}
+    /**
+     * Creates an HTML structure corresponding to the data in the database
+     */
 	_this.generateGUI = function(){
 		var gui = document.createElement("div");
 		gui.className = "preferences";
@@ -23,6 +32,9 @@ function DB(defaultValues){
 		}
 		return gui;
 	}
+    /**
+     * Clear all the data from the database, and restores the default values
+     */
 	_this.clear = function(){
 		data = JSON.parse(JSON.stringify(defaultValues));
 		localStorage.clear();

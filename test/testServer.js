@@ -16,6 +16,9 @@ QUnit.module("Server Test", {
     }
 });
 
+/**
+ * Can connect ot server
+ */
 QUnit.test("Did we connect", function (assert) {
     var done = assert.async();
     socket.on('connect', function () {
@@ -24,7 +27,9 @@ QUnit.test("Did we connect", function (assert) {
     });
 });
 
-
+/**
+ * Can get game list
+ */
 QUnit.test("Test listgames", function (assert) {
 
     socket.emit("listgames");
@@ -36,6 +41,10 @@ QUnit.test("Test listgames", function (assert) {
     });
 });
 
+
+/**
+ * Can create and join a game
+ */
 QUnit.test("Test create/join game", function (assert) {
 
     var title = "Test creategame title";
@@ -59,6 +68,9 @@ QUnit.test("Test create/join game", function (assert) {
 });
 
 
+/**
+ * Can start a game
+ */
 QUnit.test("Test startgame", function (assert) {
     var title = "Test startgame title";
     socket.emit("creategame", {
@@ -78,6 +90,9 @@ QUnit.test("Test startgame", function (assert) {
 });
 
 
+/**
+ * Can get the player info
+ */
 QUnit.test("Test players", function (assert) {
     var title = "Test players title";
     socket.emit("creategame", {
@@ -96,6 +111,9 @@ QUnit.test("Test players", function (assert) {
     socket.emit("startgame");
 });
 
+/**
+ * Can send an order
+ */
 QUnit.test("Test order", function (assert) {
     var title = "Test order title";
     socket.emit("creategame", {
@@ -121,6 +139,10 @@ QUnit.test("Test order", function (assert) {
     });
     socket.emit("startgame");
 });
+
+/**
+ * Can leave a game
+ */
 QUnit.test("Test leavegame", function (assert) {
     var title = "Test leavegame title " + Math.random();
     socket.emit("creategame", {

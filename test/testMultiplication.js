@@ -14,6 +14,9 @@ QUnit.module("Multiplication Test", {
     }
 });
 
+/**
+ * 3x1 = 5
+ */
 QUnit.test("Test multiplication with one number", function(assert) {
 	GameInstance.targetNum[1] = 3;
 	GameInstance.selectedNum[1] = [3];
@@ -27,6 +30,9 @@ QUnit.test("Test multiplication with one number", function(assert) {
         "Selected numbers are removed from available on correct combo");
 });
 
+/**
+ * 2*3 = 6
+ */
 QUnit.test("Test multiplication with two numbers", function(assert) {
 	GameInstance.targetOp[1] = true;
 	GameInstance.targetNum[1] = 6;
@@ -40,6 +46,9 @@ QUnit.test("Test multiplication with two numbers", function(assert) {
         "Selected numbers are removed from available on correct combo");
 });
 
+/**
+ * 2*4 = 8 > 6
+ */
 QUnit.test("Test deselect numbers if going over target", function(assert) {
 	GameInstance.targetOp[1] = true;
 	GameInstance.targetNum[1] = 6;
@@ -54,6 +63,9 @@ QUnit.test("Test deselect numbers if going over target", function(assert) {
         "Selected numbers are removed from available on correct combo");
 });
 
+/**
+ * Targets should be possible
+ */
 QUnit.test("Test target numbers are divisible by pool number", function(assert) {
 	for (var j = 0; j < 1000; j++) {
 		var ok = false;
@@ -69,6 +81,10 @@ QUnit.test("Test target numbers are divisible by pool number", function(assert) 
 	}
 });
 
+
+/**
+ * Target numbers should be possible
+ */
 QUnit.test("Test first target number divisible by pool number", function(assert) {
 	for (var j = 0; j < 1000; j++) {
 		var ok = false;

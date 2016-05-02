@@ -15,11 +15,17 @@ QUnit.module("Interface Test", {
     }
 });
 
+/**
+ * Test loading the interface
+ */
 QUnit.test("Test Fixture Load", function(assert) {
     var buttonBlocks = document.getElementsByClassName("button-block");
     assert.ok((buttonBlocks.length>0), "Successfully loaded interface");
 });
 
+/**
+ * Test selecting the first button
+ */
 QUnit.test("Test select First Button", function (assert) {
     GameInterface.select(1,true);
     var playerButtonWrappers = document.getElementsByClassName("button-wrapper player-button");
@@ -37,6 +43,9 @@ QUnit.test("Test select First Button", function (assert) {
     }
 });
 
+/**
+ * Test selecting the 4th button
+ */
 QUnit.test("Test select 4th Button", function (assert) {
     GameInterface.select(4,true);
     var playerButtonWrappers = document.getElementsByClassName("button-wrapper player-button");
@@ -56,6 +65,9 @@ QUnit.test("Test select 4th Button", function (assert) {
     }
 });
 
+/**
+ * Test selecting the 7th button
+ */
 QUnit.test("Test select 7th Button", function (assert) {
     GameInterface.select(7,true);
     var playerButtonWrappers = document.getElementsByClassName("button-wrapper player-button");
@@ -68,6 +80,9 @@ QUnit.test("Test select 7th Button", function (assert) {
 
 });
 
+/**
+ * Test selecting and deslecting
+ */
 QUnit.test("Test select and deselect 2nd Button", function (assert) {
     GameInterface.select(2,true);
     var playerButtonWrappers = document.getElementsByClassName("button-wrapper player-button");
@@ -101,6 +116,9 @@ QUnit.test("Test select and deselect 2nd Button", function (assert) {
 
 });
 
+/**
+ * Test selecting and deslecting
+ */
 QUnit.test("Test select and deselect 5th Button", function (assert) {
     GameInterface.select(5,true);
     var playerButtonWrappers = document.getElementsByClassName("button-wrapper player-button");
@@ -118,6 +136,9 @@ QUnit.test("Test select and deselect 5th Button", function (assert) {
 
 });
 
+/**
+ * Test selecting and deslecting
+ */
 QUnit.test("Test select and deselect  8th Button", function (assert) {
     GameInterface.select(8,true);
     var playerButtonWrappers = document.getElementsByClassName("button-wrapper player-button");
@@ -135,6 +156,9 @@ QUnit.test("Test select and deselect  8th Button", function (assert) {
 
 });
 
+/**
+ * Test reset button
+ */
 QUnit.test("Test reset()", function (assert) {
     GameInterface.select(3,true);
     GameInterface.select(6,true);
@@ -157,8 +181,11 @@ QUnit.test("Test reset()", function (assert) {
     assert.ok(!playerButtonWrappers[9].classList.contains("selected"), "Tenth player button was deselected properly");
 
 
-})
+});
 
+/**
+ * Make sure light color changes
+ */
 QUnit.test("Test Light Color Changed", function (assert) {
 
     var playerButtonWrappers = document.getElementsByClassName("button-wrapper player-button");

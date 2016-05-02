@@ -11,7 +11,9 @@ function updateGamesList(games) {
 	}
 }
 
-
+/**
+ * Shows or hides the game lobby html elements
+ */
 function showLobby(flag) {
 	if (flag) {
 		$('#createGame').css('display', 'inline-block');
@@ -26,6 +28,9 @@ function showLobby(flag) {
 	}
 }
 
+/**
+ * Shows or hides the game html elements
+ */
 function showGame(flag) {
 	if (flag) {
 		$('#leaveGame').css('display', 'inline-block');

@@ -14,17 +14,26 @@ QUnit.module("Random Test", {
     }
 });
 
+/**
+ * Need to show x
+ */
 QUnit.test("Target Number Properly has appended x for multiplication", function(assert) {
 	GameInstance.targetOp[1] = true;
 	assert.ok(Multiplayer.makeTarget(1).indexOf("x") >= -1);
 });
 
+/**
+ * Need to show +
+ */
 QUnit.test("Target Number Properly has appended + for addition", function(assert) {
 	GameInstance.targetOp[1] = false;
 	assert.ok(Multiplayer.makeTarget(1).indexOf("+") >= -1);
 });
 
 
+/**
+ * Can get/set target op
+ */
 QUnit.test("Testing setTargetOp/getTargetOp with good input", function(assert) {
 	GameInstance.myID = 1;
 	GameInstance.setTargetOp(true);
@@ -33,6 +42,9 @@ QUnit.test("Testing setTargetOp/getTargetOp with good input", function(assert) {
 	assert.ok(!GameInstance.getTargetOp());
 });
 
+/**
+ * Bad input
+ */
 QUnit.test("Testing setTargetOp/getTargetOp with bad input", function(assert) {
 	GameInstance.myID = 1;
 	GameInstance.setTargetOp(null);
@@ -40,6 +52,9 @@ QUnit.test("Testing setTargetOp/getTargetOp with bad input", function(assert) {
 });
 
 
+/**
+ * Win condition with a random operator
+ */
 QUnit.test("Mock win condition with randomop", function(assert) {
   var wincall = false;
   GameInstance.declareWinner = function mockDeclareWinner() {

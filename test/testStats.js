@@ -41,6 +41,9 @@ var needed = {
 
 function runTests(){
 
+    /**
+     * Record 1000 losses
+     */
     QUnit.test("Loss works", function (assert) {
         
         var otherID = Math.random().toString();
@@ -51,6 +54,10 @@ function runTests(){
             assert.equal(GameInstance.gameStats().losses,s.losses+1);
         }
     });
+    
+    /**
+     * Record 1000 wins
+     */
     QUnit.test("Win works", function (assert) {
         
         var otherID = Math.random().toString();
@@ -61,11 +68,19 @@ function runTests(){
             assert.equal(GameInstance.gameStats().wins,s.wins+1);
         }
     });
+    
+    /**
+     * Clear the stats
+     */
     QUnit.test("Clear sets to 0", function (assert) {
         localStorage.clear();
         assert.equal(GameInstance.gameStats().wins, 0);
         assert.equal(GameInstance.gameStats().losses, 0);
     });
+    
+    /**
+     * Wins and losses at the same time!
+     */
     QUnit.test("Wins and losses after clear", function (assert) {
         localStorage.clear();
         var otherID = Math.random().toString();

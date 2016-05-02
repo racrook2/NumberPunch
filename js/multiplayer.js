@@ -17,6 +17,9 @@ var Multiplayer;
             syncOrders: false
         });
     }
+    /**
+     * Got data about the current active game lobbies
+     */
     socket.on('listgames', function(games) {
         //data[i].id, data[i].title, data[i].players, data[i].max
         var validGames = [];
@@ -29,20 +32,35 @@ var Multiplayer;
         updateGamesList(validGames);
         return;
     });
+    /**
+     * Got an order, from this client or another
+     */
     socket.on('order', function(data) {
         console.log("Got order", data);
         handleOrder(data);
     });
+    /**
+     * Got a shout
+     */
     socket.on('shout', function(data) {
         console.log("Got shout", data);
         handleShout(data);
     });
+    /**
+     * A set of queued orders
+     */
     socket.on('orders', function(data) {
         console.log("Got orders", data);
     });
+    /**
+     * Joining a game
+     */
     socket.on('youjoined', function() {
         console.log("youjoined");
     });
+    /**
+     * The game started
+     */
     socket.on('start', function(data) {
         console.log("Game is starting ", data);
 
@@ -53,6 +71,9 @@ var Multiplayer;
             GameInterface.reset(makeTarget(Multiplayer.players[i]), i === myIndex);
         }
     });
+    /**
+     * Information about the players in the game
+     */
     socket.on('players', function(data) {
         console.log("Players:", data);
 
@@ -66,10 +87,17 @@ var Multiplayer;
 
         Multiplayer.players = data;
     });
-
+    
+    /**
+     * Join a game
+     */
     function joinGame(id) {
         socket.emit('joingame', id);
     }
+    
+    /**
+     * Leave the current game
+     */
     function leaveGame() {
         if (ready) {
             if (inProgress) {
@@ -82,6 +110,10 @@ var Multiplayer;
         Multiplayer.readyPlayers = 0;
 
     }
+    
+    /**
+     * Send an order, arbitrary data
+     */
     function sendOrder(data) {
         console.log("entered send Order");
         //console.log(data);
@@ -89,14 +121,26 @@ var Multiplayer;
         console.log("exited send Order");
 
     }
+    
+    /**
+     * Request a listgames packet
+     */
     function refreshGameList() {
         socket.emit('listgames');
     }
+    
+    /**
+     * Start the game
+     */
     function startGame() {
         console.log("start");
 
         socket.emit("startgame");
     }
+    
+    /**
+     * Check if the game is ready to be started
+     */
     function startGameCheck() {
         console.log("startGame");
         if (Multiplayer.readyPlayers === 2) {
@@ -108,6 +152,10 @@ var Multiplayer;
         }
 
     }
+    
+    /**
+     * Ready up for the game
+     */
     function readyGame() {
         if (ready) return;
 
@@ -121,11 +169,19 @@ var Multiplayer;
         ready = true;
 
     }
+    
+    /**
+     * Send the game settings to the other player
+     */
     function gameSettings(data) {
         console.log("in gameSettings");
         socket.emit('shout', { type: "setting", playerid: GameInstance.myID, penalty: data['penalty'], gameRule: data['gameRule'], poolSize: data['poolSize'] });
 
     }
+    
+    /**
+     * Got a message before the game started
+     */
     function handleShout(data) {
         var orderType = data['type'];
 
@@ -154,9 +210,17 @@ var Multiplayer;
         }
 
     }
+    
+    /**
+     * Make the html for a target button
+     */
     function makeTarget(playerID) {
         return GameInstance.targetNum[playerID] + " <b>" + (GameInstance.targetOp[playerID] ? "x" : "+") + "</b>";
     }
+    
+    /**
+     * Got an order packet
+     */
     function handleOrder(data) {
         var orderType = data['type'];
         var playerID = data['playerid'];

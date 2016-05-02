@@ -21,7 +21,10 @@ Game.prototype = {
     orders: [],
     syncOrders: true,
     title: "Untitled Game",
-    addPlayer: function (p) {
+    /**
+     * Add a player to this game instance
+     */
+    addPlayer: function(p) {
         if (this.players.length < this.max && !this.started) {
             if (p.game) {
                 p.game.removePlayer(p);
@@ -33,14 +36,20 @@ Game.prototype = {
         }
         return false;
     },
-    sendPlayers: function () {
+    /**
+     * Send the player array to all clients
+     */
+    sendPlayers: function() {
         var p = [];
         for (var i in this.players) {
             p.push(this.players[i].name);
         }
         this.send("players", p);
     },
-    removePlayer: function(p){
+    /**
+     * Remove a player from this game instance
+     */
+    removePlayer: function(p) {
         removeSplice(this.players, p);
         p.game = false;
         this.sendPlayers();
@@ -48,12 +57,18 @@ Game.prototype = {
             remove(games, this);
         }
     },
-    send: function (t, d) {
+    /**
+     * Send a message t containing data d to all players
+     */
+    send: function(t, d) {
         for (var i = 0; i < this.players.length; i++) {
             this.players[i].emit(t, d)
         }
     },
-    start: function () {
+    /**
+     * Start the game
+     */
+    start: function() {
         this.started = true;
         var seed = Math.random();
         for (var i = 0; i < this.players.length; i++) {
@@ -65,7 +80,10 @@ Game.prototype = {
         }
 
     },
-    order: function (data, socket) {
+    /**
+     * Send an order from a socket to all the clients
+     */
+    order: function(data, socket) {
         if (this.started) {
             for (var i = 0; i < this.players.length; i++) {
                 if (socket == this.players[i]) {
@@ -81,7 +99,10 @@ Game.prototype = {
             }
         }
     },
-    step: function () {
+    /**
+     * Send out queued orders if in sync mode
+     */
+    step: function() {
         if (!this.syncOrders)
             return;
 
@@ -98,25 +119,32 @@ Game.prototype = {
 };
 var io = require('socket.io').listen(8162);
 io.set('log level', 1); // reduce logging
-io.sockets.on('connection', function (socket) {
+io.sockets.on('connection', function(socket) {
     socket.name = "Guest " + Math.random();
     console.log("somebody connected");
-    
-    socket.on('disconnect', function () {
+    /**
+     * Sent on disconnecting from the service
+     */
+    socket.on('disconnect', function() {
         console.log("they left?!?!");
         if (socket.game) {
             socket.game.removePlayer(socket);
         }
     });
-
-    socket.on('leavegame', function () {
+    /**
+     * Sent on leaving a game instance
+     */
+    socket.on('leavegame', function() {
         if (socket.game) {
             socket.game.removePlayer(socket);
         }
 
     });
 
-    socket.on('listgames', function () {
+    /**
+     * A request from the list of current active game lobbies
+     */
+    socket.on('listgames', function() {
         var titles = [];
         for (var i in games) {
             if (!games[i].started && games[i].players.length < games[i].max) {
@@ -132,7 +160,10 @@ io.sockets.on('connection', function (socket) {
         }
         socket.emit('listgames', titles);
     });
-    socket.on('joingame', function (data) {
+    /**
+     * Join a game lobby
+     */
+    socket.on('joingame', function(data) {
         data = parseInt(data);
         if (data || data === 0) {
             if (!game[data].addPlayer(socket)) {
@@ -145,25 +176,31 @@ io.sockets.on('connection', function (socket) {
             }
         }
     });
-    socket.on('creategame', function (data) {
+    /**
+     * Create a game lobby
+     */
+    socket.on('creategame', function(data) {
         var syncOrders;
-        if (typeof data.syncOrders == 'undefined'){
+        if (typeof data.syncOrders == 'undefined') {
             syncOrders = Game.prototype.syncOrders;
         }
-        else{
+        else {
             syncOrders = data.syncOrders;
         }
         var g = new Game({
             title: data.title,
             type: data.type,
             syncOrders: syncOrders,
-            max: Math.max(data.max,1)
+            max: Math.max(data.max, 1)
         });
         if (!g.addPlayer(socket)) {
             socket.emit('error', 'game is full');
         }
     });
-    socket.on('startgame', function () {
+    /**
+     * Start a game
+     */
+    socket.on('startgame', function() {
         if (socket.game) {
             if (socket.game.players[0] == socket) {
                 if (!socket.game.started) {
@@ -172,16 +209,22 @@ io.sockets.on('connection', function (socket) {
             }
         }
     });
-    socket.on('order', function (data) {
+    /**
+     * Recieved an order
+     */
+    socket.on('order', function(data) {
         if (socket.game) {
-            socket.game.order(data,socket);
+            socket.game.order(data, socket);
         }
     });
-	socket.on('shout', function(data){
-		if (socket.game){
-			socket.game.send('shout',data);
-		}
-	});
+    /**
+     * Recieved a shout
+     */
+    socket.on('shout', function(data) {
+        if (socket.game) {
+            socket.game.send('shout', data);
+        }
+    });
 });
 
 
@@ -194,10 +237,10 @@ function remove(arr, item) {
 function removeSplice(arr, item) {
     var i;
     while ((i = arr.indexOf(item)) !== -1) {
-        arr.splice(i,1);
+        arr.splice(i, 1);
     }
 }
-setInterval(function () {
+setInterval(function() {
     for (var i in games) {
         games[i].step();
     }

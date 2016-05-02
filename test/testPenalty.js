@@ -13,15 +13,24 @@ QUnit.module("Penalty System Test", {
     }
 });
 
+/**
+ * Default penalty = 0
+ */
 QUnit.test("Test default penalty threshold", function(assert) {
 	assert.equal(GameInstance.getPenaltyThreshold(), 0);
 });
 
+/**
+ * Should be able to set penalty threshold
+ */
 QUnit.test("Test set penalty threshold", function(assert) {
 	GameInstance.setPenaltyThreshold(1);
     assert.equal(GameInstance.getPenaltyThreshold(), 1);
 });
 
+/**
+ * Reset should trigger penalty
+ */
 QUnit.test("Test penalty on one reset", function(assert) {
 	var userID = 1;
 	GameInstance.setPenaltyThreshold(1);
@@ -37,6 +46,9 @@ QUnit.test("Test penalty on one reset", function(assert) {
 	assert.equal(GameInstance.unavailNum[userID].length, unavailLen);
 });
 
+/**
+ * Reset should trigger penalty twice
+ */
 QUnit.test("Test penalty on two resets", function(assert) {
 	var userID = 1;
 	GameInstance.setPenaltyThreshold(2);
@@ -55,6 +67,9 @@ QUnit.test("Test penalty on two resets", function(assert) {
 	assert.equal(GameInstance.unavailNum[userID].length, unavailLen);
 });
 
+/**
+ * You can change the penalty thresholds
+ */
 QUnit.test("Test change penalty threshold", function(assert) {
 	GameInstance.setPenaltyThreshold(1);
 	assert.equal(GameInstance.getPenaltyThreshold(), 1);
